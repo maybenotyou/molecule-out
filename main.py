@@ -3,7 +3,7 @@ import pygame
 def menu():
    return
 
-def selection_difficulté():
+def selection_difficulte():
    return
 
 
