@@ -1,6 +1,4 @@
 import pygame
-def rectangle_inscrit(rayon):
-    return int((2*(rayon**2))**0.5)
 
 class Bouton_circulaire():
     def __init__(self,x,y,rayon,couleur,surface,nom):
@@ -146,13 +144,9 @@ def difficulte(surface,taille):
             rect_sel=pygame.Rect((b.rect[0]-int(taille/10),b.rect[1]-int(taille/10)),(b.rect[2]+2*int(taille/10),b.rect[3]+2*int(taille/10)))
             pygame.draw.rect(surface,(100,100,100),rect_sel)
 
-        Starter.update()
-        Junior.update()
-        Expert.update()
-        Master.update()
-        Wizard.update()
-        Bonus.update()
-        Menu.update()
+        for rang in liste_boutons:
+            for bouton in rang:
+                bouton.update()
 
         pygame.display.update()
 
