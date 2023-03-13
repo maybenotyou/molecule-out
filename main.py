@@ -156,5 +156,6 @@ def main():
    screen=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
    taille=(min(screen.get_size()))//18
    menu()
+   pygame.quit()
    
 main()
