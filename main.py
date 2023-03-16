@@ -44,7 +44,7 @@ def junior():
 def expert():
    return
 
-def maitre():
+def master():
    return
 
 def difficulte():
