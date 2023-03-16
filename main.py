@@ -1,5 +1,8 @@
 import pygame
 
+def rectangle_inscrit(rayon):
+    return int((2*(rayon**2))**0.5)
+
 class Bouton_circulaire():
     def __init__(self,x,y,rayon,couleur,surface,nom):
         self.x=x
