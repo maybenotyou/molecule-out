@@ -38,30 +38,32 @@ class Bouton_rectangulaire():
             pygame.draw.rect(self.surface,self.couleur,self.rect)
             self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_size()[0])/2,self.y+int(self.hauteur-self.texte.get_size()[1])/2))
 
+def options():
+    return
+
+def aide():
+    return
+
 def starter():
-   return
+    return
 
 def junior():
-   return
+    return
 
 def expert():
-   return
+    return
 
 def master():
-   return
+    return
 
-def difficulte():
-   return
+def wizard():
+    return
 
-def menu():
-   return
+def bonus():
+    return
 
 
-def difficulte(surface,taille):
-    background = pygame.Surface(surface.get_size())
-    background.fill((200,200,200))
-    background.convert()
-
+def difficulte(surface,taille,background):
     titre=pygame.font.SysFont(None,4*taille).render('Choisissez la difficulté',True,(0, 0, 0))
 
     Starter=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Starter',3*taille)
@@ -121,22 +123,22 @@ def difficulte(surface,taille):
                         j=0
                     b=liste_boutons[i][j]
 
-                elif event.key==pygame.K_SPACE or event.key==pygame.K_RETURN:
-                    if b.nom=='Menu':
-                        return menu()
-                    elif b.nom=='Starter':
-                        return starter()
-                    elif b.nom=='Junior':
-                        return junior()
-                    if b.nom=='Expert':
-                        return expert()
-                    elif b.nom=='Master':
-                        return master()
-                    if b.nom=='Wizard':
-                        return wizard()
-                    elif b.nom=='Bonus':
+                elif event.key in [pygame.K_SPACE, pygame.K_RETURN]:
+                    if b.nom == 'Bonus':
                         return bonus()
 
+                    elif b.nom == 'Expert':
+                        return expert()
+                    elif b.nom == 'Junior':
+                        return junior()
+                    elif b.nom == 'Master':
+                        return master()
+                    elif b.nom == 'Menu':
+                        return main()
+                    elif b.nom == 'Starter':
+                        return starter()
+                    elif b.nom == 'Wizard':
+                        return wizard()
         surface.blit(background,(0,0))
         surface.blit(titre,(int((surface.get_size()[0]-titre.get_size()[0])/2),int(4*surface.get_size()[1]/25)))
 
@@ -153,12 +155,87 @@ def difficulte(surface,taille):
 
         pygame.display.update()
 
+
+def menu(surface,background,taille):
+    logo = pygame.image.load('images/OUT.png').convert_alpha()
+    bouton_jouer = pygame.Rect(surface.get_width()*0.4, surface.get_height()*0.625, surface.get_width()*0.2, surface.get_height()*0.1)
+    bouton_options = pygame.Rect(surface.get_width()*0.225, surface.get_height()*0.8, surface.get_width()*0.2, surface.get_height()*0.1)
+    bouton_aide = pygame.Rect(surface.get_width()*0.575, surface.get_height()*0.8, surface.get_width()*0.2, surface.get_height()*0.1)
+    b = 2
+    controle = "Clavier"
+    running = True
+    while running:
+        surface.blit(background,(0,0))
+        surface.blit(logo, (surface.get_width()*0.345, surface.get_height()*0.05))
+        bouton_text_arrondi("Jouer", (0, 255, 0), surface.get_width()*0.4, surface.get_height()*0.625, surface.get_width()*0.2, surface.get_height()*0.1, surface)
+        bouton_text_arrondi("Options", (0, 0, 255), surface.get_width()*0.225, surface.get_height()*0.8, surface.get_width()*0.2, surface.get_height()*0.1, surface)
+        bouton_text_arrondi("Aide", (255, 0, 0), surface.get_width()*0.575, surface.get_height()*0.8, surface.get_width()*0.2, surface.get_height()*0.1, surface)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    quit()
+                elif controle == "Clavier":
+                    if event.key == pygame.K_LEFT:
+                        if b == 1:
+                            b = 3
+                        elif b == 3:
+                            b = 2
+                        elif b == 2:
+                            b = 1
+
+                    elif event.key == pygame.K_RIGHT:
+                        if b == 3:
+                            b = 1
+                        elif b == 1:
+                            b = 2
+                        elif b == 2:
+                            b = 3
+
+                    elif event.key in [pygame.K_SPACE, pygame.K_RETURN]:
+                        if b == 1:
+                            return options()
+                        elif b == 2:
+                            return difficulte(surface, taille, background)
+                        elif b == 3:
+                            return aide()
+
+            elif controle == "Sourie":
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if bouton_jouer.collidepoint(event.pos):
+                        difficulte(surface, taille, background)
+                    elif bouton_options.collidepoint(event.pos):
+                        options()
+                    elif bouton_aide.collidepoint(event.pos):
+                        aide()
+
+        if b == 1:
+            pygame.draw.rect(surface,(100,100,100), bouton_options, 14,75)
+        elif b == 2:
+            pygame.draw.rect(surface,(100,100,100), bouton_jouer, 14,75)
+        elif b == 3:
+            pygame.draw.rect(surface,(100,100,100), bouton_aide, 14,75)
+
+        pygame.display.update()
+            
+
+def bouton_text_arrondi(texte, couleur, x, y, largeur, hauteur, surface):
+    font = pygame.font.Font("verdana.ttf", int((largeur, hauteur)[1]*0.5))
+    pygame.draw.rect(surface, couleur, (x, y, largeur, hauteur), border_radius=int(hauteur//2))
+    texte = font.render(texte, True, (255, 255, 255))
+    surface.blit(texte, texte.get_rect(center=pygame.Rect(x, y, largeur, hauteur).center))
+
 def main():
-   pygame.init()
-   pygame.display.set_caption("Anti-virus")
-   screen=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
-   taille=(min(screen.get_size()))//18
-   menu()
-   pygame.quit()
-   
+    pygame.init()
+    pygame.display.set_caption("Molécule out")
+    screen=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
+    background = pygame.Surface(screen.get_size())
+    background.fill((200,200,200))
+    background.convert()
+    taille=(min(screen.get_size()))//18
+    return menu(screen,background,taille)
+
 main()
