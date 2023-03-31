@@ -67,14 +67,14 @@ def difficulte(surface,taille,background):
     titre=pygame.font.SysFont(None,4*taille).render('Choisissez la difficulté',True,(0, 0, 0))
 
     Starter=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Starter',3*taille)
-    Junior=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Junior',3*taille)
-    Expert=Bouton_rectangulaire(int(3*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Expert',3*taille)
-    Master=Bouton_rectangulaire(int(3*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Master',3*taille)
-    Wizard=Bouton_rectangulaire(int(5*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Wizard',3*taille)
+    Junior=Bouton_rectangulaire(int(3*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Junior',3*taille)
+    Expert=Bouton_rectangulaire(int(5*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Expert',3*taille)
+    Master=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Master',3*taille)
+    Wizard=Bouton_rectangulaire(int(3*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Wizard',3*taille)
     Bonus=Bouton_rectangulaire(int(5*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Bonus',3*taille)
     Menu=Bouton_circulaire(int(1.5*taille),int(1.5*taille),taille,(250,250,250),surface,'Menu')
 
-    liste_boutons=[[Menu],[Starter,Expert,Wizard],[Junior,Master,Bonus]]
+    liste_boutons=[[Menu],[Starter,Junior,Expert],[Master,Wizard,Bonus]]
     i=1
     j=1
     b=liste_boutons[i][j]
