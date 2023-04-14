@@ -71,7 +71,29 @@ def options(controle_actuel):
 def aide():
     return
 
-def lancement(niveau,liste_boutons, taille, surface, background, titre,controle_actuel):
+def lancement(niveau, taille, surface, background, titre,controle_actuel):
+    Menu=Bouton_circulaire(int(1.5*taille),int(1.5*taille),taille,(250,250,250),surface,'Menu')
+    if niveau=='aucun':
+        Starter=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Starter',3*taille)
+        Master=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Master',3*taille)
+        Junior=Bouton_rectangulaire(int(3*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Junior',3*taille)
+        Wizard=Bouton_rectangulaire(int(3*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Wizard',3*taille)
+        Expert=Bouton_rectangulaire(int(5*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Expert',3*taille)
+        Bonus=Bouton_rectangulaire(int(5*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Bonus',3*taille)
+        liste_boutons=[[Menu],[Starter,Junior,Expert],[Master,Wizard,Bonus]]
+    if niveau=='starter':
+        liste_boutons=la_liste_bouton(0,250,0, surface, taille)
+    if niveau=='junior':
+        liste_boutons=la_liste_bouton(225,175,45, surface, taille)
+    if niveau=='master':
+        liste_boutons=la_liste_bouton(250,0,0, surface, taille)
+    if niveau=='expert':
+        liste_boutons=la_liste_bouton(250,125,0, surface, taille)
+    if niveau=='wizard':
+        liste_boutons=la_liste_bouton(0,0,250, surface, taille)
+    if niveau=='bonus':
+        liste_boutons=la_liste_bouton(192,66,138, surface, taille)
+
     i=1
     j=1
     b=liste_boutons[i][j]
@@ -277,15 +299,39 @@ def lancement(niveau,liste_boutons, taille, surface, background, titre,controle_
                                 return """retourner le niveau """
 
 
+            elif event.type==pygame.MOUSEBUTTONDOWN:
+                if controle_actuel=='sourie' :
+                    if Menu.rect.collidepoint(event.pos):
+                        return menu(surface,taille,controle_actuel,background)
+                    if niveau=='aucun':
+                        if Starter.rect.collidepoint(event.pos):
+                            return starter(surface, taille,background,controle_actuel)
+                        elif Junior.rect.collidepoint(event.pos):
+                            return junior(surface, taille,background,controle_actuel)
+                        if Expert.rect.collidepoint(event.pos):
+                            return expert(surface, taille,background,controle_actuel)
+                        elif Master.rect.collidepoint(event.pos):
+                            return master(surface, taille,background,controle_actuel)
+                        if Wizard.rect.collidepoint(event.pos):
+                            return wizard(surface, taille,background,controle_actuel)
+                        elif Bonus.rect.collidepoint(event.pos):
+                            return bonus(surface, taille,background,controle_actuel)
+
+
         surface.blit(background,(0,0))
         surface.blit(titre,(int((surface.get_size()[0]-titre.get_size()[0])/2),int(4*surface.get_size()[1]/25)))
-
-        if i==0:
-            pygame.draw.circle(surface,(100,100,100),(b.x,b.y), int(1.1*b.rayon))
+        if controle_actuel=='sourie':
+            pygame.mouse.set_visible(True)
 
         else:
-            rect_sel=pygame.Rect((b.rect[0]-int(taille/10),b.rect[1]-int(taille/10)),(b.rect[2]+2*int(taille/10),b.rect[3]+2*int(taille/10)))
-            pygame.draw.rect(surface,(100,100,100),rect_sel)
+            pygame.mouse.set_visible(False)
+
+            if i==0:
+                pygame.draw.circle(surface,(100,100,100),(b.x,b.y), int(1.1*b.rayon))
+
+            else:
+                rect_sel=pygame.Rect((b.rect[0]-int(taille/10),b.rect[1]-int(taille/10)),(b.rect[2]+2*int(taille/10),b.rect[3]+2*int(taille/10)))
+                pygame.draw.rect(surface,(100,100,100),rect_sel)
 
         for rang in liste_boutons:
             for bouton in rang:
@@ -295,33 +341,27 @@ def lancement(niveau,liste_boutons, taille, surface, background, titre,controle_
 
 def starter(surface, taille,background,controle_actuel):
     titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
-    liste=la_liste_bouton(0,250,0, surface, taille)
-    lancement('starter', liste,taille, surface, background, titre,controle_actuel)
+    lancement('starter',taille, surface, background, titre,controle_actuel)
 
 def junior(surface, taille, background,controle_actuel):
     titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
-    liste=la_liste_bouton(225,175,45, surface, taille)
-    lancement('junior', liste,taille, surface, background, titre, controle_actuel)
+    lancement('junior',taille, surface, background, titre, controle_actuel)
 
 def expert(surface, taille, background,controle_actuel):
     titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
-    liste=la_liste_bouton(250,125,0, surface, taille)
-    lancement('expert', liste,taille, surface, background, titre,controle_actuel)
+    lancement('expert',taille, surface, background, titre,controle_actuel)
 
 def master(surface, taille,background,controle_actuel):
     titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
-    liste=la_liste_bouton(250,0,0, surface, taille)
-    lancement('master', liste,taille, surface, background, titre,controle_actuel)
+    lancement('master',taille, surface, background, titre,controle_actuel)
 
 def wizard(surface, taille,background,controle_actuel):
     titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
-    liste=la_liste_bouton(0,0,250, surface, taille)
-    lancement('wizard', liste,taille, surface, background, titre,controle_actuel)
+    lancement('wizard',taille, surface, background, titre,controle_actuel)
 
 def bonus(surface, taille,background,controle_actuel):
     titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
-    liste=la_liste_bouton(192,66,138, surface, taille)
-    lancement('bonus', liste,taille, surface, background, titre,controle_actuel)
+    lancement('bonus',taille, surface, background, titre,controle_actuel)
 
 def menu(surface,taille,controle_actuel,background):
     logo = pygame.image.load('images/OUT.png').convert_alpha()
@@ -396,24 +436,14 @@ def menu(surface,taille,controle_actuel,background):
 def difficulte(surface,taille, controle_actuel,background):
 
     titre=pygame.font.SysFont(None,4*taille).render('Choisissez la difficulté',True,(0, 0, 0))
-
-    Starter=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Starter',3*taille)
-    Master=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Master',3*taille)
-    Junior=Bouton_rectangulaire(int(3*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Junior',3*taille)
-    Wizard=Bouton_rectangulaire(int(3*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Wizard',3*taille)
-    Expert=Bouton_rectangulaire(int(5*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Expert',3*taille)
-    Bonus=Bouton_rectangulaire(int(5*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Bonus',3*taille)
-    Menu=Bouton_circulaire(int(1.5*taille),int(1.5*taille),taille,(250,250,250),surface,'Menu')
-
-    liste_boutons=[[Menu],[Starter,Junior,Expert],[Master,Wizard,Bonus]]
-    lancement('aucun', liste_boutons, taille, surface, background, titre, controle_actuel)
+    lancement('aucun', taille, surface, background, titre, controle_actuel)
 
 def main():
    pygame.init()
    pygame.display.set_caption("Anti-virus")
    screen=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
    taille=(min(screen.get_size()))//18
-   controle_actuel='clavier'
+   controle_actuel='sourie'
    background = pygame.Surface(screen.get_size())
    background.fill((200,200,200))
    background.convert()
