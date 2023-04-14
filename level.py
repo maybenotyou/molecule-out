@@ -27,7 +27,7 @@ def level(screen,list_cell_ini):
     list_cell_current=[i.copy() for i in list_cell_ini]
     
     #------- set base image of cells ------------ 
-    for cell in list_cell_current : cell.set_image(scalx,scaly))
+    for cell in list_cell_current : cell.set_image((scalx,scaly))
     a.set_img(scalx,scaly)
     going=True
     while going :
