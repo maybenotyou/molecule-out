@@ -22,12 +22,12 @@ def level(screen,list_cell_ini):
     for x in range(8):
         for y in range(8):
             if (1+abs(y-3)<=x<=7-abs(y-3)) or (x==0 and y == 3):
-                koala=placement(x,y)
+                koala=placement((x,y))
                 pygame.draw.ellipse(bg,(255,255,255),pygame.Rect(((koala[0]-wid/2),koala[1]-hei/2),(wid,hei)))
     list_cell_current=[i.copy() for i in list_cell_ini]
-    
-    #------- set base image of cells ------------ 
-    for cell in list_cell_current : cell.set_image((scalx,scaly))
+
+    #------- set base image of cells ------------
+    for cell in list_cell_current : cell.set_image(scalx,scaly)
     a.set_img(scalx,scaly)
     going=True
     while going :
@@ -55,7 +55,7 @@ def level(screen,list_cell_ini):
                 going = False
         screen.blit(bg,(0,0))
         for i in list_cell_current:
-            i.draw(screen)
+            i.draw(screen,xoff,yoff,scalx,scaly)
         a.draw(screen,placement(a.pos))
         pygame.display.flip()
     if win == True :
@@ -110,6 +110,5 @@ import time
 def test():
     pygame.init()
     screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
-    level(screen, [virus(5,5)])
-
+    level(screen, [virus((5,5))])
 
