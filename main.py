@@ -1,5 +1,6 @@
 import pygame
 
+
 def rectangle_inscrit(rayon):
     return int((2*(rayon**2))**0.5)
 
@@ -18,7 +19,7 @@ class Bouton_circulaire():
 
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y), self.rayon)
-            
+
 class Bouton_rectangulaire():
     def __init__(self,x,y,hauteur,largeur,couleur,surface,nom,taille):
         self.x=x
@@ -38,43 +39,39 @@ class Bouton_rectangulaire():
             pygame.draw.rect(self.surface,self.couleur,self.rect)
             self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_size()[0])/2,self.y+int(self.hauteur-self.texte.get_size()[1])/2))
 
-def options():
-    return
+def bouton_text_arrondi(texte, couleur, x, y, largeur, hauteur, surface):
+    font = pygame.font.Font("verdana.ttf", int((largeur, hauteur)[1]*0.5))
+    pygame.draw.rect(surface, couleur, (x, y, largeur, hauteur), border_radius=int(hauteur//1))
+    texte = font.render(texte, True, (255, 255, 255))
+    surface.blit(texte, texte.get_rect(center=pygame.Rect(x, y, largeur, hauteur).center))
+
+def la_liste_bouton(R,V,B, surface, taille):
+    niveau_1=Bouton_rectangulaire(int(1.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'1',3*taille)
+    niveau_2=Bouton_rectangulaire(int(2.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'2',3*taille)
+    niveau_3=Bouton_rectangulaire(int(3.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'3',3*taille)
+    niveau_4=Bouton_rectangulaire(int(4.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'4',3*taille)
+    niveau_5=Bouton_rectangulaire(int(5.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'5',3*taille)
+    niveau_6=Bouton_rectangulaire(int(1.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'6',3*taille)
+    niveau_7=Bouton_rectangulaire(int(2.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'7',3*taille)
+    niveau_8=Bouton_rectangulaire(int(3.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'8',3*taille)
+    niveau_9=Bouton_rectangulaire(int(4.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'9',3*taille)
+    niveau_10=Bouton_rectangulaire(int(5.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)
+    Menu=Bouton_circulaire(int(1.5*taille),int(1.5*taille),taille,(250,250,250),surface,'Menu')
+
+    liste_boutons=[[Menu],[niveau_1,niveau_2,niveau_3,niveau_4, niveau_5],[niveau_6,niveau_7,niveau_8,niveau_9, niveau_10]]
+    return liste_boutons
+
+def options(controle_actuel):
+    if controle_actuel== 'sourie':
+        return 'clavier'
+    else:
+        return 'sourie'
+
 
 def aide():
     return
 
-def starter():
-    return
-
-def junior():
-    return
-
-def expert():
-    return
-
-def master():
-    return
-
-def wizard():
-    return
-
-def bonus():
-    return
-
-
-def difficulte(surface,taille,background):
-    titre=pygame.font.SysFont(None,4*taille).render('Choisissez la difficulté',True,(0, 0, 0))
-
-    Starter=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Starter',3*taille)
-    Junior=Bouton_rectangulaire(int(3*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Junior',3*taille)
-    Expert=Bouton_rectangulaire(int(5*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Expert',3*taille)
-    Master=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Master',3*taille)
-    Wizard=Bouton_rectangulaire(int(3*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Wizard',3*taille)
-    Bonus=Bouton_rectangulaire(int(5*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Bonus',3*taille)
-    Menu=Bouton_circulaire(int(1.5*taille),int(1.5*taille),taille,(250,250,250),surface,'Menu')
-
-    liste_boutons=[[Menu],[Starter,Junior,Expert],[Master,Wizard,Bonus]]
+def lancement(niveau,liste_boutons, taille, surface, background, titre,controle_actuel):
     i=1
     j=1
     b=liste_boutons[i][j]
@@ -91,54 +88,195 @@ def difficulte(surface,taille,background):
                     running=False
                     pygame.quit()
                     return
-
-                elif event.key==pygame.K_RIGHT:
-                    if j<len(liste_boutons[i])-1:
-                        j+=1
-                    else:
-                        j=0
-                    b=liste_boutons[i][j]
-
-                elif event.key==pygame.K_LEFT:
-                    if j>0:
-                        j-=1
-                    else:
-                        j=len(liste_boutons[i])-1
-                    b=liste_boutons[i][j]
-
-                elif event.key==pygame.K_UP:
-                    if i>0:
-                        if i==1:
+                elif controle_actuel=='clavier':
+                    if event.key==pygame.K_RIGHT:
+                        if j<len(liste_boutons[i])-1:
+                            j+=1
+                        else:
                             j=0
-                        i-=1
-                    else:
-                        i=len(liste_boutons)-1
-                    b=liste_boutons[i][j]
+                        b=liste_boutons[i][j]
 
-                elif event.key==pygame.K_DOWN:
-                    if i<len(liste_boutons)-1:
-                        i+=1
-                    else:
-                        i=0
-                        j=0
-                    b=liste_boutons[i][j]
+                    elif event.key==pygame.K_LEFT:
+                        if j>0:
+                            j-=1
+                        else:
+                            j=len(liste_boutons[i])-1
+                        b=liste_boutons[i][j]
 
-                elif event.key in [pygame.K_SPACE, pygame.K_RETURN]:
-                    if b.nom == 'Bonus':
-                        return bonus()
+                    elif event.key==pygame.K_UP:
+                        if i>0:
+                            if i==1:
+                                j=0
+                            i-=1
+                        else:
+                            i=len(liste_boutons)-1
+                        b=liste_boutons[i][j]
 
-                    elif b.nom == 'Expert':
-                        return expert()
-                    elif b.nom == 'Junior':
-                        return junior()
-                    elif b.nom == 'Master':
-                        return master()
-                    elif b.nom == 'Menu':
-                        return main()
-                    elif b.nom == 'Starter':
-                        return starter()
-                    elif b.nom == 'Wizard':
-                        return wizard()
+                    elif event.key==pygame.K_DOWN:
+                        if i<len(liste_boutons)-1:
+                            i+=1
+                        else:
+                            i=0
+                            j=0
+                        b=liste_boutons[i][j]
+
+                    elif event.key==pygame.K_SPACE or event.key==pygame.K_RETURN:
+                        if b.nom=='Menu':
+                            return menu(surface,taille,controle_actuel,background)
+                        elif b.nom=='Starter':
+                            return starter(surface, taille,background,controle_actuel)
+                        elif b.nom=='Junior':
+                            return junior(surface, taille,background,controle_actuel)
+                        if b.nom=='Expert':
+                            return expert(surface, taille,background,controle_actuel)
+                        elif b.nom=='Master':
+                            return master(surface, taille,background,controle_actuel)
+                        if b.nom=='Wizard':
+                            return wizard(surface, taille,background,controle_actuel)
+                        elif b.nom=='Bonus':
+                            return bonus(surface, taille,background,controle_actuel)
+
+                        elif b.nom=='1':
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif b.nom=='2':
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif b.nom=='3':
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif b.nom=='4':
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif b.nom=='5':
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif b.nom=='6':
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif b.nom=='7':
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif b.nom=='8':
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif b.nom=='9':
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif b.nom=='10':
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+
         surface.blit(background,(0,0))
         surface.blit(titre,(int((surface.get_size()[0]-titre.get_size()[0])/2),int(4*surface.get_size()[1]/25)))
 
@@ -155,18 +293,48 @@ def difficulte(surface,taille,background):
 
         pygame.display.update()
 
+def starter(surface, taille,background,controle_actuel):
+    titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
+    liste=la_liste_bouton(0,250,0, surface, taille)
+    lancement('starter', liste,taille, surface, background, titre,controle_actuel)
 
-def menu(surface,background,taille):
+def junior(surface, taille, background,controle_actuel):
+    titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
+    liste=la_liste_bouton(225,175,45, surface, taille)
+    lancement('junior', liste,taille, surface, background, titre, controle_actuel)
+
+def expert(surface, taille, background,controle_actuel):
+    titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
+    liste=la_liste_bouton(250,125,0, surface, taille)
+    lancement('expert', liste,taille, surface, background, titre,controle_actuel)
+
+def master(surface, taille,background,controle_actuel):
+    titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
+    liste=la_liste_bouton(250,0,0, surface, taille)
+    lancement('master', liste,taille, surface, background, titre,controle_actuel)
+
+def wizard(surface, taille,background,controle_actuel):
+    titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
+    liste=la_liste_bouton(0,0,250, surface, taille)
+    lancement('wizard', liste,taille, surface, background, titre,controle_actuel)
+
+def bonus(surface, taille,background,controle_actuel):
+    titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
+    liste=la_liste_bouton(192,66,138, surface, taille)
+    lancement('bonus', liste,taille, surface, background, titre,controle_actuel)
+
+def menu(surface,taille,controle_actuel,background):
     logo = pygame.image.load('images/OUT.png').convert_alpha()
     bouton_jouer = pygame.Rect(surface.get_width()*0.4, surface.get_height()*0.625, surface.get_width()*0.2, surface.get_height()*0.1)
     bouton_options = pygame.Rect(surface.get_width()*0.225, surface.get_height()*0.8, surface.get_width()*0.2, surface.get_height()*0.1)
     bouton_aide = pygame.Rect(surface.get_width()*0.575, surface.get_height()*0.8, surface.get_width()*0.2, surface.get_height()*0.1)
-    b = 2
-    controle = "Clavier"
+
+    b=2
+
     running = True
     while running:
         surface.blit(background,(0,0))
-        surface.blit(logo, (surface.get_width()*0.345, surface.get_height()*0.05))
+        surface.blit(logo, (surface.get_width()*0.28, surface.get_height()*-0.05))
         bouton_text_arrondi("Jouer", (0, 255, 0), surface.get_width()*0.4, surface.get_height()*0.625, surface.get_width()*0.2, surface.get_height()*0.1, surface)
         bouton_text_arrondi("Options", (0, 0, 255), surface.get_width()*0.225, surface.get_height()*0.8, surface.get_width()*0.2, surface.get_height()*0.1, surface)
         bouton_text_arrondi("Aide", (255, 0, 0), surface.get_width()*0.575, surface.get_height()*0.8, surface.get_width()*0.2, surface.get_height()*0.1, surface)
@@ -178,7 +346,7 @@ def menu(surface,background,taille):
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     quit()
-                elif controle == "Clavier":
+                elif controle_actuel == "clavier":
                     if event.key == pygame.K_LEFT:
                         if b == 1:
                             b = 3
@@ -197,45 +365,56 @@ def menu(surface,background,taille):
 
                     elif event.key in [pygame.K_SPACE, pygame.K_RETURN]:
                         if b == 1:
-                            return options()
+                            controle_actuel= options(controle_actuel)
                         elif b == 2:
-                            return difficulte(surface, taille, background)
+                            return difficulte(surface, taille, controle_actuel, background)
                         elif b == 3:
                             return aide()
 
-            elif controle == "Sourie":
+            elif controle_actuel == "sourie":
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if bouton_jouer.collidepoint(event.pos):
-                        difficulte(surface, taille, background)
+                        return difficulte(surface, taille, controle_actuel, background)
                     elif bouton_options.collidepoint(event.pos):
-                        options()
+                        controle_actuel=options(controle_actuel)
                     elif bouton_aide.collidepoint(event.pos):
-                        aide()
+                        return aide()
 
         if b == 1:
-            pygame.draw.rect(surface,(100,100,100), bouton_options, 14,75)
+            pygame.draw.rect(surface,(100,100,100), bouton_options, 8,75)
         elif b == 2:
-            pygame.draw.rect(surface,(100,100,100), bouton_jouer, 14,75)
+            pygame.draw.rect(surface,(100,100,100), bouton_jouer, 8,75)
         elif b == 3:
-            pygame.draw.rect(surface,(100,100,100), bouton_aide, 14,75)
+            pygame.draw.rect(surface,(100,100,100), bouton_aide, 8,75)
 
         pygame.display.update()
-            
 
-def bouton_text_arrondi(texte, couleur, x, y, largeur, hauteur, surface):
-    font = pygame.font.Font("verdana.ttf", int((largeur, hauteur)[1]*0.5))
-    pygame.draw.rect(surface, couleur, (x, y, largeur, hauteur), border_radius=int(hauteur//2))
-    texte = font.render(texte, True, (255, 255, 255))
-    surface.blit(texte, texte.get_rect(center=pygame.Rect(x, y, largeur, hauteur).center))
+def difficulte(surface,taille, controle_actuel,background):
+
+    titre=pygame.font.SysFont(None,4*taille).render('Choisissez la difficulté',True,(0, 0, 0))
+
+    Starter=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Starter',3*taille)
+    Master=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Master',3*taille)
+    Junior=Bouton_rectangulaire(int(3*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Junior',3*taille)
+    Wizard=Bouton_rectangulaire(int(3*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Wizard',3*taille)
+    Expert=Bouton_rectangulaire(int(5*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Expert',3*taille)
+    Bonus=Bouton_rectangulaire(int(5*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Bonus',3*taille)
+    Menu=Bouton_circulaire(int(1.5*taille),int(1.5*taille),taille,(250,250,250),surface,'Menu')
+
+    liste_boutons=[[Menu],[Starter,Junior,Expert],[Master,Wizard,Bonus]]
+    lancement('aucun', liste_boutons, taille, surface, background, titre, controle_actuel)
 
 def main():
-    pygame.init()
-    pygame.display.set_caption("Molécule out")
-    screen=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
-    background = pygame.Surface(screen.get_size())
-    background.fill((200,200,200))
-    background.convert()
-    taille=(min(screen.get_size()))//18
-    return menu(screen,background,taille)
+   pygame.init()
+   pygame.display.set_caption("Anti-virus")
+   screen=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
+   taille=(min(screen.get_size()))//18
+   controle_actuel='clavier'
+   background = pygame.Surface(screen.get_size())
+   background.fill((200,200,200))
+   background.convert()
+
+   menu(screen,taille,controle_actuel,background)
+   pygame.quit()
 
 main()
