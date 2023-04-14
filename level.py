@@ -15,16 +15,20 @@ def level(screen,list_cell_ini):
     def placement(pos):
         x=pos[0]
         y=pos[1]
-        return ((xoff + (x-y)*scalx),yoff+(x+y)*scaly)
+        return ((xoff + (x-y+0.5)*scalx),yoff+(x+y+0.5)*scaly)
     win = False
     wid = scalx*3/4
-    hei =scaly*3/4
+    hei = scaly*3/4
     for x in range(8):
         for y in range(8):
             if (1+abs(y-3)<=x<=7-abs(y-3)) or (x==0 and y == 3):
                 koala=placement(x,y)
                 pygame.draw.ellipse(bg,(255,255,255),pygame.Rect(((koala[0]-wid/2),koala[1]-hei/2),(wid,hei)))
     list_cell_current=[i.copy() for i in list_cell_ini]
+    
+    #------- set base image of cells ------------ 
+    for cell in list_cell_current : cell.set_image(scalx,scaly))
+    a.set_img(scalx,scaly)
     going=True
     while going :
         for event in pygame.event.get():
@@ -46,13 +50,13 @@ def level(screen,list_cell_ini):
                     if a.pos in e.cells :
                         a.select(e)
         for x in list_cell_current:
-            if type(x)==virus and x.cells[0] == (0,3):
+            if type(x) == virus and x.cells[0] == (0,3):
                 win = True
                 going = False
         screen.blit(bg,(0,0))
         for i in list_cell_current:
             i.draw(screen)
-        a.draw(screen)
+        a.draw(screen,placement(a.pos))
         pygame.display.flip()
     if win == True :
         going = True
@@ -106,27 +110,6 @@ import time
 def test():
     pygame.init()
     screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
-    bg = pygame.Surface(screen.get_size())
-    bg.fill((0,0,0))
-    d=bg.get_size()
-    xoff=d[0]*4/9
-    yoff=-d[1]*2/10
-    scalx=d[0]/9
-    scaly=d[1]/9
-    def placement(pos):
-        x=pos[0]
-        y=pos[1]
-        return ((xoff + (x-y)*scalx),yoff+(x+y)*scaly)
-    win = False
-    wid = scalx*4/5
-    hei =scaly*4/5
-    for x in range(8):
-        for y in range(8):
-            if (1+abs(y-3)<=x<=7-abs(y-3)) or (x==0 and y == 3):
-                koala=placement((x,y))
-                pygame.draw.ellipse(bg,(255,255,255),pygame.Rect(((koala[0]-wid/2),koala[1]-hei/2),(wid,hei)))
-    screen.blit(bg,(0,0))
-    pygame.display.flip()
-    time.sleep(5)
-    pygame.quit()
+    level(screen, [virus(5,5)])
+
 
