@@ -40,9 +40,17 @@ class cursor :
         self.pos = pos
         self.selecting = False
         self.is_selected = None
+        self.img = None
         
-    def draw(self,screen):
-        pygame.draw.circle(screen,(255,0,255),placement(self.pos),10)
+    def set_img(self,scalx,scaly):
+        self.wid = scalx*1/4
+        self.hei = scaly*1/4
+        self.img = pygame.Surface(wid,hei)
+        pygame.draw.ellipse(self.img,(255,0,255),pygame.Rect((0,0),(wid,hei)))
+        
+    def draw(self,screen,pos,scalx,scaly):
+        screen.blit(self.img,pos)
+        
         
     def move(self,ls_cell,d) :
         if self.selecting == True :
@@ -62,18 +70,29 @@ class cursor :
                     
 class cellule:
     def __init__(self,cells,color):
+        self.ctr = 1
         self.color = color
         self.cells=cells
+        self.img = None
     
     def copy(self):
         return cellule([a for a in self.cells],self.color)
         
-    def draw(self,screen):
-        rad=40
-        for i in self.cells :
-            pygame.draw.circle(screen,self.color,placement(i),rad)
-        for i in range(1,len(self.cells)) :
-            pygame.draw.line(screen,self.color,placement(self.cells[i-1]),placement(self.cells[i]),width=50)
+    def set_image(self,scalx,scaly):
+        self.img = pygame.Surface((5*scalx,5*scaly))
+        cellule = self.cells.copy()
+        ctr = cellule[self.ctr]
+        cellule = [(i[0]-ctr[0], i[1]-ctr[1]) for i in cellule]
+        wid = scalx*5/8
+        hei = scaly*5/8
+        for elm in cellule :
+            x=scalx*(elm[0]+2.5)
+            y=scaly*(elm[1]+2.5)
+            pygame.draw.ellipse(self.img,self.color,pygame.Rect(((x-wid/2),y-hei/2),(wid,hei)))
+    
+    
+    def draw(self,screen,xoff,yoff,scalx,scaly):
+        screen.blit(self.img,(xoff+scalx(self.ctr[0]-2.5),yoff+scaly(self.ctr[1]-2.5)))
 
     def move(self,ls_cell,d):
         ls_cell.remove(self)
@@ -93,7 +112,8 @@ class virus(cellule):
         
 class o(cellule):
     def __init__(self,pos):
-        super().__init__([pos],(127,127,127))
+        super().__init__([pos],(127,127,127),)
+        self.ctr = 0
     def move(self,ls_cell,d):
         return False
     def copy(self):
