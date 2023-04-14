@@ -21,7 +21,7 @@ def check(cel, ls_cell,d):
                     for k in un :
                         ls_cell.append(k)
                         k.move(ls_cell,und)
-                    return False       
+                    return False
                 un.append(z)
     return True
 
@@ -29,7 +29,7 @@ def placement(pos):
     x=pos[0]
     y=pos[1]
     return ((xoff +(x-y)*scalx),yoff+(x+y)*scaly)
-    
+
 def out(pos):
     if (1+abs(pos[1]-3)<=pos[0]<=7-abs(pos[1]-3)) or (pos[0]==0 and pos[1] == 3):
         return False
@@ -41,17 +41,17 @@ class cursor :
         self.selecting = False
         self.is_selected = None
         self.img = None
-        
+
     def set_img(self,scalx,scaly):
-        self.wid = scalx*1/4
-        self.hei = scaly*1/4
-        self.img = pygame.Surface(wid,hei)
-        pygame.draw.ellipse(self.img,(255,0,255),pygame.Rect((0,0),(wid,hei)))
-        
+        self.wid = int(scalx*1/4)
+        self.hei = int(scaly*1/4)
+        self.img = pygame.Surface((self.wid,self.hei))
+        pygame.draw.ellipse(self.img,(255,0,255),pygame.Rect((0,0),(self.wid,self.hei)))
+
     def draw(self,screen,pos,scalx,scaly):
         screen.blit(self.img,pos)
-        
-        
+
+
     def move(self,ls_cell,d) :
         if self.selecting == True :
             if self.is_selected.move(ls_cell.copy(),d) :
@@ -65,19 +65,19 @@ class cursor :
             self.selecting = True
         else :
             self.selecting=False
-                    
-                    
-                    
+
+
+
 class cellule:
     def __init__(self,cells,color):
         self.ctr = 1
         self.color = color
         self.cells=cells
         self.img = None
-    
+
     def copy(self):
         return cellule([a for a in self.cells],self.color)
-        
+
     def set_image(self,scalx,scaly):
         self.img = pygame.Surface((5*scalx,5*scaly))
         cellule = self.cells.copy()
@@ -89,8 +89,8 @@ class cellule:
             x=scalx*(elm[0]+2.5)
             y=scaly*(elm[1]+2.5)
             pygame.draw.ellipse(self.img,self.color,pygame.Rect(((x-wid/2),y-hei/2),(wid,hei)))
-    
-    
+
+
     def draw(self,screen,xoff,yoff,scalx,scaly):
         screen.blit(self.img,(xoff+scalx(self.ctr[0]-2.5),yoff+scaly(self.ctr[1]-2.5)))
 
@@ -105,11 +105,11 @@ class cellule:
 class virus(cellule):
     def __init__(self,pos):
         super().__init__([pos,(pos[0]+1,pos[1])],(255,0,0))
-        
+
     def copy(self):
         return virus(self.cells[0])
-        
-        
+
+
 class o(cellule):
     def __init__(self,pos):
         super().__init__([pos],(127,127,127),)
@@ -118,12 +118,12 @@ class o(cellule):
         return False
     def copy(self):
         return o(self.cells[0])
-        
-        
+
+
 class v(cellule):
     def __init__(self,pos,r):
         super().__init__([turn(r,(pos[0],pos[1]+1),pos),pos,turn(r,(pos[0]+1,pos[1]),pos)],(255,127,0))
-        
+
 class w(cellule):
     def __init__(self,pos,r):
         super().__init__([turn(r,(pos[0]-1,pos[1]),pos),pos],(30,180,255))
