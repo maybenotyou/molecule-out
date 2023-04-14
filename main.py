@@ -380,12 +380,16 @@ def menu(surface,taille,controle_actuel,background):
                     elif bouton_aide.collidepoint(event.pos):
                         return aide()
 
-        if b == 1:
-            pygame.draw.rect(surface,(100,100,100), bouton_options, 8,75)
-        elif b == 2:
-            pygame.draw.rect(surface,(100,100,100), bouton_jouer, 8,75)
-        elif b == 3:
-            pygame.draw.rect(surface,(100,100,100), bouton_aide, 8,75)
+        if controle_actuel=='clavier':
+            pygame.mouse.set_visible(False)
+            if b == 1:
+                pygame.draw.rect(surface,(100,100,100), bouton_options, 8,75)
+            elif b == 2:
+                pygame.draw.rect(surface,(100,100,100), bouton_jouer, 8,75)
+            elif b == 3:
+                pygame.draw.rect(surface,(100,100,100), bouton_aide, 8,75)
+        else:
+            pygame.mouse.set_visible(True)
 
         pygame.display.update()
 
