@@ -73,6 +73,30 @@ def aide():
 
 def lancement(niveau, taille, surface, background, titre,controle_actuel):
     Menu=Bouton_circulaire(int(1.5*taille),int(1.5*taille),taille,(250,250,250),surface,'Menu')
+    if niveau=='starter':
+        R=0
+        V=250
+        B=0
+    if niveau=='junior':
+        R=225
+        V=175
+        B=45
+    if niveau=='master':
+        R=250
+        V=0
+        B=0
+    if niveau=='expert':
+        R=250
+        V=125
+        B=0
+    if niveau=='wizard':
+        R=0
+        V=0
+        B=250
+    if niveau=='bonus':
+        R=192
+        V=66
+        B=138
     if niveau=='aucun':
         Starter=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Starter',3*taille)
         Master=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Master',3*taille)
@@ -81,18 +105,18 @@ def lancement(niveau, taille, surface, background, titre,controle_actuel):
         Expert=Bouton_rectangulaire(int(5*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Expert',3*taille)
         Bonus=Bouton_rectangulaire(int(5*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Bonus',3*taille)
         liste_boutons=[[Menu],[Starter,Junior,Expert],[Master,Wizard,Bonus]]
-    if niveau=='starter':
-        liste_boutons=la_liste_bouton(0,250,0, surface, taille)
-    if niveau=='junior':
-        liste_boutons=la_liste_bouton(225,175,45, surface, taille)
-    if niveau=='master':
-        liste_boutons=la_liste_bouton(250,0,0, surface, taille)
-    if niveau=='expert':
-        liste_boutons=la_liste_bouton(250,125,0, surface, taille)
-    if niveau=='wizard':
-        liste_boutons=la_liste_bouton(0,0,250, surface, taille)
-    if niveau=='bonus':
-        liste_boutons=la_liste_bouton(192,66,138, surface, taille)
+    else:
+        niveau_1=Bouton_rectangulaire(int(1.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'1',3*taille)
+        niveau_2=Bouton_rectangulaire(int(2.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'2',3*taille)
+        niveau_3=Bouton_rectangulaire(int(3.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'3',3*taille)
+        niveau_4=Bouton_rectangulaire(int(4.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'4',3*taille)
+        niveau_5=Bouton_rectangulaire(int(5.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'5',3*taille)
+        niveau_6=Bouton_rectangulaire(int(1.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'6',3*taille)
+        niveau_7=Bouton_rectangulaire(int(2.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'7',3*taille)
+        niveau_8=Bouton_rectangulaire(int(3.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'8',3*taille)
+        niveau_9=Bouton_rectangulaire(int(4.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'9',3*taille)
+        niveau_10=Bouton_rectangulaire(int(5.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)
+        liste_boutons=[[Menu],[niveau_1,niveau_2,niveau_3,niveau_4, niveau_5],[niveau_6,niveau_7,niveau_8,niveau_9, niveau_10]]
 
     i=1
     j=1
@@ -316,7 +340,146 @@ def lancement(niveau, taille, surface, background, titre,controle_actuel):
                             return wizard(surface, taille,background,controle_actuel)
                         elif Bonus.rect.collidepoint(event.pos):
                             return bonus(surface, taille,background,controle_actuel)
+                    else:
+                        if niveau_1.rect.collidepoint(event.pos):
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
 
+                        elif niveau_2.rect.collidepoint(event.pos):
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif niveau_3.rect.collidepoint(event.pos):
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif niveau_4.rect.collidepoint(event.pos):
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif niveau_5.rect.collidepoint(event.pos):
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif niveau_6.rect.collidepoint(event.pos):
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif niveau_7.rect.collidepoint(event.pos):
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif niveau_8.rect.collidepoint(event.pos):
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif niveau_9.rect.collidepoint(event.pos):
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
+
+                        elif niveau_10.rect.collidepoint(event.pos):
+                            if niveau=='starter':
+                                return """retourner le niveau """
+                            if niveau=='junior':
+                                return """retourner le niveau """
+                            if niveau=='expert':
+                                return """retourner le niveau """
+                            if niveau=='master':
+                                return """retourner le niveau """
+                            if niveau=='wizard':
+                                return """retourner le niveau """
+                            if niveau=='bonus':
+                                return """retourner le niveau """
 
         surface.blit(background,(0,0))
         surface.blit(titre,(int((surface.get_size()[0]-titre.get_size()[0])/2),int(4*surface.get_size()[1]/25)))
