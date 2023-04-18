@@ -1,5 +1,6 @@
 import pygame
 
+
 def rectangle_inscrit(rayon):
     return int((2*(rayon**2))**0.5)
 
@@ -91,30 +92,7 @@ def aide():
 
 def lancement(niveau, taille, surface, background, titre,controle_actuel):
     Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface,'Menu')
-    if niveau=='starter':
-        R=0
-        V=250
-        B=0
-    if niveau=='junior':
-        R=225
-        V=175
-        B=45
-    if niveau=='master':
-        R=250
-        V=0
-        B=0
-    if niveau=='expert':
-        R=250
-        V=125
-        B=0
-    if niveau=='wizard':
-        R=0
-        V=0
-        B=250
-    if niveau=='bonus':
-        R=192
-        V=66
-        B=138
+
     if niveau=='aucun':
         Starter=Bouton_texte(int(surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(0,250,0),surface,'Starter',3*taille)
         Junior=Bouton_texte(int(3*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(225,175,45),surface,'Junior',3*taille)
@@ -123,7 +101,33 @@ def lancement(niveau, taille, surface, background, titre,controle_actuel):
         Wizard=Bouton_texte(int(3*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(0,0,250),surface,'Wizard',3*taille)
         Bonus=Bouton_texte(int(5*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(192,66,138),surface,'Bonus',3*taille)
         liste_boutons=[[Menu],[Starter,Junior,Expert],[Master,Wizard,Bonus]]
+
     else:
+        if niveau=='starter':
+            R=0
+            V=250
+            B=0
+        elif niveau=='junior':
+            R=225
+            V=175
+            B=45
+        elif niveau=='master':
+            R=250
+            V=0
+            B=0
+        elif niveau=='expert':
+            R=250
+            V=125
+            B=0
+        elif niveau=='wizard':
+            R=0
+            V=0
+            B=250
+        elif niveau=='bonus':
+            R=192
+            V=66
+            B=138
+
         niveau_1=Bouton_texte(int(1.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'1',3*taille)
         niveau_2=Bouton_texte(int(2.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'2',3*taille)
         niveau_3=Bouton_texte(int(3.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'3',3*taille)
@@ -137,7 +141,7 @@ def lancement(niveau, taille, surface, background, titre,controle_actuel):
         liste_boutons=[[Menu],[niveau_1,niveau_2,niveau_3,niveau_4, niveau_5],[niveau_6,niveau_7,niveau_8,niveau_9, niveau_10]]
 
     i=1
-    j=1
+    j=0
     b=liste_boutons[i][j]
     running=True
     while running:
@@ -521,27 +525,27 @@ def lancement(niveau, taille, surface, background, titre,controle_actuel):
         pygame.display.update()
 
 def starter(surface, taille,background,controle_actuel):
-    titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
+    titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0, 0, 0))
     lancement('starter',taille, surface, background, titre,controle_actuel)
 
 def junior(surface, taille, background,controle_actuel):
-    titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
+    titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0, 0, 0))
     lancement('junior',taille, surface, background, titre, controle_actuel)
 
 def expert(surface, taille, background,controle_actuel):
-    titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
+    titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0, 0, 0))
     lancement('expert',taille, surface, background, titre,controle_actuel)
 
 def master(surface, taille,background,controle_actuel):
-    titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
+    titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0, 0, 0))
     lancement('master',taille, surface, background, titre,controle_actuel)
 
 def wizard(surface, taille,background,controle_actuel):
-    titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
+    titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0, 0, 0))
     lancement('wizard',taille, surface, background, titre,controle_actuel)
 
 def bonus(surface, taille,background,controle_actuel):
-    titre=pygame.font.SysFont(None,4*taille).render('Choisissez un niveau',True,(0, 0, 0))
+    titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0, 0, 0))
     lancement('bonus',taille, surface, background, titre,controle_actuel)
 
 def menu(surface,taille,controle_actuel,background):
@@ -616,7 +620,7 @@ def menu(surface,taille,controle_actuel,background):
 
 def difficulte(surface,taille, controle_actuel,background):
 
-    titre=pygame.font.SysFont(None,4*taille).render('Choisissez la difficulté',True,(0, 0, 0))
+    titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez la difficulté',True,(0, 0, 0))
     lancement('aucun', taille, surface, background, titre, controle_actuel)
 
 def main():
