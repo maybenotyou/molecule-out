@@ -1,6 +1,5 @@
 import pygame
 
-
 def rectangle_inscrit(rayon):
     return int((2*(rayon**2))**0.5)
 
@@ -39,7 +38,7 @@ class Bouton_menu(Bouton_circulaire):
             pygame.draw.rect(self.surface,(0,0,0),((self.rect[0]+int(self.rect[2]/8),self.rect[1]+int(self.rect[3]/2)),(int(3*self.rect[2]/4),int(self.rect[3]/2))))
             pygame.draw.rect(self.surface,(255,255,255),((self.rect[0]+int(self.rect[2]/3),self.rect[1]+int(3*self.rect[2]/5)),(int(self.rect[2]/3),int(2*self.rect[3]/5))))
 
-class Bouton_rectangulaire():
+class Bouton_texte():
     def __init__(self,x,y,hauteur,largeur,couleur,surface,nom,taille):
         self.x=x
         self.y=y
@@ -52,11 +51,11 @@ class Bouton_rectangulaire():
         self.selectionné=False
         self.rect = pygame.Rect((self.x,self.y),(self.largeur,self.hauteur))
         self.surface_bouton=pygame.Surface((self.rect[2],self.rect[3]))
-        self.texte=pygame.font.SysFont(None,self.taille).render(self.nom,True,(0, 0, 0))
+        self.texte=pygame.font.Font("verdana.ttf", int(self.hauteur*0.5)).render(self.nom, True, (255, 255, 255))
 
     def update(self):
-            pygame.draw.rect(self.surface,self.couleur,self.rect)
-            self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_size()[0])/2,self.y+int(self.hauteur-self.texte.get_size()[1])/2))
+        pygame.draw.rect(self.surface, self.couleur, (self.x, self.y, self.largeur, self.hauteur), border_radius=self.hauteur)
+        self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_size()[0])/2,self.y+int(self.hauteur-self.texte.get_size()[1])/2))
 
 def bouton_text_arrondi(texte, couleur, x, y, largeur, hauteur, surface):
     font = pygame.font.Font("verdana.ttf", int((largeur, hauteur)[1]*0.5))
@@ -65,33 +64,33 @@ def bouton_text_arrondi(texte, couleur, x, y, largeur, hauteur, surface):
     surface.blit(texte, texte.get_rect(center=pygame.Rect(x, y, largeur, hauteur).center))
 
 def la_liste_bouton(R,V,B, surface, taille):
-    niveau_1=Bouton_rectangulaire(int(1.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'1',3*taille)
-    niveau_2=Bouton_rectangulaire(int(2.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'2',3*taille)
-    niveau_3=Bouton_rectangulaire(int(3.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'3',3*taille)
-    niveau_4=Bouton_rectangulaire(int(4.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'4',3*taille)
-    niveau_5=Bouton_rectangulaire(int(5.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'5',3*taille)
-    niveau_6=Bouton_rectangulaire(int(1.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'6',3*taille)
-    niveau_7=Bouton_rectangulaire(int(2.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'7',3*taille)
-    niveau_8=Bouton_rectangulaire(int(3.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'8',3*taille)
-    niveau_9=Bouton_rectangulaire(int(4.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'9',3*taille)
-    niveau_10=Bouton_rectangulaire(int(5.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)
-    Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(250,250,250),surface,'Menu')
+    niveau_1=Bouton_texte(int(1.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'1',3*taille)
+    niveau_2=Bouton_texte(int(2.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'2',3*taille)
+    niveau_3=Bouton_texte(int(3.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'3',3*taille)
+    niveau_4=Bouton_texte(int(4.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'4',3*taille)
+    niveau_5=Bouton_texte(int(5.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'5',3*taille)
+    niveau_6=Bouton_texte(int(1.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'6',3*taille)
+    niveau_7=Bouton_texte(int(2.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'7',3*taille)
+    niveau_8=Bouton_texte(int(3.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'8',3*taille)
+    niveau_9=Bouton_texte(int(4.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'9',3*taille)
+    niveau_10=Bouton_texte(int(5.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)
+    Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface,'Menu')
 
     liste_boutons=[[Menu],[niveau_1,niveau_2,niveau_3,niveau_4, niveau_5],[niveau_6,niveau_7,niveau_8,niveau_9, niveau_10]]
     return liste_boutons
 
 def options(controle_actuel):
-    if controle_actuel== 'sourie':
+    if controle_actuel== 'souris':
         return 'clavier'
     else:
-        return 'sourie'
+        return 'souris'
 
 
 def aide():
     return
 
 def lancement(niveau, taille, surface, background, titre,controle_actuel):
-    Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(250,250,250),surface,'Menu')
+    Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface,'Menu')
     if niveau=='starter':
         R=0
         V=250
@@ -117,24 +116,24 @@ def lancement(niveau, taille, surface, background, titre,controle_actuel):
         V=66
         B=138
     if niveau=='aucun':
-        Starter=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Starter',3*taille)
-        Master=Bouton_rectangulaire(int(surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Master',3*taille)
-        Junior=Bouton_rectangulaire(int(3*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Junior',3*taille)
-        Wizard=Bouton_rectangulaire(int(3*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Wizard',3*taille)
-        Expert=Bouton_rectangulaire(int(5*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Expert',3*taille)
-        Bonus=Bouton_rectangulaire(int(5*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,250,250),surface,'Bonus',3*taille)
+        Starter=Bouton_texte(int(surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(0,250,0),surface,'Starter',3*taille)
+        Junior=Bouton_texte(int(3*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(225,175,45),surface,'Junior',3*taille)
+        Master=Bouton_texte(int(surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,0,0),surface,'Master',3*taille)
+        Expert=Bouton_texte(int(5*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(250,125,0),surface,'Expert',3*taille)
+        Wizard=Bouton_texte(int(3*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(0,0,250),surface,'Wizard',3*taille)
+        Bonus=Bouton_texte(int(5*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(192,66,138),surface,'Bonus',3*taille)
         liste_boutons=[[Menu],[Starter,Junior,Expert],[Master,Wizard,Bonus]]
     else:
-        niveau_1=Bouton_rectangulaire(int(1.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'1',3*taille)
-        niveau_2=Bouton_rectangulaire(int(2.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'2',3*taille)
-        niveau_3=Bouton_rectangulaire(int(3.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'3',3*taille)
-        niveau_4=Bouton_rectangulaire(int(4.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'4',3*taille)
-        niveau_5=Bouton_rectangulaire(int(5.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'5',3*taille)
-        niveau_6=Bouton_rectangulaire(int(1.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'6',3*taille)
-        niveau_7=Bouton_rectangulaire(int(2.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'7',3*taille)
-        niveau_8=Bouton_rectangulaire(int(3.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'8',3*taille)
-        niveau_9=Bouton_rectangulaire(int(4.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'9',3*taille)
-        niveau_10=Bouton_rectangulaire(int(5.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)
+        niveau_1=Bouton_texte(int(1.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'1',3*taille)
+        niveau_2=Bouton_texte(int(2.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'2',3*taille)
+        niveau_3=Bouton_texte(int(3.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'3',3*taille)
+        niveau_4=Bouton_texte(int(4.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'4',3*taille)
+        niveau_5=Bouton_texte(int(5.6*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'5',3*taille)
+        niveau_6=Bouton_texte(int(1.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'6',3*taille)
+        niveau_7=Bouton_texte(int(2.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'7',3*taille)
+        niveau_8=Bouton_texte(int(3.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'8',3*taille)
+        niveau_9=Bouton_texte(int(4.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'9',3*taille)
+        niveau_10=Bouton_texte(int(5.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)
         liste_boutons=[[Menu],[niveau_1,niveau_2,niveau_3,niveau_4, niveau_5],[niveau_6,niveau_7,niveau_8,niveau_9, niveau_10]]
 
     i=1
@@ -343,7 +342,7 @@ def lancement(niveau, taille, surface, background, titre,controle_actuel):
 
 
             elif event.type==pygame.MOUSEBUTTONDOWN:
-                if controle_actuel=='sourie' :
+                if controle_actuel=='souris' :
                     if Menu.rect.collidepoint(event.pos):
                         return menu(surface,taille,controle_actuel,background)
                     if niveau=='aucun':
@@ -502,7 +501,7 @@ def lancement(niveau, taille, surface, background, titre,controle_actuel):
 
         surface.blit(background,(0,0))
         surface.blit(titre,(int((surface.get_size()[0]-titre.get_size()[0])/2),int(4*surface.get_size()[1]/25)))
-        if controle_actuel=='sourie':
+        if controle_actuel=='souris':
             pygame.mouse.set_visible(True)
 
         else:
@@ -513,7 +512,7 @@ def lancement(niveau, taille, surface, background, titre,controle_actuel):
 
             else:
                 rect_sel=pygame.Rect((b.rect[0]-int(taille/10),b.rect[1]-int(taille/10)),(b.rect[2]+2*int(taille/10),b.rect[3]+2*int(taille/10)))
-                pygame.draw.rect(surface,(100,100,100),rect_sel)
+                pygame.draw.rect(surface,(100,100,100),rect_sel,0,75)
 
         for rang in liste_boutons:
             for bouton in rang:
@@ -593,7 +592,7 @@ def menu(surface,taille,controle_actuel,background):
                         elif b == 3:
                             return aide()
 
-            elif controle_actuel == "sourie":
+            elif controle_actuel == "souris":
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if bouton_jouer.collidepoint(event.pos):
                         return difficulte(surface, taille, controle_actuel, background)
@@ -625,7 +624,7 @@ def main():
    pygame.display.set_caption("Anti-virus")
    screen=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
    taille=(min(screen.get_size()))//18
-   controle_actuel='sourie'
+   controle_actuel='souris'
    background = pygame.Surface(screen.get_size())
    background.fill((200,200,200))
    background.convert()
