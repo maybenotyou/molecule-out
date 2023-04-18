@@ -20,6 +20,25 @@ class Bouton_circulaire():
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y), self.rayon)
 
+class Bouton_menu(Bouton_circulaire):
+    def __init__(self,x,y,rayon,couleur,surface,nom):
+        self.x=x
+        self.y=y
+        self.couleur=couleur
+        self.rayon=rayon
+        self.surface=surface
+        self.nom=nom
+        self.selectionné=False
+        self.longueur=rectangle_inscrit(rayon)
+        self.rect = pygame.Rect((self.x-(self.longueur//2),self.y-(self.longueur//2)),(self.longueur,self.longueur))
+        self.surface_bouton=pygame.Surface((self.rect[2],self.rect[3]))
+
+    def update(self):
+            pygame.draw.circle(self.surface,self.couleur,(self.x,self.y), self.rayon)
+            pygame.draw.polygon(self.surface,(0,0,0),((self.rect[0]+int(self.rect[2]/2),self.rect[1]),(self.rect[0],self.rect[1]+int(self.rect[3]/2)),(self.rect[0]+self.rect[2],self.rect[1]+int(self.rect[3]/2))))
+            pygame.draw.rect(self.surface,(0,0,0),((self.rect[0]+int(self.rect[2]/8),self.rect[1]+int(self.rect[3]/2)),(int(3*self.rect[2]/4),int(self.rect[3]/2))))
+            pygame.draw.rect(self.surface,(255,255,255),((self.rect[0]+int(self.rect[2]/3),self.rect[1]+int(3*self.rect[2]/5)),(int(self.rect[2]/3),int(2*self.rect[3]/5))))
+
 class Bouton_rectangulaire():
     def __init__(self,x,y,hauteur,largeur,couleur,surface,nom,taille):
         self.x=x
@@ -56,7 +75,7 @@ def la_liste_bouton(R,V,B, surface, taille):
     niveau_8=Bouton_rectangulaire(int(3.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'8',3*taille)
     niveau_9=Bouton_rectangulaire(int(4.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'9',3*taille)
     niveau_10=Bouton_rectangulaire(int(5.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)
-    Menu=Bouton_circulaire(int(1.5*taille),int(1.5*taille),taille,(250,250,250),surface,'Menu')
+    Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(250,250,250),surface,'Menu')
 
     liste_boutons=[[Menu],[niveau_1,niveau_2,niveau_3,niveau_4, niveau_5],[niveau_6,niveau_7,niveau_8,niveau_9, niveau_10]]
     return liste_boutons
@@ -72,7 +91,7 @@ def aide():
     return
 
 def lancement(niveau, taille, surface, background, titre,controle_actuel):
-    Menu=Bouton_circulaire(int(1.5*taille),int(1.5*taille),taille,(250,250,250),surface,'Menu')
+    Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(250,250,250),surface,'Menu')
     if niveau=='starter':
         R=0
         V=250
