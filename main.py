@@ -1,6 +1,5 @@
 import pygame
 
-
 def rectangle_inscrit(rayon):
     return int((2*(rayon**2))**0.5)
 
@@ -22,16 +21,7 @@ class Bouton_circulaire():
 
 class Bouton_menu(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface,nom):
-        self.x=x
-        self.y=y
-        self.couleur=couleur
-        self.rayon=rayon
-        self.surface=surface
-        self.nom=nom
-        self.selectionné=False
-        self.longueur=rectangle_inscrit(rayon)
-        self.rect = pygame.Rect((self.x-(self.longueur//2),self.y-(self.longueur//2)),(self.longueur,self.longueur))
-        self.surface_bouton=pygame.Surface((self.rect[2],self.rect[3]))
+        super().__init__(x,y,rayon,couleur,surface,nom)
 
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y), self.rayon)
@@ -575,18 +565,14 @@ def menu(surface,taille,controle_actuel,background):
                     if event.key == pygame.K_LEFT:
                         if b == 1:
                             b = 3
-                        elif b == 3:
-                            b = 2
-                        elif b == 2:
-                            b = 1
+                        else:
+                            b -= 1
 
                     elif event.key == pygame.K_RIGHT:
                         if b == 3:
                             b = 1
-                        elif b == 1:
-                            b = 2
-                        elif b == 2:
-                            b = 3
+                        else:
+                            b += 1
 
                     elif event.key in [pygame.K_SPACE, pygame.K_RETURN]:
                         if b == 1:
@@ -619,7 +605,6 @@ def menu(surface,taille,controle_actuel,background):
         pygame.display.update()
 
 def difficulte(surface,taille, controle_actuel,background):
-
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez la difficulté',True,(0, 0, 0))
     lancement('aucun', taille, surface, background, titre, controle_actuel)
 
