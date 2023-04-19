@@ -25,9 +25,28 @@ class Bouton_menu(Bouton_circulaire):
 
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y), self.rayon)
-            pygame.draw.polygon(self.surface,(0,0,0),((self.rect[0]+int(self.rect[2]/2),self.rect[1]),(self.rect[0],self.rect[1]+int(self.rect[3]/2)),(self.rect[0]+self.rect[2],self.rect[1]+int(self.rect[3]/2))))
+            pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0],self.y),(self.rect[0]+self.rect[2],self.y)))
             pygame.draw.rect(self.surface,(0,0,0),((self.rect[0]+int(self.rect[2]/8),self.rect[1]+int(self.rect[3]/2)),(int(3*self.rect[2]/4),int(self.rect[3]/2))))
-            pygame.draw.rect(self.surface,(255,255,255),((self.rect[0]+int(self.rect[2]/3),self.rect[1]+int(3*self.rect[2]/5)),(int(self.rect[2]/3),int(2*self.rect[3]/5))))
+            pygame.draw.rect(self.surface,self.couleur,((self.rect[0]+int(self.rect[2]/3),self.rect[1]+int(3*self.rect[2]/5)),(int(self.rect[2]/3),int(2*self.rect[3]/5))))
+
+class Bouton_éteindre(Bouton_circulaire):
+    def __init__(self,x,y,rayon,couleur,surface,nom):
+        super().__init__(x,y,rayon,couleur,surface,nom)
+
+    def update(self):
+            pygame.draw.circle(self.surface,self.couleur,(self.x,self.y), self.rayon)
+            pygame.draw.circle(self.surface,(0,0,0),(self.x,self.y),int(self.longueur/2),int(self.longueur/8))
+            pygame.draw.rect(self.surface,self.couleur,((self.x-int(self.longueur/6),self.y-int(9*self.rayon/10)),(int(self.longueur/3),self.rayon)))
+            pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/12),self.y-int(9*self.rayon/10)),(int(self.longueur/6),int(9*self.rayon/10))))
+
+class Bouton_retour(Bouton_circulaire):
+    def __init__(self,x,y,rayon,couleur,surface,nom):
+        super().__init__(x,y,rayon,couleur,surface,nom)
+
+    def update(self):
+            pygame.draw.circle(self.surface,self.couleur,(self.x,self.y), self.rayon)
+            pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0],self.y),(self.x,self.rect[1]+self.rect[3])))
+            pygame.draw.rect(self.surface,(0,0,0),((self.x,self.y-int(self.longueur/4)),(int(self.longueur/2),int(self.longueur/2))))
 
 class Bouton_texte():
     def __init__(self,x,y,hauteur,largeur,couleur,surface,nom,taille):
@@ -76,14 +95,13 @@ def options(controle_actuel):
     else:
         return 'souris'
 
-
 def aide():
     return
 
-def lancement(niveau, taille, surface, background, titre,controle_actuel):
+def lancement(page, taille, surface, background, titre,controle_actuel):
     Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface,'Menu')
 
-    if niveau=='aucun':
+    if page=='difficulté':
         Starter=Bouton_texte(int(surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(0,250,0),surface,'Starter',3*taille)
         Junior=Bouton_texte(int(3*surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(225,175,45),surface,'Junior',3*taille)
         Master=Bouton_texte(int(surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(250,0,0),surface,'Master',3*taille)
@@ -93,27 +111,28 @@ def lancement(niveau, taille, surface, background, titre,controle_actuel):
         liste_boutons=[[Menu],[Starter,Junior,Expert],[Master,Wizard,Bonus]]
 
     else:
-        if niveau=='starter':
+        Retour=Bouton_retour(int(4*taille),int(1.5*taille),taille,(255,255,255),surface,'Retour')
+        if page=='starter':
             R=0
             V=250
             B=0
-        elif niveau=='junior':
+        elif page=='junior':
             R=225
             V=175
             B=45
-        elif niveau=='master':
+        elif page=='master':
             R=250
             V=0
             B=0
-        elif niveau=='expert':
+        elif page=='expert':
             R=250
             V=125
             B=0
-        elif niveau=='wizard':
+        elif page=='wizard':
             R=0
             V=0
             B=250
-        elif niveau=='bonus':
+        elif page=='bonus':
             R=192
             V=66
             B=138
@@ -128,7 +147,7 @@ def lancement(niveau, taille, surface, background, titre,controle_actuel):
         niveau_8=Bouton_texte(int(3.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'8',3*taille)
         niveau_9=Bouton_texte(int(4.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'9',3*taille)
         niveau_10=Bouton_texte(int(5.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)
-        liste_boutons=[[Menu],[niveau_1,niveau_2,niveau_3,niveau_4, niveau_5],[niveau_6,niveau_7,niveau_8,niveau_9, niveau_10]]
+        liste_boutons=[[Menu,Retour],[niveau_1,niveau_2,niveau_3,niveau_4, niveau_5],[niveau_6,niveau_7,niveau_8,niveau_9, niveau_10]]
 
     i=1
     j=0
@@ -164,7 +183,8 @@ def lancement(niveau, taille, surface, background, titre,controle_actuel):
                     elif event.key==pygame.K_UP:
                         if i>0:
                             if i==1:
-                                j=0
+                                if j>1:
+                                    j=1
                             i-=1
                         else:
                             i=len(liste_boutons)-1
@@ -175,163 +195,166 @@ def lancement(niveau, taille, surface, background, titre,controle_actuel):
                             i+=1
                         else:
                             i=0
-                            j=0
+                            if j>1:
+                                j=1
                         b=liste_boutons[i][j]
 
                     elif event.key==pygame.K_SPACE or event.key==pygame.K_RETURN:
                         if b.nom=='Menu':
                             return menu(surface,taille,controle_actuel,background)
+                        if b.nom=='Retour':
+                            return difficulte(surface,taille,controle_actuel,background)
                         elif b.nom=='Starter':
                             return starter(surface, taille,background,controle_actuel)
                         elif b.nom=='Junior':
                             return junior(surface, taille,background,controle_actuel)
-                        if b.nom=='Expert':
+                        elif b.nom=='Expert':
                             return expert(surface, taille,background,controle_actuel)
                         elif b.nom=='Master':
                             return master(surface, taille,background,controle_actuel)
-                        if b.nom=='Wizard':
+                        elif b.nom=='Wizard':
                             return wizard(surface, taille,background,controle_actuel)
                         elif b.nom=='Bonus':
                             return bonus(surface, taille,background,controle_actuel)
 
                         elif b.nom=='1':
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif b.nom=='2':
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif b.nom=='3':
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif b.nom=='4':
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif b.nom=='5':
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif b.nom=='6':
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif b.nom=='7':
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif b.nom=='8':
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif b.nom=='9':
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif b.nom=='10':
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
 
@@ -339,7 +362,7 @@ def lancement(niveau, taille, surface, background, titre,controle_actuel):
                 if controle_actuel=='souris' :
                     if Menu.rect.collidepoint(event.pos):
                         return menu(surface,taille,controle_actuel,background)
-                    if niveau=='aucun':
+                    if page=='difficulté':
                         if Starter.rect.collidepoint(event.pos):
                             return starter(surface, taille,background,controle_actuel)
                         elif Junior.rect.collidepoint(event.pos):
@@ -353,144 +376,146 @@ def lancement(niveau, taille, surface, background, titre,controle_actuel):
                         elif Bonus.rect.collidepoint(event.pos):
                             return bonus(surface, taille,background,controle_actuel)
                     else:
+                        if Retour.rect.collidepoint(event.pos):
+                            return difficulte(surface,taille,controle_actuel,background)
                         if niveau_1.rect.collidepoint(event.pos):
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif niveau_2.rect.collidepoint(event.pos):
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif niveau_3.rect.collidepoint(event.pos):
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif niveau_4.rect.collidepoint(event.pos):
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif niveau_5.rect.collidepoint(event.pos):
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif niveau_6.rect.collidepoint(event.pos):
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif niveau_7.rect.collidepoint(event.pos):
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif niveau_8.rect.collidepoint(event.pos):
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif niveau_9.rect.collidepoint(event.pos):
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
                         elif niveau_10.rect.collidepoint(event.pos):
-                            if niveau=='starter':
+                            if page=='starter':
                                 return """retourner le niveau """
-                            if niveau=='junior':
+                            if page=='junior':
                                 return """retourner le niveau """
-                            if niveau=='expert':
+                            if page=='expert':
                                 return """retourner le niveau """
-                            if niveau=='master':
+                            if page=='master':
                                 return """retourner le niveau """
-                            if niveau=='wizard':
+                            if page=='wizard':
                                 return """retourner le niveau """
-                            if niveau=='bonus':
+                            if page=='bonus':
                                 return """retourner le niveau """
 
         surface.blit(background,(0,0))
@@ -606,7 +631,7 @@ def menu(surface,taille,controle_actuel,background):
 
 def difficulte(surface,taille, controle_actuel,background):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez la difficulté',True,(0, 0, 0))
-    lancement('aucun', taille, surface, background, titre, controle_actuel)
+    lancement('difficulté', taille, surface, background, titre, controle_actuel)
 
 def main():
    pygame.init()
