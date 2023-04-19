@@ -11,7 +11,6 @@ class Bouton_circulaire():
         self.rayon=rayon
         self.surface=surface
         self.nom=nom
-        self.selectionné=False
         self.longueur=rectangle_inscrit(rayon)
         self.rect = pygame.Rect((self.x-(self.longueur//2),self.y-(self.longueur//2)),(self.longueur,self.longueur))
         self.surface_bouton=pygame.Surface((self.rect[2],self.rect[3]))
