@@ -19,8 +19,8 @@ class Bouton_circulaire():
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y), self.rayon)
 
 class Bouton_menu(Bouton_circulaire):
-    def __init__(self,x,y,rayon,couleur,surface,nom):
-        super().__init__(x,y,rayon,couleur,surface,nom)
+    def __init__(self,x,y,rayon,couleur,surface):
+        super().__init__(x,y,rayon,couleur,surface,'Menu')
 
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y), self.rayon)
@@ -29,8 +29,8 @@ class Bouton_menu(Bouton_circulaire):
             pygame.draw.rect(self.surface,self.couleur,((self.rect[0]+int(self.rect[2]/3),self.rect[1]+int(3*self.rect[2]/5)),(int(self.rect[2]/3),int(2*self.rect[3]/5))))
 
 class Bouton_éteindre(Bouton_circulaire):
-    def __init__(self,x,y,rayon,couleur,surface,nom):
-        super().__init__(x,y,rayon,couleur,surface,nom)
+    def __init__(self,x,y,rayon,couleur,surface):
+        super().__init__(x,y,rayon,couleur,surface,'Eteindre')
 
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y), self.rayon)
@@ -39,8 +39,8 @@ class Bouton_éteindre(Bouton_circulaire):
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/12),self.y-int(9*self.rayon/10)),(int(self.longueur/6),int(9*self.rayon/10))))
 
 class Bouton_retour(Bouton_circulaire):
-    def __init__(self,x,y,rayon,couleur,surface,nom):
-        super().__init__(x,y,rayon,couleur,surface,nom)
+    def __init__(self,x,y,rayon,couleur,surface):
+        super().__init__(x,y,rayon,couleur,surface,'Retour')
 
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y), self.rayon)
@@ -83,7 +83,7 @@ def la_liste_bouton(R,V,B, surface, taille):
     niveau_8=Bouton_texte(int(3.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'8',3*taille)
     niveau_9=Bouton_texte(int(4.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'9',3*taille)
     niveau_10=Bouton_texte(int(5.6*surface.get_size()[0]/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)
-    Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface,'Menu')
+    Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
 
     liste_boutons=[[Menu],[niveau_1,niveau_2,niveau_3,niveau_4, niveau_5],[niveau_6,niveau_7,niveau_8,niveau_9, niveau_10]]
     return liste_boutons
@@ -98,7 +98,7 @@ def aide():
     return
 
 def lancement(page, taille, surface, background, titre,controle_actuel):
-    Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface,'Menu')
+    Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
 
     if page=='difficulté':
         Starter=Bouton_texte(int(surface.get_size()[0]/6-5*taille),int(4*surface.get_size()[1]/10),3*taille,10*taille,(0,250,0),surface,'Starter',3*taille)
@@ -110,7 +110,7 @@ def lancement(page, taille, surface, background, titre,controle_actuel):
         liste_boutons=[[Menu],[Starter,Junior,Expert],[Master,Wizard,Bonus]]
 
     else:
-        Retour=Bouton_retour(int(4*taille),int(1.5*taille),taille,(255,255,255),surface,'Retour')
+        Retour=Bouton_retour(int(4*taille),int(1.5*taille),taille,(255,255,255),surface)
         if page=='starter':
             R=0
             V=250
