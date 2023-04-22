@@ -55,10 +55,15 @@ class Bouton_commande(Bouton_circulaire):
     def update(self):
         if self.etat=="clavier":
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
-            pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/2),self.y-int(self.longueur/4)),(self.longueur,int(self.longueur/2))),0,8)
+            pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/2),self.y-int(self.longueur/4)),(self.longueur,int(self.longueur/2))),0,10)
+            pygame.draw.rect(self.surface,self.couleur,((self.x-int(3*self.longueur/8),self.y+int(3*self.longueur/24)),(int(3*self.longueur/4),int(self.longueur/12))))
+            for i in range (2):
+                for j in range (7):
+                    pygame.draw.rect(self.surface,self.couleur,((self.x-int(5*self.longueur/12)+int(j*self.longueur/8),self.y-int(self.longueur/24)-int(3*i*self.longueur/24)),(int(self.longueur/12),int(self.longueur/12))))
+
         else:
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
-            pygame.draw.rect(self.surface,(0,0,0),((self.x-int(5*self.longueur/16),self.y-int(self.longueur/2)),(int(5*self.longueur/8),self.longueur)),0,80)
+            pygame.draw.rect(self.surface,(0,0,0),((self.x-int(5*self.longueur/16),self.y-int(self.longueur/2)),(int(5*self.longueur/8),self.longueur)),border_radius=35,border_top_left_radius=25,border_top_right_radius=25)
             pygame.draw.line(self.surface,self.couleur,(self.x,self.rect[1]),(self.x,self.y-int(self.rayon/6)),int(self.rayon*0.05))
             pygame.draw.line(self.surface,self.couleur,(self.rect[0],self.y-int(self.rayon/6)),(self.rect[0]+self.rect[2],self.y-int(self.rayon/6)),int(self.rayon*0.05))
 
@@ -120,13 +125,13 @@ def la_liste_bouton(R,V,B,surface,taille):
     liste_boutons=[[niveau_1,niveau_2,niveau_3,niveau_4,niveau_5],[niveau_6,niveau_7,niveau_8,niveau_9,niveau_10],[Menu,Retour]]
     return liste_boutons
 
-def lancement(page,taille,surface,background,titre,controle_actuel):
+def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=None):
 
     if page=='options':
-        Menu=Bouton_menu(int(7*surface.get_width()/18),int(4*surface.get_height()/9),2*taille,(255,255,255),surface)
-        Eteindre=Bouton_éteindre(int(11*surface.get_width()/18),int(4*surface.get_height()/9),2*taille,(255,0,0),surface)
-        Commande=Bouton_commande(int(7*surface.get_width()/18),int(7*surface.get_height()/9),2*taille,(255,255,255),surface,controle_actuel)
-        Musique=Bouton_Musique(int(11*surface.get_width()/18),int(7*surface.get_height()/9),2*taille,(255,255,255),surface,True)
+        Menu=Bouton_menu(int(2*surface.get_width()/9),int(4*surface.get_height()/9),2*taille,(255,255,255),surface)
+        Eteindre=Bouton_éteindre(int(7*surface.get_width()/18),int(4*surface.get_height()/9),2*taille,(255,0,0),surface)
+        Commande=Bouton_commande(int(2*surface.get_width()/9),int(7*surface.get_height()/9),2*taille,(255,255,255),surface,controle_actuel)
+        Musique=Bouton_Musique(int(7*surface.get_width()/18),int(7*surface.get_height()/9),2*taille,(255,255,255),surface,True)
         liste_boutons=[[Menu,Eteindre],[Commande,Musique]]
 
     elif page=='difficulté':
@@ -575,7 +580,12 @@ def lancement(page,taille,surface,background,titre,controle_actuel):
                                             return """retourner le niveau """
 
         surface.blit(background,(0,0))
-        surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(4*surface.get_height()/25)))
+        if page=="options":
+            surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(surface.get_height()/25)))
+            surface.blit(autre_texte,(int(surface.get_width()/2),int(3*surface.get_height()/9)))
+        else:
+            surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(4*surface.get_height()/25)))
+
         if controle_actuel=='souris':
             pygame.mouse.set_visible(True)
 
@@ -687,7 +697,8 @@ def menu(surface,taille,controle_actuel,background):
 
 def options(surface,taille,controle_actuel,background):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Options',True,(0,0,0))
-    lancement('options',taille,surface,background,titre,controle_actuel)
+    autre_titre=pygame.font.SysFont("verdana.ttf",3*taille).render('Graphismes :',True,(0,0,0))
+    lancement('options',taille,surface,background,titre,controle_actuel,autre_titre)
 
 def aide(surface,taille,controle_actuel,background):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Aide',True,(0,0,0))
