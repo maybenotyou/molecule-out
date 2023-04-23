@@ -101,6 +101,24 @@ class Bouton_texte():
         pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.largeur,self.hauteur),border_radius=self.hauteur)
         self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_width())/2,self.y+int(self.hauteur-self.texte.get_height())/2))
 
+class Bouton_graphisme():
+    def __init__(self,x,y,largeur,hauteur,couleur,surface,taille):
+        self.x=x
+        self.y=y
+        self.largeur=largeur
+        self.hauteur=hauteur
+        self.couleur=couleur
+        self.surface=surface
+        self.taille=taille
+        self.rect = pygame.Rect((self.x,self.y),(self.largeur,self.hauteur))
+        self.surface_bouton=pygame.Surface((self.rect[2],self.rect[3]))
+        self.nom='Graphisme'
+        self.texte=pygame.font.Font("verdana.ttf",int(self.taille/2)).render('Graphisme :',True,(0,0,0))
+
+    def update(self):
+        pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.largeur,self.hauteur),border_radius=int(self.hauteur/4))
+        self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_width())/2,self.y+int(self.hauteur/10)))
+
 def bouton_text_arrondi(texte,couleur,x,y,largeur,hauteur,surface):
     font = pygame.font.Font("verdana.ttf",int((largeur,hauteur)[1]*0.5))
     pygame.draw.rect(surface,couleur,(x,y,largeur,hauteur),border_radius=int(hauteur//1))
@@ -131,7 +149,8 @@ def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=N
         Eteindre=Bouton_éteindre(int(7*surface.get_width()/18),int(4*surface.get_height()/9),2*taille,(255,0,0),surface)
         Commande=Bouton_commande(int(2*surface.get_width()/9),int(7*surface.get_height()/9),2*taille,(255,255,255),surface,controle_actuel)
         Musique=Bouton_Musique(int(7*surface.get_width()/18),int(7*surface.get_height()/9),2*taille,(255,255,255),surface)
-        liste_boutons=[[Menu,Eteindre],[Commande,Musique]]
+        Graphisme=Bouton_graphisme(int(3*surface.get_width()/4-7*taille),int(7*surface.get_height()/12-7*taille),14*taille,14*taille,(255,255,255),surface,3*taille)
+        liste_boutons=[[Menu,Eteindre,Graphisme],[Commande,Musique]]
 
     elif page=='difficulté':
         Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
@@ -696,8 +715,7 @@ def menu(surface,taille,controle_actuel,background):
 
 def options(surface,taille,controle_actuel,background):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Options',True,(0,0,0))
-    autre_titre=pygame.font.SysFont("verdana.ttf",3*taille).render('Graphismes :',True,(0,0,0))
-    lancement('options',taille,surface,background,titre,controle_actuel,autre_titre)
+    lancement('options',taille,surface,background,titre,controle_actuel)
 
 def aide(surface,taille,controle_actuel,background):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Aide',True,(0,0,0))
