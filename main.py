@@ -116,7 +116,7 @@ class Bouton_graphisme():
         self.texte=pygame.font.Font("verdana.ttf",int(self.taille/2)).render('Graphisme :',True,(0,0,0))
 
     def update(self):
-        pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.largeur,self.hauteur),border_radius=int(self.hauteur/4))
+        pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.largeur,self.hauteur),border_radius=int(self.hauteur/8))
         self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_width())/2,self.y+int(self.hauteur/10)))
 
 def bouton_text_arrondi(texte,couleur,x,y,largeur,hauteur,surface):
