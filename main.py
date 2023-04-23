@@ -600,7 +600,6 @@ def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=N
         surface.blit(background,(0,0))
         if page=="options":
             surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(surface.get_height()/25)))
-            surface.blit(autre_texte,(int(surface.get_width()/2),int(3*surface.get_height()/9)))
         else:
             surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(4*surface.get_height()/25)))
 
@@ -658,7 +657,7 @@ def menu(surface,taille,controle_actuel,background):
     running = True
     while running:
         surface.blit(background,(0,0))
-        surface.blit(logo,(int(3*surface.get_size()[0]/6-5*taille),int(0.75*surface.get_size()[1]/10)))
+        surface.blit(logo,(int((surface.get_width()-logo.get_width())/2),int(0.75*surface.get_height()/10)))
         bouton_text_arrondi("Jouer",(0,255,0),surface.get_width()*0.4,surface.get_height()*0.625,surface.get_width()*0.2,surface.get_height()*0.1,surface)
         bouton_text_arrondi("Options",(0,0,255),surface.get_width()*0.225,surface.get_height()*0.8,surface.get_width()*0.2,surface.get_height()*0.1,surface)
         bouton_text_arrondi("Aide",(255,0,0),surface.get_width()*0.575,surface.get_height()*0.8,surface.get_width()*0.2,surface.get_height()*0.1,surface)
