@@ -152,6 +152,10 @@ def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=N
         Graphisme=Bouton_graphisme(int(3*surface.get_width()/4-7*taille),int(7*surface.get_height()/12-7*taille),14*taille,(255,255,255),surface,3*taille)
         liste_boutons=[[Menu,Eteindre,Graphisme],[Commande,Musique,Graphisme]]
 
+    elif page=='aide':
+        Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
+        liste_boutons=[[Menu]]
+
     elif page=='difficulté':
         Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
         Starter=Bouton_texte(int(surface.get_width()/6-5*taille),int(4*surface.get_height()/10),10*taille,3*taille,(0,250,0),surface,'Starter',3*taille)
@@ -598,7 +602,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=N
                                             return """retourner le niveau """
 
         surface.blit(background,(0,0))
-        if page=="options":
+        if page=='options' or page=='aide':
             surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(surface.get_height()/25)))
         else:
             surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(4*surface.get_height()/25)))
@@ -723,7 +727,7 @@ def options(surface,taille,controle_actuel,background):
 
 def aide(surface,taille,controle_actuel,background):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Aide',True,(0,0,0))
-    return
+    lancement('aide',taille,surface,background,titre,controle_actuel)
 
 def difficulte(surface,taille,controle_actuel,background):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez la difficulté',True,(0,0,0))
