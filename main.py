@@ -1,4 +1,7 @@
 import pygame
+import level as lv
+
+import os
 
 def rectangle_inscrit(rayon):
     return int((2*(rayon**2))**0.5)
@@ -292,19 +295,8 @@ def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=N
                         else:
                             if b.nom=='Retour':
                                 return difficulte(surface,taille,controle_actuel,background)
-                            if b.nom in ['1','2','3','4','5','6','7','8','9','10']:
-                                if page=='starter':
-                                    return """retourner le niveau """
-                                if page=='junior':
-                                    return """retourner le niveau """
-                                if page=='expert':
-                                    return """retourner le niveau """
-                                if page=='master':
-                                    return """retourner le niveau """
-                                if page=='wizard':
-                                    return """retourner le niveau """
-                                if page=='bonus':
-                                    return """retourner le niveau """
+                            else :
+                                lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom))
 
                             
             elif event.type==pygame.MOUSEBUTTONDOWN:
@@ -356,19 +348,9 @@ def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=N
                                 else:
                                     if bouton.nom=='Retour':
                                         return difficulte(surface,taille,controle_actuel,background)
-                                    elif b.nom in ['1','2','3','4','5','6','7','8','9','10']:
-                                        if page=='starter':
-                                            return """retourner le niveau """
-                                        if page=='junior':
-                                            return """retourner le niveau """
-                                        if page=='expert':
-                                            return """retourner le niveau """
-                                        if page=='master':
-                                            return """retourner le niveau """
-                                        if page=='wizard':
-                                            return """retourner le niveau """
-                                        if page=='bonus':
-                                            return """retourner le niveau """
+                                    else :
+                                        lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom))
+                                    
 
         surface.blit(background,(0,0))
         if page == 'accueil':

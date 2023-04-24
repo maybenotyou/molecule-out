@@ -80,15 +80,15 @@ class cellule:
         return cellule([a for a in self.cells],self.color)
 
     def set_image(self,scalx,scaly):
-        self.img = pygame.Surface((5*scalx,5*scaly))
+        self.img = pygame.Surface((6*scalx,6*scaly))
         self.img.set_colorkey((0,0,0))
         cellule = self.cells.copy()
         ctr = cellule[self.ctr]
         cellule = [(i[0]-ctr[0], i[1]-ctr[1]) for i in cellule]
         wid = scalx*5/8
         hei = scaly*5/8
-        xoff = 2.5*scalx
-        yoff = 2.5*scaly
+        xoff = 3*scalx
+        yoff = 3*scaly
         lines = []
         for elm in cellule :
             x=xoff+scalx*(elm[0]-elm[1]+.5)
@@ -101,7 +101,7 @@ class cellule:
     def draw(self,screen,xoff,yoff,scalx,scaly):
         x = self.cells[self.ctr][0]
         y = self.cells[self.ctr][1]
-        screen.blit(self.img,((xoff+scalx*((x-y)-2.5),yoff+scaly*((x+y)-2.5))))
+        screen.blit(self.img,((xoff+scalx*((x-y)-3),yoff+scaly*((x+y)-3))))
 
     def move(self,ls_cell,d):
         ls_cell.remove(self)
