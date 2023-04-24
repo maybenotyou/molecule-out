@@ -55,20 +55,24 @@ class Bouton_commande(Bouton_circulaire):
     def update(self):
         if self.etat=="clavier":
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
-            pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/2),self.y-int(self.longueur/4)),(self.longueur,int(self.longueur/2))),0,8)
+            pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/2),self.y-int(self.longueur/4)),(self.longueur,int(self.longueur/2))),0,10)
+            pygame.draw.rect(self.surface,self.couleur,((self.x-int(3*self.longueur/8),self.y+int(3*self.longueur/24)),(int(3*self.longueur/4),int(self.longueur/12))))
+            for i in range (2):
+                for j in range (7):
+                    pygame.draw.rect(self.surface,self.couleur,((self.x-int(5*self.longueur/12)+int(j*self.longueur/8),self.y-int(self.longueur/24)-int(3*i*self.longueur/24)),(int(self.longueur/12),int(self.longueur/12))))
+
         else:
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
-            pygame.draw.rect(self.surface,(0,0,0),((self.x-int(5*self.longueur/16),self.y-int(self.longueur/2)),(int(5*self.longueur/8),self.longueur)),0,80)
+            pygame.draw.rect(self.surface,(0,0,0),((self.x-int(5*self.longueur/16),self.y-int(self.longueur/2)),(int(5*self.longueur/8),self.longueur)),border_radius=35,border_top_left_radius=25,border_top_right_radius=25)
             pygame.draw.line(self.surface,self.couleur,(self.x,self.rect[1]),(self.x,self.y-int(self.rayon/6)),int(self.rayon*0.05))
             pygame.draw.line(self.surface,self.couleur,(self.rect[0],self.y-int(self.rayon/6)),(self.rect[0]+self.rect[2],self.y-int(self.rayon/6)),int(self.rayon*0.05))
 
 class Bouton_Musique(Bouton_circulaire):
-    def __init__(self,x,y,rayon,couleur,surface,son):
+    def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Musique')
-        self.son=son
 
     def update(self):
-        if self.son:
+        if pygame.mixer.music.get_busy() == True:
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
             pygame.draw.polygon(self.surface,(0,0,0),((self.x+int(3*self.rayon/8),self.rect[1]),(self.rect[0],self.y),(self.x+int(3*self.rayon/8),self.rect[1]+self.rect[3])))
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/2),self.y-int(self.longueur/4)),(self.rayon,int(self.longueur/2))))
@@ -97,6 +101,24 @@ class Bouton_texte():
         pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.largeur,self.hauteur),border_radius=self.hauteur)
         self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_width())/2,self.y+int(self.hauteur-self.texte.get_height())/2))
 
+class Bouton_graphisme():
+    def __init__(self,x,y,largeur,hauteur,couleur,surface,taille):
+        self.x=x
+        self.y=y
+        self.largeur=largeur
+        self.hauteur=hauteur
+        self.couleur=couleur
+        self.surface=surface
+        self.taille=taille
+        self.rect = pygame.Rect((self.x,self.y),(self.largeur,self.hauteur))
+        self.surface_bouton=pygame.Surface((self.rect[2],self.rect[3]))
+        self.nom='Graphisme'
+        self.texte=pygame.font.Font("verdana.ttf",int(self.taille/2)).render('Graphisme :',True,(0,0,0))
+
+    def update(self):
+        pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.largeur,self.hauteur),border_radius=int(self.hauteur/8))
+        self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_width())/2,self.y+int(self.hauteur/10)))
+
 def bouton_text_arrondi(texte,couleur,x,y,largeur,hauteur,surface):
     font = pygame.font.Font("verdana.ttf",int((largeur,hauteur)[1]*0.5))
     pygame.draw.rect(surface,couleur,(x,y,largeur,hauteur),border_radius=int(hauteur//1))
@@ -120,14 +142,15 @@ def la_liste_bouton(R,V,B,surface,taille):
     liste_boutons=[[niveau_1,niveau_2,niveau_3,niveau_4,niveau_5],[niveau_6,niveau_7,niveau_8,niveau_9,niveau_10],[Menu,Retour]]
     return liste_boutons
 
-def lancement(page,taille,surface,background,titre,controle_actuel):
+def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=None):
 
     if page=='options':
-        Menu=Bouton_menu(int(7*surface.get_width()/18),int(4*surface.get_height()/9),2*taille,(255,255,255),surface)
-        Eteindre=Bouton_éteindre(int(11*surface.get_width()/18),int(4*surface.get_height()/9),2*taille,(255,0,0),surface)
-        Commande=Bouton_commande(int(7*surface.get_width()/18),int(7*surface.get_height()/9),2*taille,(255,255,255),surface,controle_actuel)
-        Musique=Bouton_Musique(int(11*surface.get_width()/18),int(7*surface.get_height()/9),2*taille,(255,255,255),surface,True)
-        liste_boutons=[[Menu,Eteindre],[Commande,Musique]]
+        Menu=Bouton_menu(int(2*surface.get_width()/9),int(4*surface.get_height()/9),2*taille,(255,255,255),surface)
+        Eteindre=Bouton_éteindre(int(7*surface.get_width()/18),int(4*surface.get_height()/9),2*taille,(255,0,0),surface)
+        Commande=Bouton_commande(int(2*surface.get_width()/9),int(7*surface.get_height()/9),2*taille,(255,255,255),surface,controle_actuel)
+        Musique=Bouton_Musique(int(7*surface.get_width()/18),int(7*surface.get_height()/9),2*taille,(255,255,255),surface)
+        Graphisme=Bouton_graphisme(int(3*surface.get_width()/4-7*taille),int(7*surface.get_height()/12-7*taille),14*taille,14*taille,(255,255,255),surface,3*taille)
+        liste_boutons=[[Menu,Eteindre,Graphisme],[Commande,Musique]]
 
     elif page=='difficulté':
         Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
@@ -245,10 +268,10 @@ def lancement(page,taille,surface,background,titre,controle_actuel):
                             elif b.nom=='Eteindre':
                                 return
                             elif b.nom=="Musique":
-                                if b.son:
-                                    b.son=False
+                                if pygame.mixer.music.get_busy() == True:
+                                    pygame.mixer.music.stop()
                                 else:
-                                    b.son=True
+                                    pygame.mixer.music.play(-1)
 
                         else:
                             if b.nom=='Retour':
@@ -427,10 +450,10 @@ def lancement(page,taille,surface,background,titre,controle_actuel):
                                     elif bouton.nom=='Eteindre':
                                         return
                                     elif bouton.nom=='Musique':
-                                        if bouton.son:
-                                            bouton.son=False
+                                        if pygame.mixer.music.get_busy() == True:
+                                            pygame.mixer.music.stop()
                                         else:
-                                            bouton.son=True
+                                            pygame.mixer.music.play(-1)
                                 else:
                                     if bouton.nom=='Retour':
                                         return difficulte(surface,taille,controle_actuel,background)
@@ -575,7 +598,11 @@ def lancement(page,taille,surface,background,titre,controle_actuel):
                                             return """retourner le niveau """
 
         surface.blit(background,(0,0))
-        surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(4*surface.get_height()/25)))
+        if page=="options":
+            surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(surface.get_height()/25)))
+        else:
+            surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(4*surface.get_height()/25)))
+
         if controle_actuel=='souris':
             pygame.mouse.set_visible(True)
 
@@ -630,7 +657,7 @@ def menu(surface,taille,controle_actuel,background):
     running = True
     while running:
         surface.blit(background,(0,0))
-        surface.blit(logo,(surface.get_width()*0.28,surface.get_height()*-0.05))
+        surface.blit(logo,(int((surface.get_width()-logo.get_width())/2),int(0.75*surface.get_height()/10)))
         bouton_text_arrondi("Jouer",(0,255,0),surface.get_width()*0.4,surface.get_height()*0.625,surface.get_width()*0.2,surface.get_height()*0.1,surface)
         bouton_text_arrondi("Options",(0,0,255),surface.get_width()*0.225,surface.get_height()*0.8,surface.get_width()*0.2,surface.get_height()*0.1,surface)
         bouton_text_arrondi("Aide",(255,0,0),surface.get_width()*0.575,surface.get_height()*0.8,surface.get_width()*0.2,surface.get_height()*0.1,surface)
@@ -702,6 +729,9 @@ def main():
    pygame.display.set_caption("Molecule Out")
    screen=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
    taille=(min(screen.get_size()))//18
+   pygame.mixer.music.load("son/Musique de fond.mp3")
+   pygame.mixer.music.set_volume(30)
+   pygame.mixer.music.stop()
    controle_actuel='clavier'
    background = pygame.Surface(screen.get_size())
    background.fill((200,200,200))
