@@ -57,9 +57,13 @@ class cursor :
         if self.selecting == True :
             if self.is_selected.move(ls_cell.copy(),d) :
                 self.pos = (self.pos[0]+d[0],self.pos[1]+d[1])
+                return(True)
         else :
             if not(out((self.pos[0]+d[0],self.pos[1]+d[1]))):
                 self.pos = (self.pos[0]+d[0],self.pos[1]+d[1])
+                return(True)
+        return(False)
+    
     def select(self,cell):
         if self.selecting == False:
             self.is_selected=cell

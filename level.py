@@ -59,10 +59,31 @@ def level(screen,list_cell_ini):
                 for e in list_cell_current :
                     if a.pos in e.cells :
                         a.select(e)
+        if pygame.mouse.get_pressed()[0] :
+                mpos = pygame.mouse.get_pos()
+                mx = mpos[0]
+                my = mpos[1]
+                mx,my = (mx-xoff)/scalx-.5 , (my-yoff)/scaly-.5
+                mx = (mx + my)/2
+                my = my-mx
+                mx,my = round(mx), round(my)
+                if not(out((mx,my))):
+                    if not a.selecting :
+                        for e in list_cell_current :
+                            if a.pos in e.cells :
+                                a.select(e)
+                    d= (mx-a.pos[0],my-a.pos[1])
+                    if abs(d[0])+abs(d[1])>1 : a.selecting = False
+                    if not a.move(list_cell_current,d) :
+                        a.selecting = False
+                        a.move(list_cell_current,d)
+                    
+            
         for x in list_cell_current:
             if type(x) == virus and x.cells[0] == (0,3):
                 win = True
                 going = False
+                
         screen.blit(bg,(0,0))
         for i in list_cell_current:
             i.draw(screen,xoff,yoff,scalx,scaly)
@@ -119,7 +140,7 @@ def filetolevel(path):
 import time
 def test():
     pygame.init()
-    screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)#,pygame.FULLSCREEN
+    screen = pygame.display.set_mode((800,800))#,pygame.FULLSCREEN
     level(screen, [virus((4,3))])
     pygame.quit()
 
