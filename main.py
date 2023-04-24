@@ -624,7 +624,8 @@ def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=N
 
         surface.blit(background,(0,0))
         if page == 'accueil':
-            surface.blit(Logo,(int((surface.get_width()-Logo.get_width())/2),int(0.75*surface.get_height()/10)))
+            logo = pygame.transform.scale(Logo, (10*taille,10*taille))
+            surface.blit(logo,(int((surface.get_width()-logo.get_width())/1.95),int(0.75*surface.get_height()/15)))
             
         if page=='options' or page=='aide':
             surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(surface.get_height()/25)))
