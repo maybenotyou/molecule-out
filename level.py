@@ -32,8 +32,10 @@ def level(screen,list_cell_ini):
     list_cell_current=[i.copy() for i in list_cell_ini]
 
     #------- set base image of cells and the cursor ------------
-    for cell in list_cell_current : cell.set_image(scalx,scaly)
-    a.set_img(scalx,scaly)
+    def generation_image_cell():
+        for cell in list_cell_current : cell.set_image(scalx,scaly)
+        a.set_img(scalx,scaly)
+    generation_image_cell()
     #-----------------------------------------------------
 
     going=True
@@ -44,6 +46,7 @@ def level(screen,list_cell_ini):
             if event.type == pygame.KEYDOWN and event.key == pygame.K_r :
                 a.selecting = False
                 list_cell_current=[i.copy() for i in list_cell_ini]
+                generation_image_cell()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_UP :
                 a.move(list_cell_current,(0,-1))
             if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN :
