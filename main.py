@@ -292,7 +292,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=N
                         else:
                             if b.nom=='Retour':
                                 return difficulte(surface,taille,controle_actuel,background)
-                            if b.nom=='1':
+                            if b.nom in ['1','2','3','4','5','6','7','8','9','10']:
                                 if page=='starter':
                                     return """retourner le niveau """
                                 if page=='junior':
@@ -306,133 +306,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=N
                                 if page=='bonus':
                                     return """retourner le niveau """
 
-                            elif b.nom=='2':
-                                if page=='starter':
-                                    return """retourner le niveau """
-                                if page=='junior':
-                                    return """retourner le niveau """
-                                if page=='expert':
-                                    return """retourner le niveau """
-                                if page=='master':
-                                    return """retourner le niveau """
-                                if page=='wizard':
-                                    return """retourner le niveau """
-                                if page=='bonus':
-                                    return """retourner le niveau """
-
-                            elif b.nom=='3':
-                                if page=='starter':
-                                    return """retourner le niveau """
-                                if page=='junior':
-                                    return """retourner le niveau """
-                                if page=='expert':
-                                    return """retourner le niveau """
-                                if page=='master':
-                                    return """retourner le niveau """
-                                if page=='wizard':
-                                    return """retourner le niveau """
-                                if page=='bonus':
-                                    return """retourner le niveau """
-
-                            elif b.nom=='4':
-                                if page=='starter':
-                                    return """retourner le niveau """
-                                if page=='junior':
-                                    return """retourner le niveau """
-                                if page=='expert':
-                                    return """retourner le niveau """
-                                if page=='master':
-                                    return """retourner le niveau """
-                                if page=='wizard':
-                                    return """retourner le niveau """
-                                if page=='bonus':
-                                    return """retourner le niveau """
-
-                            elif b.nom=='5':
-                                if page=='starter':
-                                    return """retourner le niveau """
-                                if page=='junior':
-                                    return """retourner le niveau """
-                                if page=='expert':
-                                    return """retourner le niveau """
-                                if page=='master':
-                                    return """retourner le niveau """
-                                if page=='wizard':
-                                    return """retourner le niveau """
-                                if page=='bonus':
-                                    return """retourner le niveau """
-
-                            elif b.nom=='6':
-                                if page=='starter':
-                                    return """retourner le niveau """
-                                if page=='junior':
-                                    return """retourner le niveau """
-                                if page=='expert':
-                                    return """retourner le niveau """
-                                if page=='master':
-                                    return """retourner le niveau """
-                                if page=='wizard':
-                                    return """retourner le niveau """
-                                if page=='bonus':
-                                    return """retourner le niveau """
-
-                            elif b.nom=='7':
-                                if page=='starter':
-                                    return """retourner le niveau """
-                                if page=='junior':
-                                    return """retourner le niveau """
-                                if page=='expert':
-                                    return """retourner le niveau """
-                                if page=='master':
-                                    return """retourner le niveau """
-                                if page=='wizard':
-                                    return """retourner le niveau """
-                                if page=='bonus':
-                                    return """retourner le niveau """
-
-                            elif b.nom=='8':
-                                if page=='starter':
-                                    return """retourner le niveau """
-                                if page=='junior':
-                                    return """retourner le niveau """
-                                if page=='expert':
-                                    return """retourner le niveau """
-                                if page=='master':
-                                    return """retourner le niveau """
-                                if page=='wizard':
-                                    return """retourner le niveau """
-                                if page=='bonus':
-                                    return """retourner le niveau """
-
-                            elif b.nom=='9':
-                                if page=='starter':
-                                    return """retourner le niveau """
-                                if page=='junior':
-                                    return """retourner le niveau """
-                                if page=='expert':
-                                    return """retourner le niveau """
-                                if page=='master':
-                                    return """retourner le niveau """
-                                if page=='wizard':
-                                    return """retourner le niveau """
-                                if page=='bonus':
-                                    return """retourner le niveau """
-
-                            elif b.nom=='10':
-                                if page=='starter':
-                                    return """retourner le niveau """
-                                if page=='junior':
-                                    return """retourner le niveau """
-                                if page=='expert':
-                                    return """retourner le niveau """
-                                if page=='master':
-                                    return """retourner le niveau """
-                                if page=='wizard':
-                                    return """retourner le niveau """
-                                if page=='bonus':
-                                    return """retourner le niveau """
-
-
+                            
             elif event.type==pygame.MOUSEBUTTONDOWN:
                 if controle_actuel=='souris':
                     for rang in liste_boutons:
@@ -482,144 +356,18 @@ def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=N
                                 else:
                                     if bouton.nom=='Retour':
                                         return difficulte(surface,taille,controle_actuel,background)
-                                    elif bouton.nom=='1':
+                                    elif b.nom in ['1','2','3','4','5','6','7','8','9','10']:
                                         if page=='starter':
                                             return """retourner le niveau """
-                                        elif page=='junior':
+                                        if page=='junior':
                                             return """retourner le niveau """
-                                        elif page=='expert':
+                                        if page=='expert':
                                             return """retourner le niveau """
-                                        elif page=='master':
+                                        if page=='master':
                                             return """retourner le niveau """
-                                        elif page=='wizard':
+                                        if page=='wizard':
                                             return """retourner le niveau """
-                                        elif page=='bonus':
-                                            return """retourner le niveau """
-
-                                    elif bouton.nom=='2':
-                                        if page=='starter':
-                                            return """retourner le niveau """
-                                        elif page=='junior':
-                                            return """retourner le niveau """
-                                        elif page=='expert':
-                                            return """retourner le niveau """
-                                        elif page=='master':
-                                            return """retourner le niveau """
-                                        elif page=='wizard':
-                                            return """retourner le niveau """
-                                        elif page=='bonus':
-                                            return """retourner le niveau """
-
-                                    elif bouton.nom=='3':
-                                        if page=='starter':
-                                            return """retourner le niveau """
-                                        elif page=='junior':
-                                            return """retourner le niveau """
-                                        elif page=='expert':
-                                            return """retourner le niveau """
-                                        elif page=='master':
-                                            return """retourner le niveau """
-                                        elif page=='wizard':
-                                            return """retourner le niveau """
-                                        elif page=='bonus':
-                                            return """retourner le niveau """
-
-                                    elif bouton.nom=='4':
-                                        if page=='starter':
-                                            return """retourner le niveau """
-                                        elif page=='junior':
-                                            return """retourner le niveau """
-                                        elif page=='expert':
-                                            return """retourner le niveau """
-                                        elif page=='master':
-                                            return """retourner le niveau """
-                                        elif page=='wizard':
-                                            return """retourner le niveau """
-                                        elif page=='bonus':
-                                            return """retourner le niveau """
-
-                                    elif bouton.nom=='5':
-                                        if page=='starter':
-                                            return """retourner le niveau """
-                                        elif page=='junior':
-                                            return """retourner le niveau """
-                                        elif page=='expert':
-                                            return """retourner le niveau """
-                                        elif page=='master':
-                                            return """retourner le niveau """
-                                        elif page=='wizard':
-                                            return """retourner le niveau """
-                                        elif page=='bonus':
-                                            return """retourner le niveau """
-
-                                    elif bouton.nom=='6':
-                                        if page=='starter':
-                                            return """retourner le niveau """
-                                        elif page=='junior':
-                                            return """retourner le niveau """
-                                        elif page=='expert':
-                                            return """retourner le niveau """
-                                        elif page=='master':
-                                            return """retourner le niveau """
-                                        elif page=='wizard':
-                                            return """retourner le niveau """
-                                        elif page=='bonus':
-                                            return """retourner le niveau """
-
-                                    elif bouton.nom=='7':
-                                        if page=='starter':
-                                            return """retourner le niveau """
-                                        elif page=='junior':
-                                            return """retourner le niveau """
-                                        elif page=='expert':
-                                            return """retourner le niveau """
-                                        elif page=='master':
-                                            return """retourner le niveau """
-                                        elif page=='wizard':
-                                            return """retourner le niveau """
-                                        elif page=='bonus':
-                                            return """retourner le niveau """
-
-                                    elif bouton.nom=='8':
-                                        if page=='starter':
-                                            return """retourner le niveau """
-                                        elif page=='junior':
-                                            return """retourner le niveau """
-                                        elif page=='expert':
-                                            return """retourner le niveau """
-                                        elif page=='master':
-                                            return """retourner le niveau """
-                                        elif page=='wizard':
-                                            return """retourner le niveau """
-                                        elif page=='bonus':
-                                            return """retourner le niveau """
-
-                                    elif bouton.nom=='9':
-                                        if page=='starter':
-                                            return """retourner le niveau """
-                                        elif page=='junior':
-                                            return """retourner le niveau """
-                                        elif page=='expert':
-                                            return """retourner le niveau """
-                                        elif page=='master':
-                                            return """retourner le niveau """
-                                        elif page=='wizard':
-                                            return """retourner le niveau """
-                                        elif page=='bonus':
-                                            return """retourner le niveau """
-
-                                    elif bouton.nom=='10':
-                                        if page=='starter':
-                                            return """retourner le niveau """
-                                        elif page=='junior':
-                                            return """retourner le niveau """
-                                        elif page=='expert':
-                                            return """retourner le niveau """
-                                        elif page=='master':
-                                            return """retourner le niveau """
-                                        elif page=='wizard':
-                                            return """retourner le niveau """
-                                        elif page=='bonus':
+                                        if page=='bonus':
                                             return """retourner le niveau """
 
         surface.blit(background,(0,0))
