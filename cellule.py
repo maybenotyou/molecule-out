@@ -89,10 +89,13 @@ class cellule:
         hei = scaly*5/8
         xoff = 2.5*scalx
         yoff = 2.5*scaly
+        lines = []
         for elm in cellule :
             x=xoff+scalx*(elm[0]-elm[1]+.5)
             y=yoff+scaly*(elm[0]+elm[1]+.5)
+            lines.append((x,y))
             pygame.draw.ellipse(self.img,self.color,pygame.Rect(((x-wid/2),y-hei/2),(wid,hei)))
+        if len(lines)>1:pygame.draw.lines(self.img,self.color,False,lines,int(min(wid/2,hei/2)))
 
 
     def draw(self,screen,xoff,yoff,scalx,scaly):

@@ -60,9 +60,9 @@ def level(screen,list_cell_ini):
         pygame.display.flip()
     if win == True :
         going = True
-        font = pygame.font.SysFont(None, 100)
+        font = pygame.font.SysFont(None, int(d[1]/8))
         c = font.render("Congrats",True,(0,255,0))
-        screen.blit(c,(200,50))
+        screen.blit(c,(d[0]/5,d[1]/18))
         pygame.display.flip()
         while going :
             for event in pygame.event.get():
@@ -109,7 +109,7 @@ def filetolevel(path):
 import time
 def test():
     pygame.init()
-    screen = pygame.display.set_mode((800,800))#,pygame.FULLSCREEN
+    screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)#,pygame.FULLSCREEN
     level(screen, [virus((4,3))])
     pygame.quit()
 
