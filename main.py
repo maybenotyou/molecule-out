@@ -144,7 +144,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=N
         Jouer = Bouton_texte(int(3.375*surface.get_width()/6-5*taille),int(6.5*surface.get_height()/10),6.5*taille,1.8*taille,(0, 255, 0),surface,"Jouer",2*taille)
         Options = Bouton_texte(int(2.25*surface.get_width()/6-5*taille),int(8*surface.get_height()/10),6.5*taille,1.8*taille,(0, 0, 255),surface,"Options",2*taille)
         Aide = Bouton_texte(int(4.5*surface.get_width()/6-5*taille),int(8*surface.get_height()/10),6.5*taille,1.8*taille,(255, 0, 0),surface,"Aide",2*taille)
-        liste_boutons=[[Jouer,Options,Aide]]
+        liste_boutons=[[Jouer,Aide,Options]]
         
 
     elif page=='options':
