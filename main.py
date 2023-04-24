@@ -84,40 +84,39 @@ class Bouton_Musique(Bouton_circulaire):
             pygame.draw.line(self.surface,(255,0,0),(self.rect[0]+int(0.9*self.rect[2]),self.rect[1]),(self.rect[0],self.rect[1]+int(0.9*self.rect[3])),int(self.rayon*0.1))
 
 class Bouton_texte():
-    def __init__(self,x,y,hauteur,largeur,couleur,surface,nom,taille):
+    def __init__(self,x,y,largeur,longueur,couleur,surface,nom,taille):
         self.x=x
         self.y=y
         self.largeur=largeur
-        self.hauteur=hauteur
+        self.longueur=longueur
         self.couleur=couleur
         self.surface=surface
         self.nom=nom
         self.taille=taille
-        self.rect = pygame.Rect((self.x,self.y),(self.largeur,self.hauteur))
+        self.rect = pygame.Rect((self.x,self.y),(self.largeur,self.longueur))
         self.surface_bouton=pygame.Surface((self.rect[2],self.rect[3]))
-        self.texte=pygame.font.Font("verdana.ttf",int(self.hauteur*0.5)).render(self.nom,True,(255,255,255))
+        self.texte=pygame.font.Font("verdana.ttf",int(self.taille/2)).render(self.nom,True,(255,255,255))
 
     def update(self):
-        pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.largeur,self.hauteur),border_radius=self.hauteur)
-        self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_width())/2,self.y+int(self.hauteur-self.texte.get_height())/2))
+        pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.largeur,self.longueur),border_radius=self.largeur)
+        self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_width())/2,self.y+int(self.longueur-self.texte.get_height())/2))
 
 class Bouton_graphisme():
-    def __init__(self,x,y,largeur,hauteur,couleur,surface,taille):
+    def __init__(self,x,y,longueur,couleur,surface,taille):
         self.x=x
         self.y=y
-        self.largeur=largeur
-        self.hauteur=hauteur
+        self.longueur=longueur
         self.couleur=couleur
         self.surface=surface
         self.taille=taille
-        self.rect = pygame.Rect((self.x,self.y),(self.largeur,self.hauteur))
+        self.rect = pygame.Rect((self.x,self.y),(self.longueur,self.longueur))
         self.surface_bouton=pygame.Surface((self.rect[2],self.rect[3]))
         self.nom='Graphisme'
         self.texte=pygame.font.Font("verdana.ttf",int(self.taille/2)).render('Graphisme :',True,(0,0,0))
 
     def update(self):
-        pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.largeur,self.hauteur),border_radius=int(self.hauteur/8))
-        self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_width())/2,self.y+int(self.hauteur/10)))
+        pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.longueur,self.longueur),border_radius=int(self.longueur/8))
+        self.surface.blit(self.texte,(self.x+int(self.longueur-self.texte.get_width())/2,self.y+int(self.longueur/10)))
 
 def bouton_text_arrondi(texte,couleur,x,y,largeur,hauteur,surface):
     font = pygame.font.Font("verdana.ttf",int((largeur,hauteur)[1]*0.5))
@@ -139,8 +138,9 @@ def la_liste_bouton(R,V,B,surface,taille):
     Menu=Bouton_menu(4*taille,int(1.5*taille),taille,(255,255,255),surface)
     Retour=Bouton_retour(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
 
-    liste_boutons=[[niveau_1,niveau_2,niveau_3,niveau_4,niveau_5],[niveau_6,niveau_7,niveau_8,niveau_9,niveau_10],[Menu,Retour]]
-    return liste_boutons
+    return [[niveau_1,niveau_2,niveau_3,niveau_4,niveau_5],
+            [niveau_6,niveau_7,niveau_8,niveau_9,niveau_10],
+            [Menu,Retour]]
 
 def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=None):
 
@@ -149,17 +149,17 @@ def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=N
         Eteindre=Bouton_éteindre(int(7*surface.get_width()/18),int(4*surface.get_height()/9),2*taille,(255,0,0),surface)
         Commande=Bouton_commande(int(2*surface.get_width()/9),int(7*surface.get_height()/9),2*taille,(255,255,255),surface,controle_actuel)
         Musique=Bouton_Musique(int(7*surface.get_width()/18),int(7*surface.get_height()/9),2*taille,(255,255,255),surface)
-        Graphisme=Bouton_graphisme(int(3*surface.get_width()/4-7*taille),int(7*surface.get_height()/12-7*taille),14*taille,14*taille,(255,255,255),surface,3*taille)
-        liste_boutons=[[Menu,Eteindre,Graphisme],[Commande,Musique]]
+        Graphisme=Bouton_graphisme(int(3*surface.get_width()/4-7*taille),int(7*surface.get_height()/12-7*taille),14*taille,(255,255,255),surface,3*taille)
+        liste_boutons=[[Menu,Eteindre,Graphisme],[Commande,Musique,Graphisme]]
 
     elif page=='difficulté':
         Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
-        Starter=Bouton_texte(int(surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,10*taille,(0,250,0),surface,'Starter',3*taille)
-        Junior=Bouton_texte(int(3*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,10*taille,(225,175,45),surface,'Junior',3*taille)
-        Master=Bouton_texte(int(surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,10*taille,(250,0,0),surface,'Master',3*taille)
-        Expert=Bouton_texte(int(5*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,10*taille,(250,125,0),surface,'Expert',3*taille)
-        Wizard=Bouton_texte(int(3*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,10*taille,(0,0,250),surface,'Wizard',3*taille)
-        Bonus=Bouton_texte(int(5*surface.get_width()/6-5*taille),int(7*surface.get_size()[1]/10),3*taille,10*taille,(192,66,138),surface,'Bonus',3*taille)
+        Starter=Bouton_texte(int(surface.get_width()/6-5*taille),int(4*surface.get_height()/10),10*taille,3*taille,(0,250,0),surface,'Starter',3*taille)
+        Junior=Bouton_texte(int(3*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),10*taille,3*taille,(225,175,45),surface,'Junior',3*taille)
+        Master=Bouton_texte(int(surface.get_width()/6-5*taille),int(7*surface.get_height()/10),10*taille,3*taille,(250,0,0),surface,'Master',3*taille)
+        Expert=Bouton_texte(int(5*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),10*taille,3*taille,(250,125,0),surface,'Expert',3*taille)
+        Wizard=Bouton_texte(int(3*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),10*taille,3*taille,(0,0,250),surface,'Wizard',3*taille)
+        Bonus=Bouton_texte(int(5*surface.get_width()/6-5*taille),int(7*surface.get_size()[1]/10),10*taille,3*taille,(192,66,138),surface,'Bonus',3*taille)
         liste_boutons=[[Starter,Junior,Expert],[Master,Wizard,Bonus],[Menu]]
 
     else:
@@ -612,9 +612,14 @@ def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=N
             if b.nom=='Menu' or b.nom=='Eteindre' or b.nom=='Commande' or b.nom=='Retour' or b.nom=='Musique':
                 pygame.draw.circle(surface,(100,100,100),(b.x,b.y),int(1.1*b.rayon))
 
+            elif b.nom=='Graphisme':
+                rect_sel=pygame.Rect((b.rect[0]-int(taille/10),b.rect[1]-int(taille/10)),(b.rect[2]+2*int(taille/10),b.rect[3]+2*int(taille/10)))
+                pygame.draw.rect(surface,(100,100,100),rect_sel,0,int(b.longueur/8))
+
+
             else:
                 rect_sel=pygame.Rect((b.rect[0]-int(taille/10),b.rect[1]-int(taille/10)),(b.rect[2]+2*int(taille/10),b.rect[3]+2*int(taille/10)))
-                pygame.draw.rect(surface,(100,100,100),rect_sel,0,75)
+                pygame.draw.rect(surface,(100,100,100),rect_sel,0,b.largeur)
 
         for rang in liste_boutons:
             for bouton in rang:
