@@ -46,10 +46,11 @@ class cursor :
         self.wid = int(scalx*1/4)
         self.hei = int(scaly*1/4)
         self.img = pygame.Surface((self.wid,self.hei))
+        self.img.set_colorkey((0,0,0))
         pygame.draw.ellipse(self.img,(255,0,255),pygame.Rect((0,0),(self.wid,self.hei)))
 
-    def draw(self,screen,pos,scalx,scaly):
-        screen.blit(self.img,pos)
+    def draw(self,screen,pos):
+        screen.blit(self.img,(pos[0]-.5*self.wid,pos[1]-.5*self.hei))
 
 
     def move(self,ls_cell,d) :
@@ -80,19 +81,24 @@ class cellule:
 
     def set_image(self,scalx,scaly):
         self.img = pygame.Surface((5*scalx,5*scaly))
+        self.img.set_colorkey((0,0,0))
         cellule = self.cells.copy()
         ctr = cellule[self.ctr]
         cellule = [(i[0]-ctr[0], i[1]-ctr[1]) for i in cellule]
         wid = scalx*5/8
         hei = scaly*5/8
+        xoff = 2.5*scalx
+        yoff = 2.5*scaly
         for elm in cellule :
-            x=scalx*(elm[0]+2.5)
-            y=scaly*(elm[1]+2.5)
+            x=xoff+scalx*(elm[0]-elm[1]+.5)
+            y=yoff+scaly*(elm[0]+elm[1]+.5)
             pygame.draw.ellipse(self.img,self.color,pygame.Rect(((x-wid/2),y-hei/2),(wid,hei)))
 
 
     def draw(self,screen,xoff,yoff,scalx,scaly):
-        screen.blit(self.img,(xoff+scalx(self.ctr[0]-2.5),yoff+scaly(self.ctr[1]-2.5)))
+        x = self.cells[self.ctr][0]
+        y = self.cells[self.ctr][1]
+        screen.blit(self.img,((xoff+scalx*((x-y)-2.5),yoff+scaly*((x+y)-2.5))))
 
     def move(self,ls_cell,d):
         ls_cell.remove(self)

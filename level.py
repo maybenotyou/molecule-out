@@ -7,11 +7,11 @@ def level(screen,list_cell_ini):
     bg = pygame.Surface(screen.get_size())
     bg.fill((0,0,0))
     d=bg.get_size()
-    xoff=d[0]/2
-    yoff=-d[1]*2/10
+    xoff=d[0]*4/10
+    yoff=-d[1]*3/10
     rad=45
-    scalx=d[0]/10
-    scaly=d[1]/10
+    scalx=d[0]/9
+    scaly=d[1]/9
     def placement(pos):
         x=pos[0]
         y=pos[1]
@@ -109,6 +109,8 @@ def filetolevel(path):
 import time
 def test():
     pygame.init()
-    screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
-    level(screen, [virus((5,5))])
+    screen = pygame.display.set_mode((800,800))#,pygame.FULLSCREEN
+    level(screen, [virus((4,3))])
+    pygame.quit()
+
 
