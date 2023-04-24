@@ -72,11 +72,11 @@ def level(screen,list_cell_ini):
                         for e in list_cell_current :
                             if a.pos in e.cells :
                                 a.select(e)
-                    d= (mx-a.pos[0],my-a.pos[1])
-                    if abs(d[0])+abs(d[1])>1 : a.selecting = False
-                    if not a.move(list_cell_current,d) :
+                    dis= (mx-a.pos[0],my-a.pos[1])
+                    if abs(dis[0])+abs(dis[1])>1 : a.selecting = False
+                    if not a.move(list_cell_current,dis) :
                         a.selecting = False
-                        a.move(list_cell_current,d)
+                        a.move(list_cell_current,dis)
                     
             
         for x in list_cell_current:
@@ -91,9 +91,9 @@ def level(screen,list_cell_ini):
         pygame.display.flip()
     if win == True :
         going = True
-        font = pygame.font.SysFont(None, int(d[1]/8))
+        font = pygame.font.Font("verdana.ttf", int(d[1]/9))
         c = font.render("Congrats",True,(0,255,0))
-        screen.blit(c,(d[0]/5,d[1]/18))
+        screen.blit(c,(d[0]/5,d[1]/40))
         pygame.display.flip()
         while going :
             for event in pygame.event.get():
