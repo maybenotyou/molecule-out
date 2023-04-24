@@ -17,6 +17,8 @@ def level(screen,list_cell_ini):
         y=pos[1]
         return ((xoff + (x-y+0.5)*scalx),yoff+(x+y+0.5)*scaly)
     win = False
+
+    #----Generation du plateau-----------
     wid = scalx*3/4
     hei = scaly*3/4
     for x in range(8):
@@ -24,11 +26,16 @@ def level(screen,list_cell_ini):
             if (1+abs(y-3)<=x<=7-abs(y-3)) or (x==0 and y == 3):
                 koala=placement((x,y))
                 pygame.draw.ellipse(bg,(255,255,255),pygame.Rect(((koala[0]-wid/2),koala[1]-hei/2),(wid,hei)))
+    #--------------------------------------------
+
+                
     list_cell_current=[i.copy() for i in list_cell_ini]
 
-    #------- set base image of cells ------------
+    #------- set base image of cells and the cursor ------------
     for cell in list_cell_current : cell.set_image(scalx,scaly)
     a.set_img(scalx,scaly)
+    #-----------------------------------------------------
+
     going=True
     while going :
         for event in pygame.event.get():
