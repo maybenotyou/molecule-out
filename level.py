@@ -56,7 +56,7 @@ def level(screen,list_cell_ini,grap):
             if event.type == pygame.KEYDOWN and event.key == pygame.K_r :
                 a.selecting = False
                 list_cell_current=[i.copy() for i in list_cell_ini]
-                generation_image_cell()
+                if grap <= 1 :generation_image_cell(grap)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_UP :
                 a.move(list_cell_current,(0,-1))
             if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN :
