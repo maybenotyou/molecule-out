@@ -2,13 +2,14 @@ import pygame
 from cellule import *
 import os
 
-def level(screen,list_cell_ini):
+def level(screen,list_cell_ini,grap):
     a= cursor((4,3))
     bg = pygame.Surface(screen.get_size())
     bg.fill((0,0,0))
     d=bg.get_size()
     xoff=d[0]*4/10
     yoff=-d[1]*3/10
+    
     rad=45
     scalx=d[0]/9
     scaly=d[1]/9
@@ -32,10 +33,19 @@ def level(screen,list_cell_ini):
     list_cell_current=[i.copy() for i in list_cell_ini]
 
     #------- set base image of cells and the cursor ------------
-    def generation_image_cell():
-        for cell in list_cell_current : cell.set_image(scalx,scaly)
-        a.set_img(scalx,scaly)
-    generation_image_cell()
+    def generation_png(grap):
+        for cell in list_cell_ini :
+            cell.set_png(scalx,scaly,grap)
+    
+    def generation_image_cell(grap):
+        for cell in list_cell_current :
+            cell.set_image(scalx,scaly,grap)
+        
+
+    if grap > 1:
+        generation_png(grap)
+    else: generation_image_cell(grap)
+    a.set_img(scalx,scaly,grap)
     #-----------------------------------------------------
 
     going=True

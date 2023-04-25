@@ -296,7 +296,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=N
                             if b.nom=='Retour':
                                 return difficulte(surface,taille,controle_actuel,background)
                             else :
-                                lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom))
+                                lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom),0)
 
                             
             elif event.type==pygame.MOUSEBUTTONDOWN:
@@ -349,7 +349,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,autre_texte=N
                                     if bouton.nom=='Retour':
                                         return difficulte(surface,taille,controle_actuel,background)
                                     else :
-                                        lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom))
+                                        lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom),0)
                                     
 
         surface.blit(background,(0,0))

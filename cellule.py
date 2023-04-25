@@ -42,12 +42,13 @@ class cursor :
         self.is_selected = None
         self.img = None
 
-    def set_img(self,scalx,scaly):
-        self.wid = int(scalx*1/4)
-        self.hei = int(scaly*1/4)
-        self.img = pygame.Surface((self.wid,self.hei))
-        self.img.set_colorkey((0,0,0))
-        pygame.draw.ellipse(self.img,(255,0,255),pygame.Rect((0,0),(self.wid,self.hei)))
+    def set_img(self,scalx,scaly,grap):
+        if grap == 0 :
+            self.wid = int(scalx*1/4)
+            self.hei = int(scaly*1/4)
+            self.img = pygame.Surface((self.wid,self.hei))
+            self.img.set_colorkey((0,0,0))
+            pygame.draw.ellipse(self.img,(255,0,255),pygame.Rect((0,0),(self.wid,self.hei)))
 
     def draw(self,screen,pos):
         screen.blit(self.img,(pos[0]-.5*self.wid,pos[1]-.5*self.hei))
@@ -83,23 +84,26 @@ class cellule:
     def copy(self):
         return cellule([a for a in self.cells],self.color)
 
-    def set_image(self,scalx,scaly):
+    def set_image(self,scalx,scaly,grap):
         self.img = pygame.Surface((6*scalx,6*scaly))
         self.img.set_colorkey((0,0,0))
         cellule = self.cells.copy()
         ctr = cellule[self.ctr]
         cellule = [(i[0]-ctr[0], i[1]-ctr[1]) for i in cellule]
-        wid = scalx*5/8
-        hei = scaly*5/8
         xoff = 3*scalx
         yoff = 3*scaly
-        lines = []
-        for elm in cellule :
-            x=xoff+scalx*(elm[0]-elm[1]+.5)
-            y=yoff+scaly*(elm[0]+elm[1]+.5)
-            lines.append((x,y))
-            pygame.draw.ellipse(self.img,self.color,pygame.Rect(((x-wid/2),y-hei/2),(wid,hei)))
-        if len(lines)>1:pygame.draw.lines(self.img,self.color,False,lines,int(min(wid/2,hei/2)))
+        if grap == 0 :
+            wid = scalx*5/8
+            hei = scaly*5/8
+            lines = []
+            for elm in cellule :
+                x=xoff+scalx*(elm[0]-elm[1]+.5)
+                y=yoff+scaly*(elm[0]+elm[1]+.5)
+                lines.append((x,y))
+                pygame.draw.ellipse(self.img,self.color,pygame.Rect(((x-wid/2),y-hei/2),(wid,hei)))
+            if len(lines)>1:pygame.draw.lines(self.img,self.color,False,lines,int(min(wid/2,hei/2)))
+        if grap == 1:
+            return
 
 
     def draw(self,screen,xoff,yoff,scalx,scaly):
@@ -140,6 +144,7 @@ class v(cellule):
 class w(cellule):
     def __init__(self,pos,r):
         super().__init__([turn(r,(pos[0]-1,pos[1]),pos),pos],(30,180,255))
+        
 
 class r(cellule):
     def __init__(self,pos,r):
