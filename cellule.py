@@ -75,7 +75,7 @@ class cursor :
 
 
 class cellule:
-    def __init__(self,cells,color):
+    def __init__(self,cells,color,change = (0,0,0)):
         self.ctr = 1
         self.color = color
         self.cells=cells
@@ -105,6 +105,11 @@ class cellule:
         if grap == 1:
             return
 
+    def change_color(self,scalx,scaly,grap, changement = (_,_,_)):
+        
+        self.color =self.color 
+        self.set_image(scalx,scaly,grap)
+        return
 
     def draw(self,screen,xoff,yoff,scalx,scaly):
         x = self.cells[self.ctr][0]

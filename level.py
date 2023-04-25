@@ -111,7 +111,7 @@ def level(screen,list_cell_ini,grap):
                     going = False
 
 
-def filetolevel(path):
+def filetolevel(path,grap = 0):
     coord = (1,3)
     i=0
     tot=[]
