@@ -104,6 +104,9 @@ def level(screen,list_cell_ini,grap,taille):
             elif event.type == pygame.KEYDOWN:
                 if event.key==pygame.K_ESCAPE:
                     going=False
+                    pygame.quit()
+                    return
+                
                 elif event.key==pygame.K_TAB:
                     if i>0:
                         i-=1
