@@ -1,6 +1,5 @@
 import pygame
 from cellule import *
-from main import *
 import os
 
 def rectangle_inscrit(rayon):
@@ -20,6 +19,7 @@ class Bouton_circulaire():
 
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
+home = Bouton_circulaire(7,4,8,(255,255,255),3,'home')
 
 class Bouton_menu(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
@@ -42,6 +42,7 @@ class Bouton_recommencer(Bouton_circulaire):
             pygame.draw.rect(self.surface,self.couleur,((self.x-int(self.longueur/4),self.y),(int(self.longueur/2),+int(9*self.rayon/10))))
             pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.y+self.rayon*0.75),(self.x-int(self.longueur/2.5),self.y+self.rayon*0.75),(self.x-int(self.longueur/5),self.y+self.rayon*0.35)))
 
+
 def level(screen,list_cell_ini,grap,taille):
     a= cursor((4,3))
     bg = pygame.Surface(screen.get_size())
@@ -57,6 +58,7 @@ def level(screen,list_cell_ini,grap,taille):
         x=pos[0]
         y=pos[1]
         return ((xoff + (x-y+0.5)*scalx),yoff+(x+y+0.5)*scaly)
+
     win = False
 
     #----Generation du plateau-----------
@@ -95,7 +97,7 @@ def level(screen,list_cell_ini,grap,taille):
     i=0
     b=liste_boutons[i]
     going=True
-    while going :
+    while going:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 going=False
@@ -108,9 +110,11 @@ def level(screen,list_cell_ini,grap,taille):
                     else:
                         i=len(liste_boutons)-1
                     b=liste_boutons[i]
-                elif event.key==pygame.K_SPACE or event.key==pygame.K_RETURN:
+                elif event.key in [pygame.K_SPACE, pygame.K_RETURN]:
                     if b.nom=='Menu':
-                        return lancement('accueil',taille,surface,background,titre,controle_actuel)
+                        home.x = 1
+                        going=False
+                        
                     elif b.nom=='Recommencer':
                         return level(screen,list_cell_ini,grap,taille)
                 elif     event.key == pygame.K_r :
@@ -171,7 +175,7 @@ def level(screen,list_cell_ini,grap,taille):
         pygame.display.flip()
         while going :
             for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_x :
+                if event.type == pygame.KEYDOWN and event.key in [pygame.K_x,pygame.K_ESCAPE] :
                     going = False
 
 
@@ -211,11 +215,9 @@ def filetolevel(path,grap = 0):
     return tot
 
 
-import time
+import time 
 def test():
     pygame.init()
     screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
     level(screen, [virus((4,3))],0,min(screen.get_size())//18)
     pygame.quit()
-
-test()
