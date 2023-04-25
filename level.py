@@ -1,15 +1,55 @@
 import pygame
 from cellule import *
+from main import *
 import os
 
-def level(screen,list_cell_ini,grap):
+def rectangle_inscrit(rayon):
+    return int((2*(rayon**2))**0.5)
+
+class Bouton_circulaire():
+    def __init__(self,x,y,rayon,couleur,surface,nom):
+        self.x=x
+        self.y=y
+        self.couleur=couleur
+        self.rayon=rayon
+        self.surface=surface
+        self.nom=nom
+        self.longueur=rectangle_inscrit(rayon)
+        self.rect = pygame.Rect((self.x-(self.longueur//2),self.y-(self.longueur//2)),(self.longueur,self.longueur))
+        self.surface_bouton=pygame.Surface((self.rect[2],self.rect[3]))
+
+    def update(self):
+            pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
+
+class Bouton_menu(Bouton_circulaire):
+    def __init__(self,x,y,rayon,couleur,surface):
+        super().__init__(x,y,rayon,couleur,surface,'Menu')
+
+    def update(self):
+            pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
+            pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0],self.y),(self.rect[0]+self.rect[2],self.y)))
+            pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/3),self.y),(int(2*self.longueur/3),int(self.longueur/2))))
+            pygame.draw.rect(self.surface,self.couleur,((self.x-int(self.longueur/6),self.y+int(self.longueur/12)),(int(self.longueur/3),int(self.longueur/3))))
+
+class Bouton_recommencer(Bouton_circulaire):
+    def __init__(self,x,y,rayon,couleur,surface):
+        super().__init__(x,y,rayon,couleur,surface,'Recommencer')
+
+    def update(self):
+            pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
+            pygame.draw.circle(self.surface,(0,0,0),(self.x,self.y),self.rayon*0.8)
+            pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon*0.6)
+            pygame.draw.rect(self.surface,self.couleur,((self.x-int(self.longueur/4),self.y),(int(self.longueur/2),+int(9*self.rayon/10))))
+            pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.y+self.rayon*0.75),(self.x-int(self.longueur/2.5),self.y+self.rayon*0.75),(self.x-int(self.longueur/5),self.y+self.rayon*0.35)))
+
+def level(screen,list_cell_ini,grap,taille):
     a= cursor((4,3))
     bg = pygame.Surface(screen.get_size())
     bg.fill((0,0,0))
     d=bg.get_size()
     xoff=d[0]*4/10
     yoff=-d[1]*3/10
-    
+
     rad=45
     scalx=d[0]/9
     scaly=d[1]/9
@@ -29,18 +69,18 @@ def level(screen,list_cell_ini,grap):
                 pygame.draw.ellipse(bg,(255,255,255),pygame.Rect(((koala[0]-wid/2),koala[1]-hei/2),(wid,hei)))
     #--------------------------------------------
 
-                
+
     list_cell_current=[i.copy() for i in list_cell_ini]
 
     #------- set base image of cells and the cursor ------------
     def generation_png(grap):
         for cell in list_cell_ini :
             cell.set_png(scalx,scaly,grap)
-    
+
     def generation_image_cell(grap):
         for cell in list_cell_current :
             cell.set_image(scalx,scaly,grap)
-        
+
 
     if grap > 1:
         generation_png(grap)
@@ -48,27 +88,47 @@ def level(screen,list_cell_ini,grap):
     a.set_img(scalx,scaly,grap)
     #-----------------------------------------------------
 
+
+    Menu=Bouton_menu(int(2*taille),screen.get_height()-int(2*taille),taille,(255,255,255),screen)
+    Recommencer=Bouton_recommencer((2*taille),screen.get_height()-int(5*taille),taille,(255,255,255),screen)
+    liste_boutons=[Menu,Recommencer]
+    i=0
+    b=liste_boutons[i]
     going=True
     while going :
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 going=False
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_r :
-                a.selecting = False
-                list_cell_current=[i.copy() for i in list_cell_ini]
-                if grap <= 1 :generation_image_cell(grap)
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_UP :
-                a.move(list_cell_current,(0,-1))
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN :
-                a.move(list_cell_current,(0,1))
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT :
-                a.move(list_cell_current,(-1,0))
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT :
-                a.move(list_cell_current,(1,0))
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_x :
-                for e in list_cell_current :
-                    if a.pos in e.cells :
-                        a.select(e)
+            elif event.type == pygame.KEYDOWN:
+                if event.key==pygame.K_ESCAPE:
+                    going=False
+                elif event.key==pygame.K_TAB:
+                    if i>0:
+                        i-=1
+                    else:
+                        i=len(liste_boutons)-1
+                    b=liste_boutons[i]
+                elif event.key==pygame.K_SPACE or event.key==pygame.K_RETURN:
+                    if b.nom=='Menu':
+                        return lancement('accueil',taille,surface,background,titre,controle_actuel)
+                    elif b.nom=='Recommencer':
+                        return level(screen,list_cell_ini,grap,taille)
+                elif     event.key == pygame.K_r :
+                    a.selecting = False
+                    list_cell_current=[i.copy() for i in list_cell_ini]
+                    if grap <= 1 :generation_image_cell(grap)
+                elif event.key == pygame.K_UP :
+                    a.move(list_cell_current,(0,-1))
+                elif event.key == pygame.K_DOWN :
+                    a.move(list_cell_current,(0,1))
+                elif event.key == pygame.K_LEFT :
+                    a.move(list_cell_current,(-1,0))
+                elif event.key == pygame.K_RIGHT :
+                    a.move(list_cell_current,(1,0))
+                elif event.key == pygame.K_x :
+                    for e in list_cell_current :
+                        if a.pos in e.cells :
+                            a.select(e)
         if pygame.mouse.get_pressed()[0] :
                 mpos = pygame.mouse.get_pos()
                 mx = mpos[0]
@@ -87,17 +147,21 @@ def level(screen,list_cell_ini,grap):
                     if not a.move(list_cell_current,dis) :
                         a.selecting = False
                         a.move(list_cell_current,dis)
-                    
-            
+
+
         for x in list_cell_current:
             if type(x) == virus and x.cells[0] == (0,3):
                 win = True
                 going = False
-                
+
         screen.blit(bg,(0,0))
-        for i in list_cell_current:
-            i.draw(screen,xoff,yoff,scalx,scaly)
+        for cell in list_cell_current:
+            cell.draw(screen,xoff,yoff,scalx,scaly)
         a.draw(screen,placement(a.pos))
+        pygame.draw.circle(screen,(100,100,100),(b.x,b.y),int(1.1*b.rayon))
+        for bouton in liste_boutons:
+            bouton.update()
+
         pygame.display.flip()
     if win == True :
         going = True
@@ -150,8 +214,8 @@ def filetolevel(path,grap = 0):
 import time
 def test():
     pygame.init()
-    screen = pygame.display.set_mode((800,800))#,pygame.FULLSCREEN
-    level(screen, [virus((4,3))])
+    screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
+    level(screen, [virus((4,3))],0,min(screen.get_size())//18)
     pygame.quit()
 
-
+test()
