@@ -105,9 +105,8 @@ class cellule:
         if grap == 1:
             return
 
-    def change_color(self,scalx,scaly,grap, changement = (_,_,_)):
-        
-        self.color =self.color 
+    def change_color(self,scalx,scaly,grap, changement):
+        self.color =changement 
         self.set_image(scalx,scaly,grap)
         return
 
