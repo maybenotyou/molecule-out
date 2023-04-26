@@ -156,10 +156,8 @@ def la_liste_bouton(R,V,B,surface,taille):
             [niveau_6,niveau_7,niveau_8,niveau_9,niveau_10],
             [Menu,Retour]]
 
-
 def lancement(page,taille,surface,background,titre,controle_actuel,page_aide):
-    global running
-    
+
     if page == 'accueil':
         Logo = pygame.image.load('images/OUT.png').convert_alpha()
         Jouer = Bouton_texte(int(3.375*surface.get_width()/6-5*taille),int(6.5*surface.get_height()/10),6.5*taille,1.8*taille,(0, 255, 0),surface,"Jouer",2*taille)
@@ -226,7 +224,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide):
     i=0
     j=0
     b=liste_boutons[i][j]
-    
+    running=True
     while running:
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
@@ -302,11 +300,11 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide):
                             if page_aide == 1:
                                 if b.nom=='Next':
                                     page_aide = 2
-                                    aide(surface,taille,controle_actuel,background,page_aide)
+                                    return aide(surface,taille,controle_actuel,background,page_aide)
                             elif page_aide == 2:
                                 if b.nom=='Next':
                                     page_aide = 1
-                                    aide(surface,taille,controle_actuel,background,page_aide)
+                                    return aide(surface,taille,controle_actuel,background,page_aide)
 
                         elif page=='options':
                             if b.nom=='Commande':
@@ -330,7 +328,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide):
                             else :
                                 if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom),0,taille): running = False
                                 if lv.home.x == 1:
-                                    lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide)
+                                    return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide)
 
 
 
@@ -369,11 +367,11 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide):
                                     if page_aide == 1:
                                         if bouton.nom=='Next':
                                             page_aide = 2
-                                            aide(surface,taille,controle_actuel,background,page_aide)
+                                            return aide(surface,taille,controle_actuel,background,page_aide)
                                     elif page_aide == 2:
                                         if bouton.nom=='Next':
                                             page_aide = 1
-                                            aide(surface,taille,controle_actuel,background,page_aide)
+                                            return aide(surface,taille,controle_actuel,background,page_aide)
 
                                 elif page=='options':
                                     if bouton.nom=='Commande':
@@ -396,106 +394,100 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide):
                                     else :
                                         if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom),0,taille): running = False
                                         if lv.home.x == 1:
-                                            lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide)
+                                            return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide)
 
 
-        if running :
-            surface.blit(background,(0,0))
-            if page == 'accueil':
-                logo = pygame.transform.scale(Logo, (10*taille,10*taille))
-                surface.blit(logo,(int((surface.get_width()-logo.get_width())/1.95),int(0.75*surface.get_height()/15)))
+        surface.blit(background,(0,0))
+        if page == 'accueil':
+            logo = pygame.transform.scale(Logo, (10*taille,10*taille))
+            surface.blit(logo,(int((surface.get_width()-logo.get_width())/1.95),int(0.75*surface.get_height()/15)))
 
-            if page == 'aide':
-                pygame.draw.rect(surface,(255,255,255),(int(1.25*surface.get_width()/4-7*taille),int(7*surface.get_height()/12-7*taille),26*taille,14*taille),border_radius=int(14*taille/8))
-                if page_aide == 1:
-                    surface.blit(pygame.font.SysFont("verdana.ttf",2*taille).render('Règle du Jeu :',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/2.25),int(4*surface.get_height()/18)))
-                    surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.7)).render('Le but de Molecule Out est de faire sortir la molécule rouge,',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4.55*surface.get_height()/10.5)))
-                    surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.7)).render('le virus, du plateau avec des mouvement en diagonale.',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(5.5*surface.get_height()/10.5)))
-                    surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.7)).render('Aucune molécule ne peut être tournée et les molécules',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(6.5*surface.get_height()/10.5)))
-                    surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.7)).render('uniques (grises par défaut) ne peuvent pas être bougées.',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(7.5*surface.get_height()/10.5)))
-                elif page_aide == 2:
-                    surface.blit(pygame.font.SysFont("verdana.ttf",2*taille).render('Contrôles de jeu :',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/2.05),int(4*surface.get_height()/18)))
-                    surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('Flèches directionnelles ou 7,9,1,3 pour se déplacer',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/10.5)))
-                    surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('R  pour recommencer le niveau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/9)))
-                    surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('ENTER, X, Z ou W pour sélectionner une molecule',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/7.9)))
-                    surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('TAB pour changer la sélection de bouton dans un niveau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/7.1)))
-                    surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('ESPACE pour sélectionner un bouton dans un niveau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/6.4)))
-                    surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('ECHAP pour quitter le jeu',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/5.8)))
-                    surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('SUPPR pour retourner au menu',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/5.3)))
-                    surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('A, Q ou 5 pour le changement de molecule rapide',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/4.9)))
-            if page=='options' or page=='aide':
-                surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(surface.get_height()/25)))
+        if page == 'aide':
+            pygame.draw.rect(surface,(255,255,255),(int(1.25*surface.get_width()/4-7*taille),int(7*surface.get_height()/12-7*taille),26*taille,14*taille),border_radius=int(14*taille/8))
+            if page_aide == 1:
+                surface.blit(pygame.font.SysFont("verdana.ttf",2*taille).render('Règle du Jeu :',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/2.25),int(4*surface.get_height()/18)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.7)).render('Le but de Molecule Out est de faire sortir la molécule rouge,',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4.55*surface.get_height()/10.5)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.7)).render('le virus, du plateau avec des mouvement en diagonale.',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(5.5*surface.get_height()/10.5)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.7)).render('Aucune molécule ne peut être tournée et les molécules',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(6.5*surface.get_height()/10.5)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.7)).render('uniques (grises par défaut) ne peuvent pas être bougées.',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(7.5*surface.get_height()/10.5)))
+            elif page_aide == 2:
+                surface.blit(pygame.font.SysFont("verdana.ttf",2*taille).render('Contrôles de jeu :',True,(0,0,0)),(int((surface.get_width()-int(2*titre.get_width()))/2),int(4*surface.get_height()/18)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('Flèches directionnelles ou 7,9,1,3 pour se déplacer',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/10.5)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('R  pour recommencer le niveau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/9)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('ENTER, X, Z ou W pour sélectionner une molecule',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/7.9)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('TAB pour changer la sélection de bouton dans un niveau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/7.1)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('ESPACE pour sélectionner un bouton dans un niveau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/6.4)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('ECHAP pour quitter le jeu',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/5.8)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('SUPPR pour retourner au menu',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/5.3)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('A, Q ou 5 pour le changement de molecule rapide',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/4.9)))
+        if page=='options' or page=='aide':
+            surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(surface.get_height()/25)))
 
-            elif page != 'accueil' and page != 'options':
-                surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(4*surface.get_height()/25)))
-
+        elif page != 'accueil' and page != 'options':
+            surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(4*surface.get_height()/25)))
 
 
-            if controle_actuel=='souris':
-                pygame.mouse.set_visible(True)
 
+        if controle_actuel=='souris':
+            pygame.mouse.set_visible(True)
+
+        else:
+            pygame.mouse.set_visible(False)
+
+            if b.nom=='Menu' or b.nom=='Eteindre' or b.nom=='Commande' or b.nom=='Retour' or b.nom=='Musique' or b.nom=='Next':
+                pygame.draw.circle(surface,(100,100,100),(b.x,b.y),int(1.1*b.rayon))
+
+            elif b.nom=='Graphisme':
+                rect_sel=pygame.Rect((b.rect[0]-int(taille/10),b.rect[1]-int(taille/10)),(b.rect[2]+2*int(taille/10),b.rect[3]+2*int(taille/10)))
+                pygame.draw.rect(surface,(100,100,100),rect_sel,0,int(b.longueur/8))
 
             else:
-                pygame.mouse.set_visible(False)
+                rect_sel=pygame.Rect((b.rect[0]-int(taille/10),b.rect[1]-int(taille/10)),(b.rect[2]+2*int(taille/10),b.rect[3]+2*int(taille/10)))
+                pygame.draw.rect(surface,(100,100,100),rect_sel,0,int(b.longueur))
 
-                if b.nom=='Menu' or b.nom=='Eteindre' or b.nom=='Commande' or b.nom=='Retour' or b.nom=='Musique' or b.nom=='Next':
-                    pygame.draw.circle(surface,(100,100,100),(b.x,b.y),int(1.1*b.rayon))
-                    
-                elif b.nom=='Graphisme':
-                    rect_sel=pygame.Rect((b.rect[0]-int(taille/10),b.rect[1]-int(taille/10)),(b.rect[2]+2*int(taille/10),b.rect[3]+2*int(taille/10)))
-                    pygame.draw.rect(surface,(100,100,100),rect_sel,0,int(b.longueur/8))
+        for rang in liste_boutons:
+            for bouton in rang:
+                bouton.update()
 
-                else:
-                    rect_sel=pygame.Rect((b.rect[0]-int(taille/10),b.rect[1]-int(taille/10)),(b.rect[2]+2*int(taille/10),b.rect[3]+2*int(taille/10)))
-                    pygame.draw.rect(surface,(100,100,100),rect_sel,0,int(b.longueur))
-
-            for rang in liste_boutons:
-                for bouton in rang:
-                    bouton.update()
-
-            pygame.display.update()
+        pygame.display.update()
 
 def starter(surface,taille,background,controle_actuel,page_aide):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
-    lancement('starter',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('starter',taille,surface,background,titre,controle_actuel,page_aide)
 
 def junior(surface,taille,background,controle_actuel,page_aide):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
-    lancement('junior',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('junior',taille,surface,background,titre,controle_actuel,page_aide)
 
 def expert(surface,taille,background,controle_actuel,page_aide):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
-    lancement('expert',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('expert',taille,surface,background,titre,controle_actuel,page_aide)
 
 def master(surface,taille,background,controle_actuel,page_aide):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
-    lancement('master',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('master',taille,surface,background,titre,controle_actuel,page_aide)
 
 def wizard(surface,taille,background,controle_actuel,page_aide):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
-    lancement('wizard',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('wizard',taille,surface,background,titre,controle_actuel,page_aide)
 
 def bonus(surface,taille,background,controle_actuel,page_aide):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
-    lancement('bonus',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('bonus',taille,surface,background,titre,controle_actuel,page_aide)
 
 def options(surface,taille,controle_actuel,background,page_aide):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Options',True,(0,0,0))
-    lancement('options',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('options',taille,surface,background,titre,controle_actuel,page_aide)
 
 def aide(surface,taille,controle_actuel,background,page_aide):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Aide',True,(0,0,0))
-    lancement('aide',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('aide',taille,surface,background,titre,controle_actuel,page_aide)
 
 def difficulte(surface,taille,controle_actuel,background,page_aide):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez la difficulté',True,(0,0,0))
-    lancement('difficulté',taille,surface,background,titre,controle_actuel,page_aide)
-
-running=True
+    return lancement('difficulté',taille,surface,background,titre,controle_actuel,page_aide)
 
 def main():
-   global running 
-   running = True
    pygame.init()
    pygame.display.set_caption("Molecule Out")
    screen=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
