@@ -55,7 +55,7 @@ def level(screen,list_cell_ini,grap,taille):
     q_select = 0
     a= cursor((4,3))
     bg = pygame.Surface(screen.get_size())
-    bg.fill((200,200,200))
+    bg.fill((0,0,0))
     d=bg.get_size()
     xoff=d[0]*4/10
     yoff=-d[1]*3/10
