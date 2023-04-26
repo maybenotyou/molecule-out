@@ -409,14 +409,14 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide):
                 surface.blit(pygame.font.Font("verdana.ttf",taille-33).render('Le but de Molecule Out est de faire sortire la molecule rouge du plateau avec des mouvement en diagonale.',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/10.5)))
                 surface.blit(pygame.font.Font("verdana.ttf",taille-33).render('Les molecules ne peuvent être tourné et la molecule seul (gris par défaut) ne peuvent pas être bougé.',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/9)))
             elif page_aide == 2:
-                surface.blit(pygame.font.SysFont("verdana.ttf",2*taille).render('Contrôles :',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/2.05),int(4*surface.get_height()/18)))
-                surface.blit(pygame.font.Font("verdana.ttf",taille-33).render('Flèche Directionnelles ou 7,9,1,3 pour se déplacer',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/10.5)))
+                surface.blit(pygame.font.SysFont("verdana.ttf",2*taille).render('Contrôles de jeu :',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/2.05),int(4*surface.get_height()/18)))
+                surface.blit(pygame.font.Font("verdana.ttf",taille-33).render('Flèches directionnelles ou 7,9,1,3 pour se déplacer',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/10.5)))
                 surface.blit(pygame.font.Font("verdana.ttf",taille-33).render('R  pour recommencer le niveau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/9)))
                 surface.blit(pygame.font.Font("verdana.ttf",taille-33).render('ENTER, X, Z ou W pour sélectionner une molecule',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/7.9)))
                 surface.blit(pygame.font.Font("verdana.ttf",taille-33).render('TAB pour changer la sélection de bouton dans un niveau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/7.1)))
                 surface.blit(pygame.font.Font("verdana.ttf",taille-33).render('ESPACE pour sélectionner un bouton dans un niveau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/6.4)))
                 surface.blit(pygame.font.Font("verdana.ttf",taille-33).render('ECHAP pour quitter le jeu',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/5.8)))
-                surface.blit(pygame.font.Font("verdana.ttf",taille-33).render('SUPPR pour retourner au menu de sélection',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/5.3)))
+                surface.blit(pygame.font.Font("verdana.ttf",taille-33).render('SUPPR pour retourner au menu',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/5.3)))
                 surface.blit(pygame.font.Font("verdana.ttf",taille-33).render('A, Q ou 5 pour le changement de molecule rapide',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/4.9)))
         if page=='options' or page=='aide':
             surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(surface.get_height()/25)))
