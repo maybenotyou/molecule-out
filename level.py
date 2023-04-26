@@ -312,5 +312,3 @@ def test():
     screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
     level(screen, [virus((1,3))],1,min(screen.get_size())//18)
     pygame.quit()
-
-test()
