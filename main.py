@@ -121,13 +121,14 @@ class Bouton_texte():
         self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_width())/2,self.y+int(self.longueur-self.texte.get_height())/2))
 
 class Bouton_graphisme():
-    def __init__(self,x,y,longueur,couleur,surface,taille):
+    def __init__(self,x,y,longueur,couleur,surface,taille,graphisme):
         self.x=x
         self.y=y
         self.longueur=longueur
         self.couleur=couleur
         self.surface=surface
         self.taille=taille
+        self.graphisme=graphisme
         self.rect = pygame.Rect((self.x,self.y),(self.longueur,self.longueur))
         self.surface_bouton=pygame.Surface((self.rect[2],self.rect[3]))
         self.nom='Graphisme'
@@ -156,7 +157,7 @@ def la_liste_bouton(R,V,B,surface,taille):
             [niveau_6,niveau_7,niveau_8,niveau_9,niveau_10],
             [Menu,Retour]]
 
-def lancement(page,taille,surface,background,titre,controle_actuel,page_aide):
+def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,graphisme):
 
     if page == 'accueil':
         Logo = pygame.image.load('images/OUT.png').convert_alpha()
@@ -171,7 +172,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide):
         Eteindre=Bouton_éteindre(int(7*surface.get_width()/18),int(4*surface.get_height()/9),2*taille,(255,0,0),surface)
         Commande=Bouton_commande(int(2*surface.get_width()/9),int(7*surface.get_height()/9),2*taille,(255,255,255),surface,controle_actuel)
         Musique=Bouton_Musique(int(7*surface.get_width()/18),int(7*surface.get_height()/9),2*taille,(255,255,255),surface)
-        Graphisme=Bouton_graphisme(int(3*surface.get_width()/4-7*taille),int(7*surface.get_height()/12-7*taille),14*taille,(255,255,255),surface,3*taille)
+        Graphisme=Bouton_graphisme(int(3*surface.get_width()/4-7*taille),int(7*surface.get_height()/12-7*taille),14*taille,(255,255,255),surface,3*taille,graphisme)
         liste_boutons=[[Menu,Eteindre,Graphisme],[Commande,Musique,Graphisme]]
 
     elif page=='aide':
@@ -272,39 +273,39 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide):
 
                     elif event.key==pygame.K_SPACE or event.key==pygame.K_RETURN:
                         if b.nom=='Menu':
-                            return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide)
+                            return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
                         elif page=='difficulté':
                             if b.nom=='Starter':
-                                return starter(surface,taille,background,controle_actuel,page_aide)
+                                return starter(surface,taille,background,controle_actuel,page_aide,graphisme)
                             elif b.nom=='Junior':
-                                return junior(surface,taille,background,controle_actuel,page_aide)
+                                return junior(surface,taille,background,controle_actuel,page_aide,graphisme)
                             elif b.nom=='Expert':
-                                return expert(surface,taille,background,controle_actuel,page_aide)
+                                return expert(surface,taille,background,controle_actuel,page_aide,graphisme)
                             elif b.nom=='Master':
-                                return master(surface,taille,background,controle_actuel,page_aide)
+                                return master(surface,taille,background,controle_actuel,page_aide,graphisme)
                             elif b.nom=='Wizard':
-                                return wizard(surface,taille,background,controle_actuel,page_aide)
+                                return wizard(surface,taille,background,controle_actuel,page_aide,graphisme)
                             elif b.nom=='Bonus':
-                                return bonus(surface,taille,background,controle_actuel,page_aide)
+                                return bonus(surface,taille,background,controle_actuel,page_aide,graphisme)
 
                         elif page=='accueil':
                             if b.nom=='Jouer':
-                                return difficulte(surface,taille,controle_actuel,background,page_aide)
+                                return difficulte(surface,taille,controle_actuel,background,page_aide,graphisme)
                             elif b.nom=='Options':
-                                return options(surface,taille,controle_actuel,background,page_aide)
+                                return options(surface,taille,controle_actuel,background,page_aide,graphisme)
                             elif b.nom=='Aide':
-                                return aide(surface,taille,controle_actuel,background,page_aide)
+                                return aide(surface,taille,controle_actuel,background,page_aide,graphisme)
 
                         elif page=='aide':
                             if page_aide == 1:
                                 if b.nom=='Next':
                                     page_aide = 2
-                                    return aide(surface,taille,controle_actuel,background,page_aide)
+                                    return aide(surface,taille,controle_actuel,background,page_aide,graphisme)
                             elif page_aide == 2:
                                 if b.nom=='Next':
                                     page_aide = 1
-                                    return aide(surface,taille,controle_actuel,background,page_aide)
+                                    return aide(surface,taille,controle_actuel,background,page_aide,graphisme)
 
                         elif page=='options':
                             if b.nom=='Commande':
@@ -315,61 +316,69 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide):
                                     controle_actuel='souris'
                                     Commande.etat='souris'
                             elif b.nom=='Eteindre':
+                                running=False
+                                pygame.quit()
                                 return
                             elif b.nom=='Musique':
                                 if pygame.mixer.music.get_busy() == True:
                                     pygame.mixer.music.stop()
                                 else:
                                     pygame.mixer.music.play(-1)
+                            elif b.nom=='Graphisme':
+                                b.graphisme+=1
+                                if b.graphisme>3:
+                                    b.graphisme=0
+                                graphisme=b.graphisme
 
                         else:
                             if b.nom=='Retour':
-                                return difficulte(surface,taille,controle_actuel,background,page_aide)
+                                return difficulte(surface,taille,controle_actuel,background,page_aide,graphisme)
                             else :
                                 if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom),0,taille): running = False
                                 if lv.home.x == 1:
-                                    return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide)
+                                    return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
             elif event.type==pygame.MOUSEBUTTONDOWN:
                 if controle_actuel=='souris':
+                    doublon=False
                     for rang in liste_boutons:
                         for bouton in rang:
                             if bouton.rect.collidepoint(event.pos):
                                 if bouton.nom=='Menu':
-                                    return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide)
+                                    return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
                                 elif page=='difficulté':
                                     if bouton.nom=='Starter':
-                                        return starter(surface,taille,background,controle_actuel,page_aide)
+                                        return starter(surface,taille,background,controle_actuel,page_aide,graphisme)
                                     elif bouton.nom=='Junior':
-                                        return junior(surface,taille,background,controle_actuel,page_aide)
+                                        return junior(surface,taille,background,controle_actuel,page_aide,graphisme)
                                     elif bouton.nom=='Expert':
-                                        return expert(surface,taille,background,controle_actuel,page_aide)
+                                        return expert(surface,taille,background,controle_actuel,page_aide,graphisme)
                                     elif bouton.nom=='Master':
-                                        return master(surface,taille,background,controle_actuel,page_aide)
+                                        return master(surface,taille,background,controle_actuel,page_aide,graphisme)
                                     elif bouton.nom=='Wizard':
-                                        return wizard(surface,taille,background,controle_actuel,page_aide)
+                                        return wizard(surface,taille,background,controle_actuel,page_aide,graphisme)
                                     elif bouton.nom=='Bonus':
-                                        return bonus(surface,taille,background,controle_actuel,page_aide)
+                                        return bonus(surface,taille,background,controle_actuel,page_aide,graphisme)
 
 
                                 elif page=='accueil':
                                     if bouton.nom=='Jouer':
-                                        return difficulte(surface,taille,controle_actuel,background,page_aide)
+                                        return difficulte(surface,taille,controle_actuel,background,page_aide,graphisme)
                                     elif bouton.nom=='Options':
-                                        return options(surface,taille,controle_actuel,background,page_aide)
+                                        return options(surface,taille,controle_actuel,background,page_aide,graphisme)
                                     elif bouton.nom=='Aide':
-                                        return aide(surface,taille,controle_actuel,background,page_aide)
+                                        return aide(surface,taille,controle_actuel,background,page_aide,graphisme)
 
                                 elif page=='aide':
                                     if page_aide == 1:
                                         if bouton.nom=='Next':
                                             page_aide = 2
-                                            return aide(surface,taille,controle_actuel,background,page_aide)
+                                            return aide(surface,taille,controle_actuel,background,page_aide,graphisme)
                                     elif page_aide == 2:
                                         if bouton.nom=='Next':
                                             page_aide = 1
-                                            return aide(surface,taille,controle_actuel,background,page_aide)
+                                            return aide(surface,taille,controle_actuel,background,page_aide,graphisme)
 
                                 elif page=='options':
                                     if bouton.nom=='Commande':
@@ -380,19 +389,27 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide):
                                             controle_actuel='souris'
                                             Commande.etat='souris'
                                     elif bouton.nom=='Eteindre':
+                                        running=False
+                                        pygame.quit()
                                         return
                                     elif bouton.nom=='Musique':
                                         if pygame.mixer.music.get_busy() == True:
                                             pygame.mixer.music.stop()
                                         else:
                                             pygame.mixer.music.play(-1)
+                                    elif bouton.nom=='Graphisme' and not doublon:
+                                        doublon=True
+                                        bouton.graphisme+=1
+                                        if bouton.graphisme>3:
+                                            bouton.graphisme=0
+                                        graphisme=bouton.graphisme
                                 else:
                                     if bouton.nom=='Retour':
                                         return difficulte(surface,taille,controle_actuel,background)
                                     else :
                                         if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom),0,taille): running = False
                                         if lv.home.x == 1:
-                                            return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide)
+                                            return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
 
         surface.blit(background,(0,0))
@@ -449,41 +466,41 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide):
 
         pygame.display.update()
 
-def starter(surface,taille,background,controle_actuel,page_aide):
+def starter(surface,taille,background,controle_actuel,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
-    return lancement('starter',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('starter',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
-def junior(surface,taille,background,controle_actuel,page_aide):
+def junior(surface,taille,background,controle_actuel,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
-    return lancement('junior',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('junior',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
-def expert(surface,taille,background,controle_actuel,page_aide):
+def expert(surface,taille,background,controle_actuel,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
-    return lancement('expert',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('expert',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
-def master(surface,taille,background,controle_actuel,page_aide):
+def master(surface,taille,background,controle_actuel,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
-    return lancement('master',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('master',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
-def wizard(surface,taille,background,controle_actuel,page_aide):
+def wizard(surface,taille,background,controle_actuel,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
-    return lancement('wizard',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('wizard',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
-def bonus(surface,taille,background,controle_actuel,page_aide):
+def bonus(surface,taille,background,controle_actuel,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
-    return lancement('bonus',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('bonus',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
-def options(surface,taille,controle_actuel,background,page_aide):
+def options(surface,taille,controle_actuel,background,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Options',True,(0,0,0))
-    return lancement('options',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('options',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
-def aide(surface,taille,controle_actuel,background,page_aide):
+def aide(surface,taille,controle_actuel,background,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Aide',True,(0,0,0))
-    return lancement('aide',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('aide',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
-def difficulte(surface,taille,controle_actuel,background,page_aide):
+def difficulte(surface,taille,controle_actuel,background,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez la difficulté',True,(0,0,0))
-    return lancement('difficulté',taille,surface,background,titre,controle_actuel,page_aide)
+    return lancement('difficulté',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
 def main():
    pygame.init()
@@ -496,11 +513,12 @@ def main():
    titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Logo',True,(0,0,0))
    controle_actuel='clavier'
    page_aide = 1
+   graphisme = 0
    background = pygame.image.load('images/back.png').convert_alpha()
    background = pygame.transform.scale(background, (screen.get_size()))
    background.convert()
 
-   lancement('accueil',taille,screen,background,titre,controle_actuel,page_aide)
+   lancement('accueil',taille,screen,background,titre,controle_actuel,page_aide,graphisme)
    pygame.quit()
 
 main()
