@@ -65,12 +65,14 @@ class cursor :
                 return(True)
         return(False)
     
-    def select(self,cell):
+    def select(self,cell,grap,scalx,scaly):
         if self.selecting == False:
             self.is_selected=cell
+            if grap <= 1 : cell.change_color(scalx,scaly,grap,cell.change)
             self.selecting = True
         else :
             self.selecting=False
+            if grap <= 1 : cell.change_color(scalx,scaly,grap,(-cell.change[0],-cell.change[1],-cell.change[2]))
 
 
 
@@ -80,6 +82,7 @@ class cellule:
         self.color = color
         self.cells=cells
         self.img = None
+        self.change = change
 
     def copy(self):
         return cellule([a for a in self.cells],self.color)
@@ -106,9 +109,9 @@ class cellule:
             return
 
     def change_color(self,scalx,scaly,grap, changement):
-        self.color =changement 
+        color = self.color
+        self.color = (color[0]+changement[0],color[1]+changement[1],color[2]+changement[2])
         self.set_image(scalx,scaly,grap)
-        return
 
     def draw(self,screen,xoff,yoff,scalx,scaly):
         x = self.cells[self.ctr][0]
@@ -125,15 +128,15 @@ class cellule:
 
 class virus(cellule):
     def __init__(self,pos,base_color = (255,0,0),c = (0,0,0)):
-        super().__init__([pos,(pos[0]+1,pos[1])],base_color)
+        super().__init__([pos,(pos[0]+1,pos[1])],base_color,c)
 
     def copy(self):
         return virus(self.cells[0])
 
 
 class o(cellule):
-    def __init__(self,pos,base_color = (255,0,0),c = (0,0,0)):
-        super().__init__([pos],(127,127,127),)
+    def __init__(self,pos,base_color = (127,127,127),c = (0,0,0)):
+        super().__init__([pos],(127,127,127),base_color,c)
         self.ctr = 0
     def move(self,ls_cell,d):
         return False
@@ -142,34 +145,34 @@ class o(cellule):
 
 
 class v(cellule):
-    def __init__(self,pos,r,base_color = (255,0,0),c = (0,0,0)):
-        super().__init__([turn(r,(pos[0],pos[1]+1),pos),pos,turn(r,(pos[0]+1,pos[1]),pos)],(255,127,0))
+    def __init__(self,pos,r,base_color = (255,127,0),c = (0,0,0)):
+        super().__init__([turn(r,(pos[0],pos[1]+1),pos),pos,turn(r,(pos[0]+1,pos[1]),pos)],base_color,c)
 
 class w(cellule):
     def __init__(self,pos,r,base_color = (30,180,255),c = (0,0,0)):
-        super().__init__([turn(r,(pos[0]-1,pos[1]),pos),pos],(30,180,255))
+        super().__init__([turn(r,(pos[0]-1,pos[1]),pos),pos],base_color,c)
         
 
 class r(cellule):
     def __init__(self,pos,r,base_color = (255,100,170),c = (0,0,0)):
-        super().__init__([turn(r,(pos[0]-1,pos[1]-1),pos),pos],(255,100,170))
+        super().__init__([turn(r,(pos[0]-1,pos[1]-1),pos),pos],base_color,c)
 
 class g(cellule):
     def __init__(self,pos,r,base_color = (0,127,50),c = (0,0,0)):
-        super().__init__([turn(r,(pos[0]-1,pos[1]-1),pos),pos],(0,127,50))
+        super().__init__([turn(r,(pos[0]-1,pos[1]-1),pos),pos],base_color,c)
 
 class u(cellule):
     def __init__(self,pos,r,base_color = (0,0,255),c = (0,0,0)):
-        super().__init__([turn(r,(pos[0]-1,pos[1]+1),pos),pos,turn(r,(pos[0]+1,pos[1]-1),pos)],(0,0,255))
+        super().__init__([turn(r,(pos[0]-1,pos[1]+1),pos),pos,turn(r,(pos[0]+1,pos[1]-1),pos)],base_color,c)
 
 class c(cellule):
     def __init__(self,pos,r,base_color = (100,0,100),c = (0,0,0)):
-        super().__init__([turn(r,(pos[0]-1,pos[1]+1),pos),pos,turn(r,(pos[0]+1,pos[1]+1),pos)],(100,0,100))
+        super().__init__([turn(r,(pos[0]-1,pos[1]+1),pos),pos,turn(r,(pos[0]+1,pos[1]+1),pos)],base_color,c)
 
 class j(cellule):
     def __init__(self,pos,r,base_color = (0,255,0),c = (0,0,0)):
-        super().__init__([turn(r,(pos[0]-1,pos[1]),pos),pos,turn(r,(pos[0]+1,pos[1]+1),pos)],(0,255,0))
+        super().__init__([turn(r,(pos[0]-1,pos[1]),pos),pos,turn(r,(pos[0]+1,pos[1]+1),pos)],base_color,c)
 
 class l(cellule):
     def __init__(self,pos,r,base_color = (255,255,0),c = (0,0,0)):
-        super().__init__([turn(r,(pos[0],pos[1]-1),pos),pos,turn(r,(pos[0]+1,pos[1]+1),pos)],(255,255,0))
+        super().__init__([turn(r,(pos[0],pos[1]-1),pos),pos,turn(r,(pos[0]+1,pos[1]+1),pos)],base_color,c)

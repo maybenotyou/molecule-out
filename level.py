@@ -133,7 +133,7 @@ def level(screen,list_cell_ini,grap,taille):
                 elif event.key == pygame.K_x :
                     for e in list_cell_current :
                         if a.pos in e.cells :
-                            a.select(e)
+                            a.select(e,grap,scalx,scaly)
         if pygame.mouse.get_pressed()[0] :
                 mpos = pygame.mouse.get_pos()
                 mx = mpos[0]
@@ -146,11 +146,12 @@ def level(screen,list_cell_ini,grap,taille):
                     if not a.selecting :
                         for e in list_cell_current :
                             if a.pos in e.cells :
-                                a.select(e)
+                                a.select(e,grap,scalx,scaly)
                     dis= (mx-a.pos[0],my-a.pos[1])
-                    if abs(dis[0])+abs(dis[1])>1 : a.selecting = False
+                    if abs(dis[0])+abs(dis[1])>1 :
+                        if a.selecting:a.select(a.is_selected,grap,scalx,scaly)
                     if not a.move(list_cell_current,dis) :
-                        a.selecting = False
+                        if a.selecting:a.select(a.is_selected,grap,scalx,scaly)
                         a.move(list_cell_current,dis)
 
 
@@ -246,6 +247,6 @@ def filetolevel(path,grap = 0):
 import time 
 def test():
     pygame.init()
-    screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((800,800))#,pygame.FULLSCREEN
     level(screen, [virus((4,3))],0,min(screen.get_size())//18)
     pygame.quit()
