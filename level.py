@@ -106,7 +106,7 @@ def level(screen,list_cell_ini,grap,taille):
                     else:
                         i=len(liste_boutons)-1
                     b=liste_boutons[i]
-                elif event.key in [pygame.K_SPACE, pygame.K_RETURN]:
+                elif event.key in [pygame.K_SPACE, pygame.K_BACKSPACE]:
                     if b.nom=='Menu':
                         home.x = 1
                         going=False
@@ -127,7 +127,7 @@ def level(screen,list_cell_ini,grap,taille):
                     a.move(list_cell_current,(-1,0))
                 elif event.key in [pygame.K_RIGHT,pygame.K_KP3] :
                     a.move(list_cell_current,(1,0))
-                elif event.key in [pygame.K_x, pygame.K_z, pygame.K_w] :
+                elif event.key in [pygame.K_x, pygame.K_z, pygame.K_w, pygame.K_RETURN] :
                     for e in list_cell_current :
                         if a.pos in e.cells :
                             a.select(e,grap,scalx,scaly)
