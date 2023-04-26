@@ -181,7 +181,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide):
         if page_aide == 2:
             Next=Bouton_next(int(1.5*taille),int(10.1*taille),taille,(255,255,255),surface,page_aide)
 
-        liste_boutons=[[Menu],[Next]]
+        liste_boutons=[[Menu,Next],[Next]]
 
     elif page=='difficulté':
         Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
@@ -329,8 +329,6 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide):
                                 if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom),0,taille): running = False
                                 if lv.home.x == 1:
                                     return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide)
-
-
 
             elif event.type==pygame.MOUSEBUTTONDOWN:
                 if controle_actuel=='souris':
@@ -491,7 +489,7 @@ def main():
    pygame.init()
    pygame.display.set_caption("Molecule Out")
    screen=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
-   taille=(min(screen.get_size()))//18
+   taille=min(screen.get_size())//18
    pygame.mixer.music.load("son/Musique de fond.mp3")
    pygame.mixer.music.set_volume(30)
    pygame.mixer.music.stop()
