@@ -72,21 +72,15 @@ def level(screen,list_cell_ini,grap,taille):
     #--------------------------------------------
 
 
-    list_cell_current=[i.copy() for i in list_cell_ini]
+    
 
     #------- set base image of cells and the cursor ------------
-    def generation_png(grap):
-        for cell in list_cell_ini :
-            cell.set_png(scalx,scaly,grap)
-
-    def generation_image_cell(grap):
-        for cell in list_cell_current :
-            cell.set_image(scalx,scaly,grap)
+    for cell in list_cell_ini :
+        cell.set_image(scalx,scaly,grap)
 
 
-    if grap > 1:
-        generation_png(grap)
-    else: generation_image_cell(grap)
+    list_cell_current=[i.copy() for i in list_cell_ini]
+
     a.set_img(scalx,scaly,grap)
     #-----------------------------------------------------
 
@@ -121,7 +115,6 @@ def level(screen,list_cell_ini,grap,taille):
                 elif     event.key == pygame.K_r :
                     a.selecting = False
                     list_cell_current=[i.copy() for i in list_cell_ini]
-                    if grap <= 1 :generation_image_cell(grap)
                 elif event.key in [pygame.K_UP,pygame.K_KP9] :
                     a.move(list_cell_current,(0,-1))
                 elif event.key in [pygame.K_DOWN,pygame.K_KP1] :

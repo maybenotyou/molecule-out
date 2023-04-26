@@ -77,15 +77,15 @@ class cursor :
 
 
 class cellule:
-    def __init__(self,cells,color,change = (0,0,0)):
+    def __init__(self,cells,color,change = (0,0,0),img = None):
         self.ctr = 1
         self.color = color
         self.cells=cells
-        self.img = None
+        self.img = img
         self.change = change
 
     def copy(self):
-        return cellule([a for a in self.cells],self.color)
+        return cellule([a for a in self.cells],self.color,self.change,self.img)
 
     def set_image(self,scalx,scaly,grap):
         self.img = pygame.Surface((6*scalx,6*scaly))
@@ -127,11 +127,11 @@ class cellule:
         return False
 
 class virus(cellule):
-    def __init__(self,pos,base_color = (255,0,0),c = (0,0,0)):
-        super().__init__([pos,(pos[0]+1,pos[1])],base_color,c)
+    def __init__(self,pos,base_color = (255,0,0),c = (0,0,0), img = None):
+        super().__init__([pos,(pos[0]+1,pos[1])],base_color,c,img)
 
     def copy(self):
-        return virus(self.cells[0])
+        return virus(self.cells[0],self.color,self.change,self.img)
 
 
 class o(cellule):
