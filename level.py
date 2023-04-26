@@ -44,6 +44,7 @@ class Bouton_recommencer(Bouton_circulaire):
 
 
 def level(screen,list_cell_ini,grap,taille):
+    q_select = 0
     a= cursor((4,3))
     bg = pygame.Surface(screen.get_size())
     bg.fill((0,0,0))
@@ -127,6 +128,20 @@ def level(screen,list_cell_ini,grap,taille):
                     for e in list_cell_current :
                         if a.pos in e.cells :
                             a.select(e,grap,scalx,scaly)
+                elif event.key in [pygame.K_a, pygame.K_q,pygame.K_KP5]:
+                    if a.selecting:a.select(a.is_selected,grap,scalx,scaly)
+                    while True :
+                        q_select += 1
+                        if q_select == len(list_cell_current): q_select = 0
+                        if type(list_cell_current[q_select]) == o:
+                            continue
+                        break
+                    q_cell = list_cell_current[q_select]
+                    q_cell_pos = q_cell.cells[1]
+                    dis= (q_cell_pos[0]-a.pos[0],q_cell_pos[1]-a.pos[1])
+                    a.move(list_cell_current,dis)
+                    a.select(q_cell,grap,scalx,scaly)
+                    
         if pygame.mouse.get_pressed()[0] :
                 mpos = pygame.mouse.get_pos()
                 mx = mpos[0]

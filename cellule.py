@@ -135,13 +135,13 @@ class virus(cellule):
 
 
 class o(cellule):
-    def __init__(self,pos,base_color = (127,127,127),c = (0,0,0)):
-        super().__init__([pos],(127,127,127),base_color,c)
+    def __init__(self,pos,base_color = (127,127,127),c = (0,0,0), img = None):
+        super().__init__([pos],base_color,c,img)
         self.ctr = 0
     def move(self,ls_cell,d):
         return False
     def copy(self):
-        return o(self.cells[0])
+        return o(self.cells[0],self.color,self.change,self.img)
 
 
 class v(cellule):
