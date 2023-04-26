@@ -106,14 +106,14 @@ def level(screen,list_cell_ini,grap,taille):
                     else:
                         i=len(liste_boutons)-1
                     b=liste_boutons[i]
-                elif event.key in [pygame.K_SPACE, pygame.K_BACKSPACE]:
+                elif event.key in [pygame.K_SPACE]:
                     if b.nom=='Menu':
                         home.x = 1
                         going=False
                         
                     elif b.nom=='Recommencer':
                         return level(screen,list_cell_ini,grap,taille)
-                elif event.key in [pygame.K_DELETE, pygame.K_RETURN]:
+                elif event.key in [pygame.K_DELETE, pygame.K_BACKSPACE]:
                     home.x = 1
                     going=False
                 elif     event.key == pygame.K_r :
