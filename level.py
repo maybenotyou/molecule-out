@@ -113,6 +113,9 @@ def level(screen,list_cell_ini,grap,taille):
                         
                     elif b.nom=='Recommencer':
                         return level(screen,list_cell_ini,grap,taille)
+                elif event.key in [pygame.K_DELETE, pygame.K_RETURN]:
+                    home.x = 1
+                    going=False
                 elif     event.key == pygame.K_r :
                     a.selecting = False
                     list_cell_current=[i.copy() for i in list_cell_ini]
@@ -141,6 +144,7 @@ def level(screen,list_cell_ini,grap,taille):
                     dis= (q_cell_pos[0]-a.pos[0],q_cell_pos[1]-a.pos[1])
                     a.move(list_cell_current,dis)
                     a.select(q_cell,grap,scalx,scaly)
+                    
                     
         if pygame.mouse.get_pressed()[0] :
                 mpos = pygame.mouse.get_pos()
