@@ -334,7 +334,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                             if b.nom=='Retour':
                                 return difficulte(surface,taille,controle_actuel,background,page_aide,graphisme)
                             else :
-                                if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom),0,taille): running = False
+                                if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom),graphisme,taille): running = False
                                 if lv.home.x == 1:
                                     return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
