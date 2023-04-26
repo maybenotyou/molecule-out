@@ -50,6 +50,13 @@ class cursor :
             self.img.set_colorkey((0,0,0))
             pygame.draw.ellipse(self.img,(255,0,255),pygame.Rect((0,0),(self.wid,self.hei)))
 
+        elif grap == 1 :
+            self.wid = int(scalx*1/4)
+            self.hei = int(scaly*1/4)
+            self.img = pygame.Surface((self.wid,self.hei))
+            self.img.set_colorkey((0,0,0))
+            pygame.draw.ellipse(self.img,(0,0,0),pygame.Rect((0,0),(self.wid,self.hei)))
+
     def draw(self,screen,pos):
         screen.blit(self.img,(pos[0]-.5*self.wid,pos[1]-.5*self.hei))
 
@@ -64,7 +71,7 @@ class cursor :
                 self.pos = (self.pos[0]+d[0],self.pos[1]+d[1])
                 return(True)
         return(False)
-    
+
     def select(self,cell,grap,scalx,scaly):
         if self.selecting == False:
             self.is_selected=cell
@@ -95,18 +102,32 @@ class cellule:
         cellule = [(i[0]-ctr[0], i[1]-ctr[1]) for i in cellule]
         xoff = 3*scalx
         yoff = 3*scaly
-        if grap == 0 :
+        if grap == 0:
             wid = scalx*5/8
             hei = scaly*5/8
             lines = []
             for elm in cellule :
-                x=xoff+scalx*(elm[0]-elm[1]+.5)
-                y=yoff+scaly*(elm[0]+elm[1]+.5)
+                x=xoff+scalx*(elm[0]-elm[1]+0.5)
+                y=yoff+scaly*(elm[0]+elm[1]+0.5)
                 lines.append((x,y))
                 pygame.draw.ellipse(self.img,self.color,pygame.Rect(((x-wid/2),y-hei/2),(wid,hei)))
             if len(lines)>1:pygame.draw.lines(self.img,self.color,False,lines,int(min(wid/2,hei/2)))
         if grap == 1:
-            return
+            lines = []
+            for elm in cellule :
+                x=xoff+scalx*(elm[0]-elm[1]+0.5)
+                y=yoff+scaly*(elm[0]+elm[1]+0.5)
+                lines.append((x,y))
+                pygame.draw.circle(self.img,(255,255,255),(x,y),int(min(scalx,scaly)//2))
+
+            if len(lines)>1:
+                pygame.draw.lines(self.img,(255,255,255),False,lines,int(3*min(scalx,scaly)//4))
+                if self.color==(255,0,0):
+                    pygame.draw.lines(self.img,(255,0,0),False,lines,int(2*min(scalx,scaly)//4))
+            for elm in cellule :
+                x=xoff+scalx*(elm[0]-elm[1]+0.5)
+                y=yoff+scaly*(elm[0]+elm[1]+0.5)
+                pygame.draw.circle(self.img,self.color,(x,y),int(0.8*min(scalx,scaly)//2))
 
     def change_color(self,scalx,scaly,grap, changement):
         color = self.color
@@ -151,7 +172,7 @@ class v(cellule):
 class w(cellule):
     def __init__(self,pos,r,base_color = (30,180,255),c = (0,0,0)):
         super().__init__([turn(r,(pos[0]-1,pos[1]),pos),pos],base_color,c)
-        
+
 
 class r(cellule):
     def __init__(self,pos,r,base_color = (255,100,170),c = (0,0,0)):
