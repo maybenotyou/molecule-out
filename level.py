@@ -19,7 +19,7 @@ class Bouton_circulaire():
 
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
-home = Bouton_circulaire(7,4,8,(255,255,255),3,'home')
+home = Bouton_circulaire(2,0,800,(255,255,255),300,'home')
 
 class Bouton_menu(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
@@ -42,12 +42,20 @@ class Bouton_recommencer(Bouton_circulaire):
             pygame.draw.rect(self.surface,self.couleur,((self.x-int(self.longueur/4),self.y),(int(self.longueur/2),+int(9*self.rayon/10))))
             pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.y+self.rayon*0.75),(self.x-int(self.longueur/2.5),self.y+self.rayon*0.75),(self.x-int(self.longueur/5),self.y+self.rayon*0.35)))
 
+class Bouton_next(Bouton_circulaire):
+    def __init__(self,x,y,rayon,couleur,surface):
+        super().__init__(x,y,rayon,couleur,surface,'Next')
+
+    def update(self):
+        pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
+        pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0]+self.rect[2],self.y),(self.x,self.rect[1]+self.rect[3])))
+        pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/2),self.y-int(self.longueur/4)),(int(self.longueur/2),int(self.longueur/2))))
 
 def level(screen,list_cell_ini,grap,taille):
     q_select = 0
     a= cursor((4,3))
     bg = pygame.Surface(screen.get_size())
-    bg.fill((0,0,0))
+    bg.fill((200,200,200))
     d=bg.get_size()
     xoff=d[0]*4/10
     yoff=-d[1]*3/10
@@ -66,7 +74,7 @@ def level(screen,list_cell_ini,grap,taille):
         scaly=d[1]/9
         xoff=d[0]*4/10
         yoff=-d[1]*3/10
-
+        
         wid = scalx*3/4
         hei = scaly*3/4
         for x in range(8):
@@ -145,9 +153,11 @@ def level(screen,list_cell_ini,grap,taille):
     while going:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                home.x = 2
                 going=False
             elif event.type == pygame.KEYDOWN:
                 if event.key==pygame.K_ESCAPE:
+                    home.x = 2
                     return False
 
                 elif event.key==pygame.K_TAB:
@@ -233,14 +243,55 @@ def level(screen,list_cell_ini,grap,taille):
         pygame.display.flip()
     if win == True :
         going = True
-        font = pygame.font.Font("verdana.ttf", int(d[1]/9))
-        c = font.render("Congrats",True,(0,255,0))
-        screen.blit(c,(d[0]/5,d[1]/40))
+        bg = pygame.image.load('images/back.png').convert_alpha()
+        bg = pygame.transform.scale(bg, (screen.get_size()))
+        bg.convert()
+        Menu=Bouton_menu(int(screen.get_width()/3.3),int(10.1*taille),int(2*taille),(255,255,255),screen)
+        Recommencer=Bouton_recommencer(int(screen.get_width()/2),int(10.1*taille),int(2*taille),(255,255,255),screen)
+        Next=Bouton_next(int(screen.get_width()/1.4),int(10.1*taille),int(2*taille),(255,255,255),screen)
+        liste_boutons=[[Menu,Recommencer,Next]]
+        i=0
+        j=0
+        b=liste_boutons[i][j]
         pygame.display.flip()
         while going :
             for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN and event.key in [pygame.K_x,pygame.K_ESCAPE] :
-                    going = False
+                if event.type == pygame.KEYDOWN: 
+                    if event.key in [pygame.K_x,pygame.K_ESCAPE] :
+                        going = False
+                    elif event.key==pygame.K_RIGHT:
+                        if j<len(liste_boutons[i])-1:
+                            j+=1
+                        else:
+                            j=0
+                        b=liste_boutons[i][j]
+
+                    elif event.key==pygame.K_LEFT:
+                        if j>0:
+                            j-=1
+                        else:
+                            j=len(liste_boutons[i])-1
+                        b=liste_boutons[i][j]
+                        
+                    elif event.key in [pygame.K_SPACE,pygame.K_RETURN]:
+                        if b.nom=='Menu':
+                            home.x = 1
+                            going=False
+
+                        elif b.nom=='Recommencer':
+                            return level(screen,list_cell_ini,grap,taille)
+                        
+                        elif b.nom=='Next':
+                            home.x = 2
+                            going=False
+                        
+            screen.blit(bg,(0,0))
+            screen.blit(pygame.font.Font("verdana.ttf", int(d[1]/11)).render("Félicitations, le virus est sortie",True,(9,145,0)),(d[0]/9,d[1]/8))
+            pygame.draw.circle(screen,(100,100,100),(b.x,b.y),int(1.1*b.rayon))
+            for rang in liste_boutons:
+                for bouton in rang:
+                    bouton.update()
+            pygame.display.update()
     return True
 
 
