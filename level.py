@@ -103,9 +103,7 @@ def level(screen,list_cell_ini,grap,taille):
                 going=False
             elif event.type == pygame.KEYDOWN:
                 if event.key==pygame.K_ESCAPE:
-                    going=False
-                    pygame.quit()
-                    return
+                    return False
                 
                 elif event.key==pygame.K_TAB:
                     if i>0:
@@ -180,6 +178,7 @@ def level(screen,list_cell_ini,grap,taille):
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key in [pygame.K_x,pygame.K_ESCAPE] :
                     going = False
+    return True
 
 
 def filetolevel(path,grap = 0):

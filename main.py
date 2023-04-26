@@ -327,7 +327,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,aut
                             if b.nom=='Retour':
                                 return difficulte(surface,taille,controle_actuel,background,page_aide)
                             else :
-                                lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom),0,taille)
+                                if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom),0,taille): running = False
                                 if lv.home.x == 1:
                                     lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide)
                                 
@@ -393,7 +393,9 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,aut
                                     if bouton.nom=='Retour':
                                         return difficulte(surface,taille,controle_actuel,background)
                                     else :
-                                        lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom),0,taille)
+                                        if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom),0,taille): running = False
+                                        if lv.home.x == 1:
+                                            lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide)
                                         
                                     
 
