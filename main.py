@@ -271,7 +271,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                             j=len(liste_boutons[i])-1
                         b=liste_boutons[i][j]
 
-                    elif event.key==pygame.K_SPACE or event.key==pygame.K_RETURN:
+                    elif event.key in [pygame.K_SPACE,pygame.K_RETURN]:
                         if b.nom=='Menu':
                             return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
@@ -337,6 +337,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                                 if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom),graphisme,taille): running = False
                                 if lv.home.x == 1:
                                     return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
+                                    
 
             elif event.type==pygame.MOUSEBUTTONDOWN:
                 if controle_actuel=='souris':
@@ -407,10 +408,9 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                                     if bouton.nom=='Retour':
                                         return difficulte(surface,taille,controle_actuel,background)
                                     else :
-                                        if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom),0,taille): running = False
+                                        if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom),graphisme,taille): running = False
                                         if lv.home.x == 1:
                                             return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
-
 
         surface.blit(background,(0,0))
         if page == 'accueil':
@@ -421,20 +421,20 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
             pygame.draw.rect(surface,(255,255,255),(int(1.25*surface.get_width()/4-7*taille),int(7*surface.get_height()/12-7*taille),26*taille,14*taille),border_radius=int(14*taille/8))
             if page_aide == 1:
                 surface.blit(pygame.font.SysFont("verdana.ttf",2*taille).render('Règle du Jeu :',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/2.25),int(4*surface.get_height()/18)))
-                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.7)).render('Le but de Molecule Out est de faire sortir la molécule rouge,',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4.55*surface.get_height()/10.5)))
-                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.7)).render('le virus, du plateau avec des mouvement en diagonale.',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(5.5*surface.get_height()/10.5)))
-                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.7)).render('Aucune molécule ne peut être tournée et les molécules',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(6.5*surface.get_height()/10.5)))
-                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.7)).render('uniques (grises par défaut) ne peuvent pas être bougées.',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(7.5*surface.get_height()/10.5)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.6)).render('Le but de Molecule Out est de faire sortir la molécule rouge,le virus,du plateau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/7),int(4.55*surface.get_height()/10.5)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.6)).render('avec des mouvement en diagonale.',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/7),int(5.5*surface.get_height()/10.5)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.6)).render('Aucune molécule ne peut être tournée et les molécules uniques (grises par défaut)',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/7),int(7*surface.get_height()/10.5)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.6)).render('ne peuvent pas être bougées.',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/7),int(8*surface.get_height()/10.5)))
             elif page_aide == 2:
                 surface.blit(pygame.font.SysFont("verdana.ttf",2*taille).render('Contrôles de jeu :',True,(0,0,0)),(int((surface.get_width()-int(2*titre.get_width()))/2),int(4*surface.get_height()/18)))
-                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('Flèches directionnelles ou 7,9,1,3 pour se déplacer',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/10.5)))
-                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('R  pour recommencer le niveau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/9)))
-                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('ENTER, X, Z ou W pour sélectionner une molecule',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/7.9)))
-                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('TAB pour changer la sélection de bouton dans un niveau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/7.1)))
-                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('ESPACE pour sélectionner un bouton dans un niveau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/6.4)))
-                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('ECHAP pour quitter le jeu',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/5.8)))
-                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('SUPPR pour retourner au menu',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/5.3)))
-                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.8)).render('A, Q ou 5 pour le changement de molecule rapide',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/6.5),int(4*surface.get_height()/4.9)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.6)).render('Flèches directionnelles ou 7,9,1,3 pour se déplacer',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/7),int(4*surface.get_height()/10.5)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.6)).render('R  pour recommencer le niveau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/7),int(4*surface.get_height()/9)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.6)).render('ENTER, X, Z ou W pour sélectionner une molecule',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/7),int(4*surface.get_height()/7.9)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.6)).render('TAB pour changer la sélection de bouton dans un niveau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/7),int(4*surface.get_height()/7.1)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.6)).render('ESPACE pour sélectionner un bouton dans un niveau',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/7),int(4*surface.get_height()/6.4)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.6)).render('ECHAP pour quitter le jeu',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/7),int(4*surface.get_height()/5.8)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.6)).render('SUPPR pour retourner au menu',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/7),int(4*surface.get_height()/5.3)))
+                surface.blit(pygame.font.Font("verdana.ttf",int(taille*0.6)).render('A, Q ou 5 pour le changement de molecule rapide',True,(0,0,0)),(int((surface.get_width()-titre.get_width())/7),int(4*surface.get_height()/4.9)))
         if page=='options' or page=='aide':
             surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(surface.get_height()/25)))
 
