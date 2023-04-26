@@ -124,15 +124,15 @@ class cellule:
         return False
 
 class virus(cellule):
-    def __init__(self,pos):
-        super().__init__([pos,(pos[0]+1,pos[1])],(255,0,0))
+    def __init__(self,pos,base_color = (255,0,0),c = (0,0,0)):
+        super().__init__([pos,(pos[0]+1,pos[1])],base_color)
 
     def copy(self):
         return virus(self.cells[0])
 
 
 class o(cellule):
-    def __init__(self,pos):
+    def __init__(self,pos,base_color = (255,0,0),c = (0,0,0)):
         super().__init__([pos],(127,127,127),)
         self.ctr = 0
     def move(self,ls_cell,d):
@@ -142,34 +142,34 @@ class o(cellule):
 
 
 class v(cellule):
-    def __init__(self,pos,r):
+    def __init__(self,pos,r,base_color = (255,0,0),c = (0,0,0)):
         super().__init__([turn(r,(pos[0],pos[1]+1),pos),pos,turn(r,(pos[0]+1,pos[1]),pos)],(255,127,0))
 
 class w(cellule):
-    def __init__(self,pos,r):
+    def __init__(self,pos,r,base_color = (30,180,255),c = (0,0,0)):
         super().__init__([turn(r,(pos[0]-1,pos[1]),pos),pos],(30,180,255))
         
 
 class r(cellule):
-    def __init__(self,pos,r):
+    def __init__(self,pos,r,base_color = (255,100,170),c = (0,0,0)):
         super().__init__([turn(r,(pos[0]-1,pos[1]-1),pos),pos],(255,100,170))
 
 class g(cellule):
-    def __init__(self,pos,r):
+    def __init__(self,pos,r,base_color = (0,127,50),c = (0,0,0)):
         super().__init__([turn(r,(pos[0]-1,pos[1]-1),pos),pos],(0,127,50))
 
 class u(cellule):
-    def __init__(self,pos,r):
+    def __init__(self,pos,r,base_color = (0,0,255),c = (0,0,0)):
         super().__init__([turn(r,(pos[0]-1,pos[1]+1),pos),pos,turn(r,(pos[0]+1,pos[1]-1),pos)],(0,0,255))
 
 class c(cellule):
-    def __init__(self,pos,r):
+    def __init__(self,pos,r,base_color = (100,0,100),c = (0,0,0)):
         super().__init__([turn(r,(pos[0]-1,pos[1]+1),pos),pos,turn(r,(pos[0]+1,pos[1]+1),pos)],(100,0,100))
 
 class j(cellule):
-    def __init__(self,pos,r):
+    def __init__(self,pos,r,base_color = (0,255,0),c = (0,0,0)):
         super().__init__([turn(r,(pos[0]-1,pos[1]),pos),pos,turn(r,(pos[0]+1,pos[1]+1),pos)],(0,255,0))
 
 class l(cellule):
-    def __init__(self,pos,r):
+    def __init__(self,pos,r,base_color = (255,255,0),c = (0,0,0)):
         super().__init__([turn(r,(pos[0],pos[1]-1),pos),pos,turn(r,(pos[0]+1,pos[1]+1),pos)],(255,255,0))

@@ -190,30 +190,56 @@ def filetolevel(path,grap = 0):
             x=coord[0]+((i+1)//2)
             y=coord[1]+(i//2)
             line = line.split()
-            for cel in line :
-                if cel[0] == 'V':
-                    tot.append(virus((x,y)))
-                if cel[0] == 'o':
-                    tot.append(o((x,y)))
-                if cel[0] == 'v':
-                    tot.append(v((x,y),int(cel[1])))
-                if cel[0] == 'w':
-                    tot.append(w((x,y),int(cel[1])))
-                if cel[0] == 'r':
-                    tot.append(r((x,y),int(cel[1])))
-                if cel[0] == 'g':
-                    tot.append(g((x,y),int(cel[1])))
-                if cel[0] == 'u':
-                    tot.append(u((x,y),int(cel[1])))
-                if cel[0] == 'c':
-                    tot.append(c((x,y),int(cel[1])))
-                if cel[0] == 'j':
-                    tot.append(j((x,y),int(cel[1])))
-                if cel[0] == 'l':
-                    tot.append(l((x,y),int(cel[1])))
-                x+=1
-                y-=1
+            if grap == 0 :
+                for cel in line :
+                    if cel[0] == 'V':
+                        tot.append(virus((x,y)))
+                    if cel[0] == 'o':
+                        tot.append(o((x,y)))
+                    if cel[0] == 'v':
+                        tot.append(v((x,y),int(cel[1])))
+                    if cel[0] == 'w':
+                        tot.append(w((x,y),int(cel[1])))
+                    if cel[0] == 'r':
+                        tot.append(r((x,y),int(cel[1])))
+                    if cel[0] == 'g':
+                        tot.append(g((x,y),int(cel[1])))
+                    if cel[0] == 'u':
+                        tot.append(u((x,y),int(cel[1])))
+                    if cel[0] == 'c':
+                        tot.append(c((x,y),int(cel[1])))
+                    if cel[0] == 'j':
+                        tot.append(j((x,y),int(cel[1])))
+                    if cel[0] == 'l':
+                        tot.append(l((x,y),int(cel[1])))
+                    x+=1
+                    y-=1
+            elif grap == 1:
+                for cel in line :
+                    if cel[0] == 'V':
+                        tot.append(virus((x,y)))
+                    if cel[0] == 'o':
+                        tot.append(o((x,y)))
+                    if cel[0] == 'v':
+                        tot.append(v((x,y),int(cel[1])))
+                    if cel[0] == 'w':
+                        tot.append(w((x,y),int(cel[1])))
+                    if cel[0] == 'r':
+                        tot.append(r((x,y),int(cel[1])))
+                    if cel[0] == 'g':
+                        tot.append(g((x,y),int(cel[1])))
+                    if cel[0] == 'u':
+                        tot.append(u((x,y),int(cel[1])))
+                    if cel[0] == 'c':
+                        tot.append(c((x,y),int(cel[1])))
+                    if cel[0] == 'j':
+                        tot.append(j((x,y),int(cel[1])))
+                    if cel[0] == 'l':
+                        tot.append(l((x,y),int(cel[1])))
+                    x+=1
+                    y-=1
             i+=1
+                
     return tot
 
 
