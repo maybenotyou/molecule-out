@@ -114,7 +114,7 @@ def level(screen,list_cell_ini,grap,taille):
                     elif b.nom=='Recommencer':
                         return level(screen,list_cell_ini,grap,taille)
                 elif event.key in [pygame.K_DELETE, pygame.K_BACKSPACE]:
-                    home.x = 1
+                    home.x = 2
                     going=False
                 elif     event.key == pygame.K_r :
                     a.selecting = False
