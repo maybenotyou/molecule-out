@@ -53,8 +53,6 @@ def level(screen,list_cell_ini,grap,taille):
     yoff=-d[1]*3/10
 
     rad=45
-    scalx=d[0]/9
-    scaly=d[1]/9
     def placement(pos):
         x=pos[0]
         y=pos[1]
@@ -62,18 +60,70 @@ def level(screen,list_cell_ini,grap,taille):
 
     win = False
 
-    #----Generation du plateau-----------
-    wid = scalx*3/4
-    hei = scaly*3/4
-    for x in range(8):
-        for y in range(8):
-            if (1+abs(y-3)<=x<=7-abs(y-3)) or (x==0 and y == 3):
-                koala=placement((x,y))
-                pygame.draw.ellipse(bg,(255,255,255),pygame.Rect(((koala[0]-wid/2),koala[1]-hei/2),(wid,hei)))
+#-----------Generation du plateau-----------
+    if grap==0:
+        scalx=d[0]/9
+        scaly=d[1]/9
+        xoff=d[0]*4/10
+        yoff=-d[1]*3/10
+
+        wid = scalx*3/4
+        hei = scaly*3/4
+        for x in range(8):
+            for y in range(8):
+                if (1+abs(y-3)<=x<=7-abs(y-3)) or (x==0 and y == 3):
+                    coordonnées=placement((x,y))
+                    pygame.draw.ellipse(bg,(255,255,255),pygame.Rect(((coordonnées[0]-wid/2),coordonnées[1]-hei/2),(wid,hei)))
+    elif grap==1:
+        scalx=d[1]/9
+        scaly=d[1]/9
+        xoff=d[0]*4/10
+        yoff=-d[1]/3
+
+        print(scalx,scaly)
+
+        bg = pygame.image.load('images/back.png').convert_alpha()
+        bg = pygame.transform.scale(bg, (screen.get_size()))
+        bg.convert()
+
+        pygame.draw.rect(bg,(50,50,50),[[placement((0,3))[0]-taille,placement((0,3))[1]-taille],[placement((4,0))[0]-placement((0,4))[0]+2*taille,placement((8,3))[1]-placement((0,3))[1]+2*taille]],0,taille)
+        for x in range(8):
+            for y in range(8):
+                if (1+abs(y-3)<=x<=7-abs(y-3)) or (x==0 and y == 3):
+                    coordonnées=placement((x,y))
+
+                    if (1+abs(y-3)<=x) and not (x==0 and y == 3):
+                        pygame.draw.line(bg, (255,255,255), placement((x,y)),placement((x,y-1)), int(taille*1/5))
+                        pygame.draw.line(bg, (255,255,255), placement((x,y)),placement((x,y+1)), int(taille*1/5))
+                    if (1+abs(y-3)<=x<=7-abs(y-3)) and not (x==0 and y==3):
+                        pygame.draw.line(bg, (255,255,255), placement((x,y)),placement((x-1,y)), int(taille*1/5))
+                        pygame.draw.line(bg, (255,255,255), placement((x,y)),placement((x+1,y)), int(taille*1/5))
+
+                    pygame.draw.circle(bg,(255,255,255),(coordonnées[0],coordonnées[1]),(taille*1/4))
+
+        # haut
+        pygame.draw.rect(bg,(150,150,150),[placement((1,2))[0],placement((1,2))[1]-taille,placement((4,-1))[0]-placement((1,2))[0],taille*4/3])
+        # droite
+        pygame.draw.rect(bg,(150,150,150),[placement((4,-1))[0]-taille/3,placement((4,-1))[1],taille*4/3,placement((8,3))[1]-placement((4,-1))[1]])
+        # gauche
+        pygame.draw.rect(bg,(150,150,150),[placement((1,4))[0]-taille,placement((1,4))[1],taille*4/3,placement((4,7))[1]-placement((1,4))[1]])
+        # bas
+        pygame.draw.rect(bg,(150,150,150),[placement((4,7))[0],placement((4,7))[1]-taille/3,placement((4,-1))[0]-(placement((4,7))[0]),taille*4/3])
+
+        # Cercles de la bordure
+        for c in range(1,5):
+            pygame.draw.circle(bg,(150,150,150),placement((c,c+3)),taille)
+
+        for c in range(1,5):
+            pygame.draw.circle(bg,(150,150,150),placement((c,3-c)),taille)
+
+        for c in range(4):
+            pygame.draw.circle(bg,(150,150,150),placement((c+5,c)),taille)
+
+        for c in range(3):
+                pygame.draw.circle(bg,(150,150,150),placement((7-c,c+4)),taille)
+
     #--------------------------------------------
-
-
-    
 
     #------- set base image of cells and the cursor ------------
     for cell in list_cell_ini :
@@ -99,18 +149,18 @@ def level(screen,list_cell_ini,grap,taille):
             elif event.type == pygame.KEYDOWN:
                 if event.key==pygame.K_ESCAPE:
                     return False
-                
+
                 elif event.key==pygame.K_TAB:
                     if i>0:
                         i-=1
                     else:
                         i=len(liste_boutons)-1
                     b=liste_boutons[i]
-                elif event.key in [pygame.K_SPACE]:
+                elif event.key == pygame.K_SPACE:
                     if b.nom=='Menu':
                         home.x = 1
                         going=False
-                        
+
                     elif b.nom=='Recommencer':
                         return level(screen,list_cell_ini,grap,taille)
                 elif event.key in [pygame.K_DELETE, pygame.K_BACKSPACE]:
@@ -127,7 +177,7 @@ def level(screen,list_cell_ini,grap,taille):
                     a.move(list_cell_current,(-1,0))
                 elif event.key in [pygame.K_RIGHT,pygame.K_KP3] :
                     a.move(list_cell_current,(1,0))
-                elif event.key in [pygame.K_x, pygame.K_z, pygame.K_w, pygame.K_RETURN] :
+                elif event.key in [pygame.K_x, pygame.K_z, pygame.K_w] :
                     for e in list_cell_current :
                         if a.pos in e.cells :
                             a.select(e,grap,scalx,scaly)
@@ -144,8 +194,8 @@ def level(screen,list_cell_ini,grap,taille):
                     dis= (q_cell_pos[0]-a.pos[0],q_cell_pos[1]-a.pos[1])
                     a.move(list_cell_current,dis)
                     a.select(q_cell,grap,scalx,scaly)
-                    
-                    
+
+
         if pygame.mouse.get_pressed()[0] :
                 mpos = pygame.mouse.get_pos()
                 mx = mpos[0]
@@ -252,13 +302,15 @@ def filetolevel(path,grap = 0):
                     x+=1
                     y-=1
             i+=1
-                
+
     return tot
 
 
-import time 
+import time
 def test():
     pygame.init()
-    screen = pygame.display.set_mode((800,800))#,pygame.FULLSCREEN
-    level(screen, [virus((4,3))],0,min(screen.get_size())//18)
+    screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
+    level(screen, [virus((1,3))],1,min(screen.get_size())//18)
     pygame.quit()
+
+test()
