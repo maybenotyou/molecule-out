@@ -208,7 +208,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
         Bonus=Bouton_texte(int(5*surface.get_width()/6-5*taille),int(7*surface.get_size()[1]/10),10*taille,3*taille,(192,66,138),surface,'Bonus',3*taille)
         liste_boutons=[[Starter,Junior,Expert],[Master,Wizard,Bonus],[Menu]]
 
-    else:
+    else: #Définit une couleur pour le bouton de chaque difficulté
         if page=='starter':
             R=0
             V=250
@@ -252,6 +252,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                     running=False
                     pygame.quit()
                     return
+
                 elif controle_actuel=='clavier':
                     if event.key==pygame.K_RIGHT:
                         if j<len(liste_boutons[i])-1:
@@ -346,8 +347,10 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                             if b.nom=='Retour':
                                 return difficulte(surface,taille,controle_actuel,background,page_aide,graphisme)
                             else :
-                                if page == 'bonus': miror = choice([(False,True),(True,False),(True,True)])
+                                if page == 'bonus': miror = choice([(False,True),(True,False),(True,True)]) # Mets une des 3 versions de miroir pour les niveaux bonus
+
                                 else : miror = (False,False)
+
                                 if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom,graphisme),graphisme,taille,miror): running = False
                                 if lv.home.x == 1:
                                     return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
@@ -403,15 +406,18 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                                         else:
                                             controle_actuel='souris'
                                             Commande.etat='souris'
+
                                     elif bouton.nom=='Eteindre':
                                         running=False
                                         pygame.quit()
                                         return
+
                                     elif bouton.nom=='Musique':
                                         if pygame.mixer.music.get_busy() == True:
                                             pygame.mixer.music.stop()
                                         else:
                                             pygame.mixer.music.play(-1)
+
                                     elif bouton.nom=='Graphisme' and not doublon:
                                         doublon=True
                                         bouton.change_graphisme()
@@ -420,11 +426,13 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                                     if bouton.nom=='Retour':
                                         return difficulte(surface,taille,controle_actuel,background,page_aide,graphisme)
                                     else :
-                                        if page == 'bonus': miror = choice([(False,True),(True,False),(True,True)])
+                                        if page == 'bonus': miror = choice([(False,True),(True,False),(True,True)]) # Mets une des 3 versions de miroir pour les niveaux bonus
+
                                         else : miror = (False,False)
+
                                         if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom,graphisme),graphisme,taille,miror): running = False
                                         if lv.home.x == 1:
-                                            return difficulte(surface,taille,controle_actuel,background,page_aide,graphisme)
+                                            return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
         surface.blit(background,(0,0))
         if page == 'accueil':
@@ -521,15 +529,14 @@ def main():
    pygame.display.set_caption("Molecule Out")
    screen=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
    taille=min(screen.get_size())//18
-   pygame.mixer.music.load("son/Musique de fond.mp3")
-   pygame.mixer.music.set_volume(30)
-   pygame.mixer.music.stop()
+   pygame.mixer.music.load("son/Musique_de_fond.mp3") # Importer son
+   pygame.mixer.music.play(-1) # "-1" fait une boucle
    titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Logo',True,(0,0,0))
    controle_actuel='clavier'
    page_aide = 1
    graphisme = 0
-   background = pygame.image.load('images/back.png').convert_alpha()
-   background = pygame.transform.scale(background, (screen.get_size()))
+   background = pygame.image.load('images/back.png').convert_alpha() # Importer l'image
+   background = pygame.transform.scale(background, (screen.get_size())) # Modifier l'image pour s'adapter à l'écran
    background.convert()
 
    lancement('accueil',taille,screen,background,titre,controle_actuel,page_aide,graphisme)
