@@ -25,11 +25,6 @@ def check(cel, ls_cell,d):
                 un.append(z)
     return True
 
-def placement(pos):
-    x=pos[0]
-    y=pos[1]
-    return ((xoff +(x-y)*scalx),yoff+(x+y)*scaly)
-
 def out(pos):
     if (1+abs(pos[1]-3)<=pos[0]<=7-abs(pos[1]-3)) or (pos[0]==0 and pos[1] == 3):
         return False
@@ -111,8 +106,7 @@ class cellule:
                 y=yoff+scaly*(elm[0]+elm[1]+0.5)
                 lines.append((x,y))
                 pygame.draw.ellipse(self.img,self.color,pygame.Rect(((x-wid/2),y-hei/2),(wid,hei)))
-            if len(lines)>1:
-                pygame.draw.lines(self.img,self.color,False,lines,int(min(wid/2,hei/2)))
+            if len(lines)>1:pygame.draw.lines(self.img,self.color,False,lines,int(min(wid/2,hei/2)))
         if grap == 1:
             lines = []
             for elm in cellule :
@@ -123,8 +117,8 @@ class cellule:
 
             if len(lines)>1:
                 pygame.draw.lines(self.img,(255,255,255),False,lines,int(3*min(scalx,scaly)//4))
-                if self.color==(255,0,0) or self.color==(255,100,100):
-                    pygame.draw.lines(self.img,self.color,False,lines,int(2*min(scalx,scaly)//4))
+                if self.color==(255,0,0):
+                    pygame.draw.lines(self.img,(255,0,0),False,lines,int(2*min(scalx,scaly)//4))
             for elm in cellule :
                 x=xoff+scalx*(elm[0]-elm[1]+0.5)
                 y=yoff+scaly*(elm[0]+elm[1]+0.5)
