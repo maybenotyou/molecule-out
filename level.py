@@ -186,10 +186,13 @@ def level(screen,list_cell_ini,grap,taille):
                         a.move(list_cell_current,(-1,0))
                     elif event.key in [pygame.K_RIGHT,pygame.K_KP3] :
                         a.move(list_cell_current,(1,0))
-                    elif event.key in [pygame.K_x, pygame.K_z, pygame.K_w] :
-                        for e in list_cell_current :
-                            if a.pos in e.cells :
-                                a.select(e,grap,scalx,scaly)
+
+                    elif grap!=1:
+                        if event.key in [pygame.K_x, pygame.K_z, pygame.K_w] :
+                            for e in list_cell_current :
+                                if a.pos in e.cells :
+                                    a.select(e,grap,scalx,scaly)
+
                     elif event.key in [pygame.K_a, pygame.K_q,pygame.K_KP5]:
                         if a.selecting:a.select(a.is_selected,grap,scalx,scaly)
                         while True :
