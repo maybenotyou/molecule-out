@@ -123,7 +123,7 @@ class cellule:
 
             if len(lines)>1:
                 pygame.draw.lines(self.img,(255,255,255),False,lines,int(3*min(scalx,scaly)//4))
-                if self.color==(255,0,0):
+                if self.color==(255,0,0) or self.color==(255,100,100):
                     pygame.draw.lines(self.img,self.color,False,lines,int(2*min(scalx,scaly)//4))
             for elm in cellule :
                 x=xoff+scalx*(elm[0]-elm[1]+0.5)
