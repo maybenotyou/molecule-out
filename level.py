@@ -193,7 +193,7 @@ def level(screen,list_cell_ini,grap,taille):
                                 if a.pos in e.cells :
                                     a.select(e,grap,scalx,scaly)
 
-                    elif event.key in [pygame.K_a, pygame.K_q,pygame.K_KP5]:
+                    if event.key in [pygame.K_a, pygame.K_q,pygame.K_KP5]:
                         if a.selecting:a.select(a.is_selected,grap,scalx,scaly)
                         while True :
                             q_select += 1
