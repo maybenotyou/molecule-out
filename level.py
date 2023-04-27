@@ -397,11 +397,3 @@ def filetolevel(path,grap):
             i+=1
 
     return tot
-
-
-import time
-def test():
-    pygame.init()
-    screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
-    level(screen, [virus((1,3))],0,min(screen.get_size())//18)
-    pygame.quit()
