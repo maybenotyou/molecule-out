@@ -353,25 +353,25 @@ def filetolevel(path,grap):
             elif grap == 1:
                 for cel in line :
                     if cel[0] == 'V':
-                        tot.append(virus((x,y),(255,100,100),(0,-100,-100)))
+                        tot.append(virus((x,y),(255,150,150),(0,-150,-150)))
                     if cel[0] == 'o':
-                        tot.append(o((x,y)))
+                        tot.append(o((x,y),(255,255,255)))
                     if cel[0] == 'v':
-                        tot.append(v((x,y),int(cel[1])))
+                        tot.append(v((x,y),int(cel[1]),(255,200,100),(0,-50,-100)))
                     if cel[0] == 'w':
-                        tot.append(w((x,y),int(cel[1])))
+                        tot.append(w((x,y),int(cel[1]),(100,255,255),(-100,-15,-15)))
                     if cel[0] == 'r':
-                        tot.append(r((x,y),int(cel[1])))
+                        tot.append(r((x,y),int(cel[1]),(255,200,225),(0,-50,-25)))
                     if cel[0] == 'g':
-                        tot.append(g((x,y),int(cel[1])))
+                        tot.append(g((x,y),int(cel[1]),(100,225,100),(-100,-50,-100)))
                     if cel[0] == 'u':
-                        tot.append(u((x,y),int(cel[1])))
+                        tot.append(u((x,y),int(cel[1]),(100,100,255),(-100,-100,-100)))
                     if cel[0] == 'c':
-                        tot.append(c((x,y),int(cel[1])))
+                        tot.append(c((x,y),int(cel[1]),(150,100,150),(0,-100,0)))
                     if cel[0] == 'j':
-                        tot.append(j((x,y),int(cel[1])))
+                        tot.append(j((x,y),int(cel[1]),(160,255,100),(-60,-55,-100)))
                     if cel[0] == 'l':
-                        tot.append(l((x,y),int(cel[1])))
+                        tot.append(l((x,y),int(cel[1]),(255,255,150),(-5,-15,-150)))
                     x+=1
                     y-=1
             i+=1
