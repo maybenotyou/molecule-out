@@ -142,7 +142,7 @@ class Bouton_graphisme():
 
     def change_graphisme(self):
         self.graphisme+=1
-        if self.graphisme>2:
+        if self.graphisme>1:
             self.graphisme=0
         self.set_virus()
 
