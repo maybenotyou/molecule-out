@@ -271,7 +271,7 @@ def level(screen,list_cell_ini,grap,taille):
                         return False
 
                     elif event.key==pygame.K_RIGHT:
-                        if i<len(liste_boutons[i])-1:
+                        if i<len(liste_boutons)-1:
                             i+=1
                         else:
                             i=0
@@ -281,7 +281,7 @@ def level(screen,list_cell_ini,grap,taille):
                         if i>0:
                             i-=1
                         else:
-                            i=len(liste_boutons[i])-1
+                            i=len(liste_boutons)-1
                         b=liste_boutons[i]
 
                     elif event.key in [pygame.K_SPACE,pygame.K_RETURN]:
