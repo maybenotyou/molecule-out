@@ -88,8 +88,6 @@ def level(screen,list_cell_ini,grap,taille):
         xoff=d[0]*4/10
         yoff=-d[1]/3
 
-        print(scalx,scaly)
-
         bg = pygame.image.load('images/back.png').convert_alpha()
         bg = pygame.transform.scale(bg, (screen.get_size()))
         bg.convert()
@@ -319,7 +317,7 @@ def level(screen,list_cell_ini,grap,taille):
     return True
 
 
-def filetolevel(path,grap = 0):
+def filetolevel(path,grap):
     coord = (1,3)
     i=0
     tot=[]
@@ -355,7 +353,7 @@ def filetolevel(path,grap = 0):
             elif grap == 1:
                 for cel in line :
                     if cel[0] == 'V':
-                        tot.append(virus((x,y)))
+                        tot.append(virus((x,y),(255,100,100),(0,-100,-100)))
                     if cel[0] == 'o':
                         tot.append(o((x,y)))
                     if cel[0] == 'v':
@@ -379,6 +377,7 @@ def filetolevel(path,grap = 0):
             i+=1
 
     return tot
+
 
 import time
 def test():
