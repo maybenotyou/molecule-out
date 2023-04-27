@@ -185,7 +185,7 @@ def level(screen,list_cell_ini,grap,taille, miror = (False,False)):
                             going=False
 
                         elif b.nom=='Recommencer':
-                            return level(screen,list_cell_ini,grap,taille)
+                            return level(truescreen,list_cell_ini,grap,taille,miror)
                     elif event.key in [pygame.K_DELETE, pygame.K_BACKSPACE]:
                         home.x = 2
                         going=False
@@ -229,7 +229,7 @@ def level(screen,list_cell_ini,grap,taille, miror = (False,False)):
                             going=False
 
                         elif bouton.nom=='Recommencer':
-                            return level(screen,list_cell_ini,grap,taille)
+                            return level(truescreen,list_cell_ini,grap,taille,miror)
 
         if pygame.mouse.get_pressed()[0] and pygame.mouse.get_visible():
                 mpos = pygame.mouse.get_pos()
