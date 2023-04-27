@@ -74,7 +74,7 @@ def level(screen,list_cell_ini,grap,taille):
         scaly=d[1]/9
         xoff=d[0]*4/10
         yoff=-d[1]*3/10
-        
+
         wid = scalx*3/4
         hei = scaly*3/4
         for x in range(8):
@@ -256,7 +256,7 @@ def level(screen,list_cell_ini,grap,taille):
         pygame.display.flip()
         while going :
             for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN: 
+                if event.type == pygame.KEYDOWN:
                     if event.key in [pygame.K_x,pygame.K_ESCAPE] :
                         going = False
                     elif event.key==pygame.K_RIGHT:
@@ -272,7 +272,7 @@ def level(screen,list_cell_ini,grap,taille):
                         else:
                             j=len(liste_boutons[i])-1
                         b=liste_boutons[i][j]
-                        
+
                     elif event.key in [pygame.K_SPACE,pygame.K_RETURN]:
                         if b.nom=='Menu':
                             home.x = 1
@@ -280,13 +280,13 @@ def level(screen,list_cell_ini,grap,taille):
 
                         elif b.nom=='Recommencer':
                             return level(screen,list_cell_ini,grap,taille)
-                        
+
                         elif b.nom=='Next':
                             home.x = 2
                             going=False
-                        
+
             screen.blit(bg,(0,0))
-            screen.blit(pygame.font.Font("verdana.ttf", int(d[1]/11)).render("Félicitations, le virus est sortie",True,(9,145,0)),(d[0]/9,d[1]/8))
+            screen.blit(pygame.font.Font("verdana.ttf", int(d[1]/11)).render("Félicitations, le virus est sorti !",True,(9,145,0)),(d[0]/9,d[1]/8))
             pygame.draw.circle(screen,(100,100,100),(b.x,b.y),int(1.1*b.rayon))
             for rang in liste_boutons:
                 for bouton in rang:
