@@ -1,6 +1,7 @@
 import pygame
 import level as lv
 from cellule import *
+from random import choice
 
 import os
 
@@ -142,7 +143,7 @@ class Bouton_graphisme():
 
     def change_graphisme(self):
         self.graphisme+=1
-        if self.graphisme>1:
+        if self.graphisme>2:
             self.graphisme=0
         self.set_virus()
 
@@ -153,25 +154,22 @@ class Bouton_graphisme():
         self.virus.draw(self.surface,self.x-self.longueur/4,self.y,0,0)
 
 def la_liste_bouton(R,V,B,surface,taille):
-    niveau_1=Bouton_texte(int(1.2*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'1',3*taille)
-    niveau_2=Bouton_texte(int(2.2*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'2',3*taille)
-    niveau_3=Bouton_texte(int(3.2*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'3',3*taille)
-    niveau_4=Bouton_texte(int(4.2*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'4',3*taille)
-    niveau_5=Bouton_texte(int(5.2*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'5',3*taille)
-    niveau_6=Bouton_texte(int(6.2*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'6',3*taille)
-    niveau_7=Bouton_texte(int(1.2*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'7',3*taille)
-    niveau_8=Bouton_texte(int(2.2*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'8',3*taille)
-    niveau_9=Bouton_texte(int(3.2*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'9',3*taille)
-    niveau_10=Bouton_texte(int(4.2*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)
-    niveau_11=Bouton_texte(int(5.2*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'11',3*taille)
-    niveau_12=Bouton_texte(int(6.2*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'12',3*taille)
+    niveau_1=Bouton_texte(int(1.6*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'1',3*taille)
+    niveau_2=Bouton_texte(int(2.6*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'2',3*taille)
+    niveau_3=Bouton_texte(int(3.6*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'3',3*taille)
+    niveau_4=Bouton_texte(int(4.6*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'4',3*taille)
+    niveau_5=Bouton_texte(int(5.6*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'5',3*taille)
+    niveau_6=Bouton_texte(int(1.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'6',3*taille)
+    niveau_7=Bouton_texte(int(2.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'7',3*taille)
+    niveau_8=Bouton_texte(int(3.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'8',3*taille)
+    niveau_9=Bouton_texte(int(4.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'9',3*taille)
+    niveau_10=Bouton_texte(int(5.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)
     Menu=Bouton_menu(4*taille,int(1.5*taille),taille,(255,255,255),surface)
     Retour=Bouton_retour(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
 
-    return [[niveau_1,niveau_2,niveau_3,niveau_4,niveau_5,niveau_6],
-            [niveau_7,niveau_8,niveau_9,niveau_10,niveau_11,niveau_12],
+    return [[niveau_1,niveau_2,niveau_3,niveau_4,niveau_5],
+            [niveau_6,niveau_7,niveau_8,niveau_9,niveau_10],
             [Menu,Retour]]
-
 
 def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,graphisme):
 
@@ -348,7 +346,9 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                             if b.nom=='Retour':
                                 return difficulte(surface,taille,controle_actuel,background,page_aide,graphisme)
                             else :
-                                if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom,graphisme),graphisme,taille): running = False
+                                if page == 'bonus': miror = choice([(False,True),(True,False),(True,True)])
+                                else : miror = (False,False)
+                                if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom,graphisme),graphisme,taille,miror): running = False
                                 if lv.home.x == 1:
                                     return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
@@ -420,7 +420,9 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                                     if bouton.nom=='Retour':
                                         return difficulte(surface,taille,controle_actuel,background,page_aide,graphisme)
                                     else :
-                                        if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom,graphisme),graphisme,taille): running = False
+                                        if page == 'bonus': miror = choice([(False,True),(True,False),(True,True)])
+                                        else : miror = (False,False)
+                                        if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom,graphisme),graphisme,taille,miror): running = False
                                         if lv.home.x == 1:
                                             return difficulte(surface,taille,controle_actuel,background,page_aide,graphisme)
 

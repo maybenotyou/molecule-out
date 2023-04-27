@@ -25,7 +25,8 @@ class Bouton_menu(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Menu')
 
-    def update(self):
+    def update(self,screen):
+            self.surface = screen
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
             pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0],self.y),(self.rect[0]+self.rect[2],self.y)))
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/3),self.y),(int(2*self.longueur/3),int(self.longueur/2))))
@@ -35,7 +36,8 @@ class Bouton_recommencer(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Recommencer')
 
-    def update(self):
+    def update(self,screen):
+            self.surface = screen
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
             pygame.draw.circle(self.surface,(0,0,0),(self.x,self.y),self.rayon*0.8)
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon*0.6)
@@ -46,7 +48,8 @@ class Bouton_next(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Next')
 
-    def update(self):
+    def update(self,screen):
+        self.surface = screen
         pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
         pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0]+self.rect[2],self.y),(self.x,self.rect[1]+self.rect[3])))
         pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/2),self.y-int(self.longueur/4)),(int(self.longueur/2),int(self.longueur/2))))
@@ -150,7 +153,6 @@ def level(screen,list_cell_ini,grap,taille, miror = (False,False)):
         q_cell_pos = q_cell.cells[1]
         dis= (q_cell_pos[0]-a.pos[0],q_cell_pos[1]-a.pos[1])
         a.move(list_cell_current,dis)
-        print(type(q_cell))
         a.select(q_cell,grap,scalx,scaly)
         
 
@@ -262,8 +264,8 @@ def level(screen,list_cell_ini,grap,taille, miror = (False,False)):
         if not pygame.mouse.get_visible():
             pygame.draw.circle(screen,(100,100,100),(b.x,b.y),int(1.1*b.rayon))
         for bouton in liste_boutons:
-            bouton.update()
-        screen=pygame.transform.flip(screen,True,False)
+            bouton.update(screen)
+        screen=pygame.transform.flip(screen,miror[0],miror[1])
         truescreen.blit(screen,(0,0))
 
         pygame.display.flip()
@@ -330,7 +332,7 @@ def level(screen,list_cell_ini,grap,taille, miror = (False,False)):
             if not pygame.mouse.get_visible():
                 pygame.draw.circle(screen,(100,100,100),(b.x,b.y),int(1.1*b.rayon))
             for bouton in liste_boutons:
-                bouton.update()
+                bouton.update(screen)
             pygame.display.update()
     return True
 
