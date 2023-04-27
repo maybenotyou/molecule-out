@@ -59,8 +59,6 @@ def level(screen,list_cell_ini,grap,taille):
     d=bg.get_size()
     xoff=d[0]*4/10
     yoff=-d[1]*3/10
-
-    rad=45
     def placement(pos):
         x=pos[0]
         y=pos[1]
@@ -141,6 +139,17 @@ def level(screen,list_cell_ini,grap,taille):
     a.set_img(scalx,scaly,grap)
     #-----------------------------------------------------
 
+    if grap == 1 :
+        for i in range(len(list_cell_current)):
+            if type(list_cell_current[i]) == virus :
+                q_select = i
+        q_cell = list_cell_current[q_select]
+        q_cell_pos = q_cell.cells[1]
+        dis= (q_cell_pos[0]-a.pos[0],q_cell_pos[1]-a.pos[1])
+        a.move(list_cell_current,dis)
+        print(type(q_cell))
+        a.select(q_cell,grap,scalx,scaly)
+        
 
     Menu=Bouton_menu(int(2*taille),screen.get_height()-int(2*taille),taille,(255,255,255),screen)
     Recommencer=Bouton_recommencer((2*taille),screen.get_height()-int(5*taille),taille,(255,255,255),screen)
