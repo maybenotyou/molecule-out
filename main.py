@@ -1,6 +1,6 @@
 import pygame
 import level as lv
-from cellule import * 
+from cellule import *
 
 import os
 
@@ -136,18 +136,9 @@ class Bouton_graphisme():
         self.nom='Graphisme'
         self.texte=pygame.font.Font("verdana.ttf",int(self.taille/2)).render('Graphisme :',True,(0,0,0))
 
-    def update(self):
-        pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.longueur,self.longueur),border_radius=int(self.longueur/8))
-        self.surface.blit(self.texte,(self.x+int(self.longueur-self.texte.get_width())/2,self.y+int(self.longueur/10)))
-        self.virus.draw(self.surface,self.x,self.y,0,0)
-
     def set_virus(self) :
-        if self.graphisme == 0 :
-            self.virus = virus((0,0))
-            self.virus.set_image(self.longueur/4,self.longueur/4,self.graphisme)
-        else:
-            self.virus = virus((0,0))
-            self.virus.set_image(self.longueur/4,self.longueur/4,self.graphisme)
+        self.virus = virus((0,0))
+        self.virus.set_image(self.longueur/4,self.longueur/5,self.graphisme)
 
     def change_graphisme(self):
         self.graphisme+=1
@@ -155,6 +146,11 @@ class Bouton_graphisme():
             self.graphisme=0
         self.set_virus()
 
+    def update(self):
+        pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.longueur,self.longueur),border_radius=int(self.longueur/8))
+        pygame.draw.rect(self.surface,(150,150,150),(self.x+int((self.longueur/10+1.1*self.texte.get_height())/2),self.y+(int(self.longueur/10+4*self.texte.get_height()/3)),self.longueur-(int(self.longueur/10+1.1*self.texte.get_height())),self.longueur-(int(self.longueur/10+2*self.texte.get_height()))),border_radius=int(self.longueur/8))
+        self.surface.blit(self.texte,(self.x+int(self.longueur-self.texte.get_width())/2,self.y+int(self.longueur/10)))
+        self.virus.draw(self.surface,self.x-self.longueur/4,self.y,0,0)
 
 def la_liste_bouton(R,V,B,surface,taille):
     niveau_1=Bouton_texte(int(1.6*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'1',3*taille)
@@ -349,10 +345,10 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                             if b.nom=='Retour':
                                 return difficulte(surface,taille,controle_actuel,background,page_aide,graphisme)
                             else :
-                                if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom),graphisme,taille): running = False
+                                if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+b.nom,graphisme),graphisme,taille): running = False
                                 if lv.home.x == 1:
                                     return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
-                                    
+
 
             elif event.type==pygame.MOUSEBUTTONDOWN:
                 if controle_actuel=='souris':
@@ -417,14 +413,13 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                                         doublon=True
                                         bouton.change_graphisme()
                                         graphisme=bouton.graphisme
-                                        graphisme=bouton.graphisme
                                 else:
                                     if bouton.nom=='Retour':
                                         return difficulte(surface,taille,controle_actuel,background,page_aide,graphisme)
                                     else :
-                                        if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom),graphisme,taille): running = False
+                                        if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom,graphisme),graphisme,taille): running = False
                                         if lv.home.x == 1:
-                                            return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
+                                            return difficulte(surface,taille,controle_actuel,background,page_aide,graphisme)
 
         surface.blit(background,(0,0))
         if page == 'accueil':
