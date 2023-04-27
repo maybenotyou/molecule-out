@@ -1,5 +1,6 @@
 import pygame
 import level as lv
+from cellule import * 
 
 import os
 
@@ -131,12 +132,28 @@ class Bouton_graphisme():
         self.graphisme=graphisme
         self.rect = pygame.Rect((self.x,self.y),(self.longueur,self.longueur))
         self.surface_bouton=pygame.Surface((self.rect[2],self.rect[3]))
+        self.set_virus()
         self.nom='Graphisme'
         self.texte=pygame.font.Font("verdana.ttf",int(self.taille/2)).render('Graphisme :',True,(0,0,0))
 
     def update(self):
         pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.longueur,self.longueur),border_radius=int(self.longueur/8))
         self.surface.blit(self.texte,(self.x+int(self.longueur-self.texte.get_width())/2,self.y+int(self.longueur/10)))
+        self.virus.draw(self.surface,self.x,self.y,0,0)
+
+    def set_virus(self) :
+        if self.graphisme == 0 :
+            self.virus = virus((0,0))
+            self.virus.set_image(self.longueur/4,self.longueur/4,self.graphisme)
+        else:
+            self.virus = virus((0,0))
+            self.virus.set_image(self.longueur/4,self.longueur/4,self.graphisme)
+
+    def change_graphisme(self):
+        self.graphisme+=1
+        if self.graphisme>2:
+            self.graphisme=0
+        self.set_virus()
 
 
 def la_liste_bouton(R,V,B,surface,taille):
@@ -325,9 +342,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                                 else:
                                     pygame.mixer.music.play(-1)
                             elif b.nom=='Graphisme':
-                                b.graphisme+=1
-                                if b.graphisme>3:
-                                    b.graphisme=0
+                                b.change_graphisme()
                                 graphisme=b.graphisme
 
                         else:
@@ -400,13 +415,12 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                                             pygame.mixer.music.play(-1)
                                     elif bouton.nom=='Graphisme' and not doublon:
                                         doublon=True
-                                        bouton.graphisme+=1
-                                        if bouton.graphisme>3:
-                                            bouton.graphisme=0
+                                        bouton.change_graphisme()
+                                        graphisme=bouton.graphisme
                                         graphisme=bouton.graphisme
                                 else:
                                     if bouton.nom=='Retour':
-                                        return difficulte(surface,taille,controle_actuel,background)
+                                        return difficulte(surface,taille,controle_actuel,background,page_aide,graphisme)
                                     else :
                                         if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom),graphisme,taille): running = False
                                         if lv.home.x == 1:
