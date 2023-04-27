@@ -51,11 +51,14 @@ class Bouton_next(Bouton_circulaire):
         pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0]+self.rect[2],self.y),(self.x,self.rect[1]+self.rect[3])))
         pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/2),self.y-int(self.longueur/4)),(int(self.longueur/2),int(self.longueur/2))))
 
-def level(screen,list_cell_ini,grap,taille):
+def level(screen,list_cell_ini,grap,taille, miror = (False,False)):
     q_select = 0
     a= cursor((4,3))
     bg = pygame.Surface(screen.get_size())
     bg.fill((0,0,0))
+    truescreen = screen
+    notbg = pygame.Surface(screen.get_size())
+    screen = notbg
     d=bg.get_size()
     xoff=d[0]*4/10
     yoff=-d[1]*3/10
@@ -138,7 +141,7 @@ def level(screen,list_cell_ini,grap,taille):
 
     a.set_img(scalx,scaly,grap)
     #-----------------------------------------------------
-
+    
     if grap == 1 :
         for i in range(len(list_cell_current)):
             if type(list_cell_current[i]) == virus :
@@ -260,8 +263,11 @@ def level(screen,list_cell_ini,grap,taille):
             pygame.draw.circle(screen,(100,100,100),(b.x,b.y),int(1.1*b.rayon))
         for bouton in liste_boutons:
             bouton.update()
+        screen=pygame.transform.flip(screen,True,False)
+        truescreen.blit(screen,(0,0))
 
         pygame.display.flip()
+    screen = truescreen
     if win == True :
         going = True
         bg = pygame.image.load('images/back.png').convert_alpha()
