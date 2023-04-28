@@ -199,9 +199,11 @@ def la_liste_bouton(R,V,B,surface,taille):
     return [[niveau_1,niveau_2,niveau_3,niveau_4,niveau_5],
             [niveau_6,niveau_7,niveau_8,niveau_9,niveau_10],
             [Menu,Retour]]
-
+#fonction pricipale par laquelle passe tous les menus
 def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,graphisme):
+#vérification de quel menu doit être lancer et création des boutons et liste de bouton en conséquence
 
+#lancement de la page d'accueil
     if page == 'accueil':
         Logo = pygame.image.load('images/OUT.png').convert_alpha()
         Jouer = Bouton_texte(int(3.375*surface.get_width()/6-5*taille),int(6.5*surface.get_height()/10),6.5*taille,1.8*taille,(0, 255, 0),surface,"Jouer",2*taille)
@@ -209,7 +211,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
         Aide = Bouton_texte(int(4.5*surface.get_width()/6-5*taille),int(8*surface.get_height()/10),6.5*taille,1.8*taille,(255, 0, 0),surface,"Aide",2*taille)
         liste_boutons=[[Jouer,Aide,Options]]
 
-
+#lancement du menu option
     elif page=='options':
         Menu=Bouton_menu(int(2*surface.get_width()/9),int(4*surface.get_height()/9),2*taille,(255,255,255),surface)
         Eteindre=Bouton_éteindre(int(7*surface.get_width()/18),int(4*surface.get_height()/9),2*taille,(255,0,0),surface)
@@ -218,6 +220,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
         Graphisme=Bouton_graphisme(int(3*surface.get_width()/4-7*taille),int(7*surface.get_height()/12-7*taille),14*taille,(255,255,255),surface,3*taille,graphisme)
         liste_boutons=[[Menu,Eteindre,Graphisme],[Commande,Musique,Graphisme]]
 
+      #lancement des pages d'aide
     elif page=='aide':
         Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
         if page_aide == 1:
@@ -226,7 +229,8 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
             Next=Bouton_next(int(1.5*taille),int(10.1*taille),taille,(255,255,255),surface,page_aide)
 
         liste_boutons=[[Menu,Next],[Next]]
-
+        
+#lancement du menu de selection de difficulté
     elif page=='difficulté':
         Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
         Starter=Bouton_texte(int(surface.get_width()/6-5*taille),int(4*surface.get_height()/10),10*taille,3*taille,(0,250,0),surface,'Starter',3*taille)
@@ -264,10 +268,12 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
             B=138
 
         liste_boutons=la_liste_bouton(R,V,B,surface,taille)
-
+        
+#création des variables i, j et b qui quand la commande est en clavier permettent de parcourir la liste (grace a des coordoné dans le tableau) des boutons et de séléctionner le bon bouton
     i=0
     j=0
     b=liste_boutons[i][j]
+    #boucle permettant d'actualiser la page en permanance et de vérifier si des actions y sont effectués
     running=True
     while running:
         for event in pygame.event.get():
