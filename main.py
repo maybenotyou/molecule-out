@@ -11,11 +11,11 @@ import os
 def rectangle_inscrit(rayon):
     return int((2*(rayon**2))**0.5)
 
-#cette classe crée des boutons de forme ronde
+#cette class créé des boutons de forme ronde
 class Bouton_circulaire():
     def __init__(self,x,y,rayon,couleur,surface,nom):
         #coordonée du bouton
-        self.x=x 
+        self.x=x
         self.y=y
         #sa couleur, son rayon, la surface ou ce bouton est visible et son nom
         self.couleur=couleur
@@ -32,24 +32,24 @@ class Bouton_circulaire():
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
 
-#cette classe est une classe fille de bouton_circulaire permettant de créer le bouton pour retrouner au Menu
+#cette class est une class fille de bouton_circulaire permettant de créé le bouton pour retrouner au Menu
 class Bouton_menu(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Menu')
-    
+
     #dessine le bouton, ainsi que  son logo (la maison au centre: pour le distinguer et reconnaitre facilement )
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
             pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0],self.y),(self.rect[0]+self.rect[2],self.y)))
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/3),self.y),(int(2*self.longueur/3),int(self.longueur/2))))
             pygame.draw.rect(self.surface,self.couleur,((self.x-int(self.longueur/6),self.y+int(self.longueur/12)),(int(self.longueur/3),int(self.longueur/3))))
-            
-#cette classe est une classe fille de bouton_circulaire permettant de créer le bouton pour changer de page dans le menu aide
+
+#cette class est une class fille de bouton_circulaire permettant de créé le bouton pour changer de page dans le menu aide
 class Bouton_next(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface,page_aide):
         super().__init__(x,y,rayon,couleur,surface,'Next')
         self.page_aide = page_aide
-    
+
     #dessine le bouton, ainsi que la flèche en son centre(la flèche change de sens en fonction de si l'on revient en arrière ou si l'on va a la page suivante)
     def update(self):
         if self.page_aide == 1:
@@ -61,7 +61,7 @@ class Bouton_next(Bouton_circulaire):
             pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0],self.y),(self.x,self.rect[1]+self.rect[3])))
             pygame.draw.rect(self.surface,(0,0,0),((self.x,self.y-int(self.longueur/4)),(int(self.longueur/2),int(self.longueur/2))))
 
-#cette classe est une classe fille de bouton_circulaire permettant de créer le bouton pour fermer le jeu, il se trouve dans le menu option
+#cette class est une class fille de bouton_circulaire permettant de créé le bouton pour fermer le jeu, il se trouve dans le menu option
 class Bouton_éteindre(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Eteindre')
@@ -72,18 +72,18 @@ class Bouton_éteindre(Bouton_circulaire):
             pygame.draw.rect(self.surface,self.couleur,((self.x-int(self.longueur/6),self.y-int(9*self.rayon/10)),(int(self.longueur/3),self.rayon)))
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/12),self.y-int(9*self.rayon/10)),(int(self.longueur/6),int(9*self.rayon/10))))
 
-#cette classe est une classe fille de bouton_circulaire permettant de créer le bouton pour revenir au menu de choix de difficulté depuis le menu de selection de niveau
+#cette class est une class fille de bouton_circulaire permettant de créé le bouton pour revenir au menu de choix de difficulté depuis le menu de selection de niveau
 class Bouton_retour(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Retour')
-        
+
 #dessine le bouton, ainsi que la flèche (orienté vers la gauche) en son centre
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
             pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0],self.y),(self.x,self.rect[1]+self.rect[3])))
             pygame.draw.rect(self.surface,(0,0,0),((self.x,self.y-int(self.longueur/4)),(int(self.longueur/2),int(self.longueur/2))))
 
-#cette classe est une classe fille de bouton_circulaire et permet de créer le bouton pour passer de commande clavier a souris (disponible dans le menu option)
+#cette class est une class fille de bouton_circulaire et permet de créer le bouton pour passer de commande clavier a souris (disponible dans le menu option)
 class Bouton_commande(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface,etat):
         super().__init__(x,y,rayon,couleur,surface,'Commande')
@@ -102,11 +102,11 @@ class Bouton_commande(Bouton_circulaire):
   #dessine le bouton, ainsi qu'une souris (si l'on es en comande souris) en son centre
         else:
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
-            pygame.draw.rect(self.surface,(0,0,0),((self.x-int(5*self.longueur/16),self.y-int(self.longueur/2)),(int(5*self.longueur/8),self.longueur)),border_radius=35,border_top_left_radius=25,border_top_right_radius=25)
+            pygame.draw.rect(self.surface,(0,0,0),((self.x-int(5*self.longueur/16),self.y-int(self.longueur/2)),(int(5*self.longueur/8),self.longueur)),border_radius=int(self.longueur/2),border_top_left_radius=int(self.longueur/3),border_top_right_radius=int(self.longueur/3))
             pygame.draw.line(self.surface,self.couleur,(self.x,self.rect[1]),(self.x,self.y-int(self.rayon/6)),int(self.rayon*0.05))
             pygame.draw.line(self.surface,self.couleur,(self.rect[0],self.y-int(self.rayon/6)),(self.rect[0]+self.rect[2],self.y-int(self.rayon/6)),int(self.rayon*0.05))
 
- # cette classe est une classe fille de bouton_circulaire et permet de créer le bouton pour allumer et éteindre le son
+ # cette class est une class fille de bouton_circulaire et permet de créer le bouton pour allumer et éteindre le son
 class Bouton_Musique(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Musique')
@@ -117,7 +117,7 @@ class Bouton_Musique(Bouton_circulaire):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
             pygame.draw.polygon(self.surface,(0,0,0),((self.x+int(3*self.rayon/8),self.rect[1]),(self.rect[0],self.y),(self.x+int(3*self.rayon/8),self.rect[1]+self.rect[3])))
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/2),self.y-int(self.longueur/4)),(self.rayon,int(self.longueur/2))))
-            
+
 #rajoute au bouton et au logo de haut parleur un trait oblique rouge pour signifier que le son est coupé (si la musique est désactivé)
         else:
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
@@ -125,11 +125,11 @@ class Bouton_Musique(Bouton_circulaire):
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/2),self.y-int(self.longueur/4)),(self.rayon,int(self.longueur/2))))
             pygame.draw.line(self.surface,(255,0,0),(self.rect[0]+int(0.9*self.rect[2]),self.rect[1]),(self.rect[0],self.rect[1]+int(0.9*self.rect[3])),int(self.rayon*0.1))
 
-#cette classe crée des boutons avec du texte a l'interieur
+#cette class créé des boutons avec du texte a l'interieur
 class Bouton_texte():
-    def __init__(self,x,y,largeur,longueur,couleur,surface,nom,taille):        
+    def __init__(self,x,y,largeur,longueur,couleur,surface,nom,taille):
         self.x=x
-        self.y=y        
+        self.y=y
         self.largeur=largeur
         self.longueur=longueur
         self.couleur=couleur
@@ -144,8 +144,8 @@ class Bouton_texte():
     def update(self):
         pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.largeur,self.longueur),border_radius=int(self.longueur))
         self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_width())/2,self.y+int(self.longueur-self.texte.get_height())/2))
-        
-# cette classe crée le bouton pour changer les graphismes du jeu (graphisme du plateau de jeu) avec l'exemple du virus (ce bouton se trouve dans le menu option)
+
+# cette class créé le bouton pour changer les graphismes du jeu (graphisme du plateau de jeu) avec l'exemple du virus (ce bouton se trouve dans le menu option)
 class Bouton_graphisme():
     def __init__(self,x,y,longueur,couleur,surface,taille,graphisme):
         self.x=x
@@ -161,26 +161,24 @@ class Bouton_graphisme():
         self.nom='Graphisme'
         self.texte=pygame.font.Font("verdana.ttf",int(self.taille/2)).render('Graphisme :',True,(0,0,0))
 
-    #crée le design virus en fonction du
+    #créé le design virus en fonction du
     def set_virus(self) :
         self.virus = virus((0,0))
         self.virus.set_image(self.longueur/4,self.longueur/5,self.graphisme)
 
-    #change le graphisme du jeu et du virus exemple
+    #cr
     def change_graphisme(self):
         self.graphisme+=1
         if self.graphisme>1:
             self.graphisme=0
         self.set_virus()
 
-#dessin le bouton de changement d'esthétique et la molecule du virus (en fonction du design choisi)
     def update(self):
         pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.longueur,self.longueur),border_radius=int(self.longueur/8))
         pygame.draw.rect(self.surface,(150,150,150),(self.x+int((self.longueur/10+1.1*self.texte.get_height())/2),self.y+(int(self.longueur/10+4*self.texte.get_height()/3)),self.longueur-(int(self.longueur/10+1.1*self.texte.get_height())),self.longueur-(int(self.longueur/10+2*self.texte.get_height()))),border_radius=int(self.longueur/8))
         self.surface.blit(self.texte,(self.x+int(self.longueur-self.texte.get_width())/2,self.y+int(self.longueur/10)))
         self.virus.draw(self.surface,self.x-self.longueur/4,self.y,0,0)
 
-#cette fonction permet de créer  tous les boutons pour sélectionner son niveau et ce qu'importe le niveau de difficulté choisi (cependant la couleur et le niveau retourné changent en fonction de cette dernière)
 def la_liste_bouton(R,V,B,surface,taille):
     niveau_1=Bouton_texte(int(1.6*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'1',3*taille)
     niveau_2=Bouton_texte(int(2.6*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'2',3*taille)
@@ -192,18 +190,15 @@ def la_liste_bouton(R,V,B,surface,taille):
     niveau_8=Bouton_texte(int(3.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'8',3*taille)
     niveau_9=Bouton_texte(int(4.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'9',3*taille)
     niveau_10=Bouton_texte(int(5.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)
-    #créer les boutons menu et retour
     Menu=Bouton_menu(4*taille,int(1.5*taille),taille,(255,255,255),surface)
     Retour=Bouton_retour(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
-#retourne un tableau de tableau permetant en format clavier de séléctioner le bon bouton/niveau
+
     return [[niveau_1,niveau_2,niveau_3,niveau_4,niveau_5],
             [niveau_6,niveau_7,niveau_8,niveau_9,niveau_10],
             [Menu,Retour]]
-#fonction pricipale par laquelle passe tous les menus
-def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,graphisme):
-#vérification de quel menu doit être lancer et création des boutons et liste de bouton en conséquence
 
-#lancement de la page d'accueil
+def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,graphisme):
+
     if page == 'accueil':
         Logo = pygame.image.load('images/OUT.png').convert_alpha()
         Jouer = Bouton_texte(int(3.375*surface.get_width()/6-5*taille),int(6.5*surface.get_height()/10),6.5*taille,1.8*taille,(0, 255, 0),surface,"Jouer",2*taille)
@@ -211,7 +206,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
         Aide = Bouton_texte(int(4.5*surface.get_width()/6-5*taille),int(8*surface.get_height()/10),6.5*taille,1.8*taille,(255, 0, 0),surface,"Aide",2*taille)
         liste_boutons=[[Jouer,Aide,Options]]
 
-#lancement du menu option
+
     elif page=='options':
         Menu=Bouton_menu(int(2*surface.get_width()/9),int(4*surface.get_height()/9),2*taille,(255,255,255),surface)
         Eteindre=Bouton_éteindre(int(7*surface.get_width()/18),int(4*surface.get_height()/9),2*taille,(255,0,0),surface)
@@ -220,7 +215,6 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
         Graphisme=Bouton_graphisme(int(3*surface.get_width()/4-7*taille),int(7*surface.get_height()/12-7*taille),14*taille,(255,255,255),surface,3*taille,graphisme)
         liste_boutons=[[Menu,Eteindre,Graphisme],[Commande,Musique,Graphisme]]
 
-      #lancement des pages d'aide
     elif page=='aide':
         Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
         if page_aide == 1:
@@ -229,8 +223,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
             Next=Bouton_next(int(1.5*taille),int(10.1*taille),taille,(255,255,255),surface,page_aide)
 
         liste_boutons=[[Menu,Next],[Next]]
-        
-#lancement du menu de selection de difficulté
+
     elif page=='difficulté':
         Menu=Bouton_menu(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
         Starter=Bouton_texte(int(surface.get_width()/6-5*taille),int(4*surface.get_height()/10),10*taille,3*taille,(0,250,0),surface,'Starter',3*taille)
@@ -268,32 +261,31 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
             B=138
 
         liste_boutons=la_liste_bouton(R,V,B,surface,taille)
-        
-#création des variables i, j et b qui quand la commande est en clavier permettent de parcourir la liste (grace a des coordoné dans le tableau) des boutons et de séléctionner le bon bouton
+
+    # initialise la selection des boutons de la liste_boutons
     i=0
     j=0
     b=liste_boutons[i][j]
-    #boucle permettant d'actualiser la page en permanance et de vérifier si des actions y sont effectués
+
+    # démarre la boucle d'exécution
     running=True
     while running:
-        
-        #détecte si il y a un changment (un touche pressé, un clique avec la souris...)
+        # arrête le jeu si la fenêtre a été fermée
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 running=False
                 pygame.quit()
                 return
-            
+
+            # arrête le jeu si la touche echap est pressée
             elif event.type==pygame.KEYDOWN:
-                #si on appuis sur ECHAP on quitte le jeu
                 if event.key==pygame.K_ESCAPE:
                     running=False
                     pygame.quit()
                     return
-                
-                #permet l'utilisation du clavier uniquement en commande clavier et pas en commande souris
+
+                # si le clavier est activé, change le bouton sélectionné dans la liste des boutons selon le bouton pressé
                 elif controle_actuel=='clavier':
-                    # si l'on appuis sur la touche flèche droite :décale le bouton séléctioner de 1 vers la droite si l'on est sur le bouton le plus a droite on reviens sur le bouton le plus à gauche
                     if event.key==pygame.K_RIGHT:
                         if j<len(liste_boutons[i])-1:
                             j+=1
@@ -301,7 +293,6 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                             j=0
                         b=liste_boutons[i][j]
 
-                    #si l'on appuis sur la touche flèche gauche: décale le bouton séléctioner de 1 vers la gauche si l'on est sur le bouton le plus a gauche on reviens sur le bouton le plus à droite
                     elif event.key==pygame.K_LEFT:
                         if j>0:
                             j-=1
@@ -309,7 +300,6 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                             j=len(liste_boutons[i])-1
                         b=liste_boutons[i][j]
 
-                    #si l'on appuis sur la touche flèche haut: décale le bouton séléctioner de 1 vers le haut si l'on est sur le bouton le plus en haut on reviens sur le bouton le plus en bas
                     elif event.key==pygame.K_UP:
                         if i>0:
                             i-=1
@@ -319,7 +309,6 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                             j=len(liste_boutons[i])-1
                         b=liste_boutons[i][j]
 
-                     #si l'on appuis sur la touche flèche bas: décale le bouton séléctioner de 1 vers le bas si l'on est sur le bouton le plus en bas on reviens sur le bouton le plus en haut
                     elif event.key==pygame.K_DOWN:
                         if i<len(liste_boutons)-1:
                             i+=1
@@ -328,8 +317,8 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                         if j>len(liste_boutons[i])-1:
                             j=len(liste_boutons[i])-1
                         b=liste_boutons[i][j]
-                    
-                    #si l'on appuis sur la touche espace ou entrer: 
+
+                    # vérifie quel bouton a été activé selon le menu et agis en conséquence
                     elif event.key in [pygame.K_SPACE,pygame.K_RETURN]:
                         if b.nom=='Menu':
                             return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
