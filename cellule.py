@@ -5,7 +5,7 @@ def turn(n,p,c): #tourne 90 horaire
         p=(-(p[1]-c[1])+c[0],p[0]-c[0]+c[1])
     return p
 
-def check(cel, ls_cell,d):
+def check(cel, ls_cell,d): #Verifie qu'un depaplacement fonctionne, l'anule dans le cas contraire
     und =(-d[0],-d[1])
     un=[]
     for i in cel.cells :
@@ -25,19 +25,19 @@ def check(cel, ls_cell,d):
                 un.append(z)
     return True
 
-def out(pos):
+def out(pos): # Verifie qu'une coordone se trouve dans l'enceinte du plateau
     if (1+abs(pos[1]-3)<=pos[0]<=7-abs(pos[1]-3)) or (pos[0]==0 and pos[1] == 3):
         return False
     return True
 
-class cursor :
+class cursor : # Ceci est la classe du curseur utilise pour l'interaction entre l'utlisateur et le plateau
     def __init__(self,pos):
         self.pos = pos
         self.selecting = False
         self.is_selected = None
         self.img = None
 
-    def set_img(self,scalx,scaly,grap):
+    def set_img(self,scalx,scaly,grap): # Genere l'image affichee en fonction du graphisme choisi
         if grap == 0 :
             self.wid = int(scalx*1/4)
             self.hei = int(scaly*1/4)
@@ -52,11 +52,11 @@ class cursor :
             self.img.set_colorkey((0,0,0))
             pygame.draw.ellipse(self.img,(0,0,0),pygame.Rect((0,0),(self.wid,self.hei)))
 
-    def draw(self,screen,pos):
+    def draw(self,screen,pos): 
         screen.blit(self.img,(pos[0]-.5*self.wid,pos[1]-.5*self.hei))
 
 
-    def move(self,ls_cell,d) :
+    def move(self,ls_cell,d) : # Methode permetant de deplacement du curseur et transfere ce deplacement de la piece selectionee
         if self.selecting == True :
             if self.is_selected.move(ls_cell.copy(),d) :
                 self.pos = (self.pos[0]+d[0],self.pos[1]+d[1])
@@ -67,7 +67,7 @@ class cursor :
                 return(True)
         return(False)
 
-    def select(self,cell,grap,scalx,scaly):
+    def select(self,cell,grap,scalx,scaly): #Permet de selectionner et deselectionner une cellule
         if self.selecting == False:
             self.is_selected=cell
             if grap <= 1 : cell.change_color(scalx,scaly,grap,cell.change)
@@ -86,10 +86,10 @@ class cellule:
         self.img = img
         self.change = change
 
-    def copy(self):
+    def copy(self): #Permet de generer une copie de la cellule 
         return cellule([a for a in self.cells],self.color,self.change,self.img)
 
-    def set_image(self,scalx,scaly,grap):
+    def set_image(self,scalx,scaly,grap): #Generation de l'image afichee
         self.img = pygame.Surface((6*scalx,6*scaly))
         self.img.set_colorkey((0,0,0))
         cellule = self.cells.copy()
@@ -124,7 +124,7 @@ class cellule:
                 y=yoff+scaly*(elm[0]+elm[1]+0.5)
                 pygame.draw.circle(self.img,self.color,(x,y),int(0.8*min(scalx,scaly)//2))
 
-    def change_color(self,scalx,scaly,grap, changement):
+    def change_color(self,scalx,scaly,grap, changement): #Methode permetant de changer la couleur de la cellule
         color = self.color
         self.color = (color[0]+changement[0],color[1]+changement[1],color[2]+changement[2])
         self.set_image(scalx,scaly,grap)
@@ -134,7 +134,7 @@ class cellule:
         y = self.cells[self.ctr][1]
         screen.blit(self.img,((xoff+scalx*((x-y)-3),yoff+scaly*((x+y)-3))))
 
-    def move(self,ls_cell,d):
+    def move(self,ls_cell,d): #Permet le changement des coordonees de la cellule
         ls_cell.remove(self)
         if check(self,ls_cell.copy(), d):
             for i in range(len(self.cells)):
@@ -142,11 +142,13 @@ class cellule:
             return True
         return False
 
-class virus(cellule):
+#Les differentes classes permetants la generation des pieces et de leur couleur respective.
+
+class virus(cellule): # Le molecule a sortir
     def __init__(self,pos,base_color = (255,0,0),c = (0,0,0), img = None):
         super().__init__([pos,(pos[0]+1,pos[1])],base_color,c,img)
 
-    def copy(self):
+    def copy(self): #Permet que la copie soit de meme classe
         return virus(self.cells[0],self.color,self.change,self.img)
 
 
@@ -154,9 +156,9 @@ class o(cellule):
     def __init__(self,pos,base_color = (127,127,127),c = (0,0,0), img = None):
         super().__init__([pos],base_color,c,img)
         self.ctr = 0
-    def move(self,ls_cell,d):
+    def move(self,ls_cell,d): #Empeche le deplacement
         return False
-    def copy(self):
+    def copy(self): #Permet que la copie soit de meme classe
         return o(self.cells[0],self.color,self.change,self.img)
 
 
