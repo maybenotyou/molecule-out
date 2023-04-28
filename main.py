@@ -191,7 +191,7 @@ def la_liste_bouton(R,V,B,surface,taille):
     niveau_7=Bouton_texte(int(2.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'7',3*taille)
     niveau_8=Bouton_texte(int(3.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'8',3*taille)
     niveau_9=Bouton_texte(int(4.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'9',3*taille)
-    niveau_10=Bouton_texte(int(5.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)7
+    niveau_10=Bouton_texte(int(5.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)
     #créer les boutons menu et retour
     Menu=Bouton_menu(4*taille,int(1.5*taille),taille,(255,255,255),surface)
     Retour=Bouton_retour(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
