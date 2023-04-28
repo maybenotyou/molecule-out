@@ -399,7 +399,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                                 if lv.home.x == 1:
                                     return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
-
+            # vérifie la collision de chaque bouton avec la souris selon le menu si celle-ci est activée et cliquée et agis en conséquence
             elif event.type==pygame.MOUSEBUTTONDOWN:
                 if controle_actuel=='souris':
                     doublon=False
@@ -470,15 +470,24 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                                     if bouton.nom=='Retour':
                                         return difficulte(surface,taille,controle_actuel,background,page_aide,graphisme)
                                     else :
-                                        if page == 'bonus': miror = choice([(False,True),(True,False),(True,True)]) # Mets une des 3 versions de miroir pour les niveaux bonus
+                                        # vérifie si la page est en bonus ou non et prépare l'effet mirroir en conséquence
+                                        if page == 'bonus':
+                                            miror = choice([(False,True),(True,False),(True,True)]) # Mets une des 3 versions de miroir pour les niveaux bonus
 
-                                        else : miror = (False,False)
+                                        else :
+                                            miror = (False,False)
 
-                                        if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom,graphisme),graphisme,taille,miror): running = False
+                                        # lance la partie et interrompt le jeu si l'utilisateur a quitté le jeu durant la partie
+                                        if not lv.level(surface,lv.filetolevel(os.getcwd()+'/'+page+'/'+bouton.nom,graphisme),graphisme,taille,miror):
+                                            running = False
+                                        # retourne au menu d'accueil si le joueur a demandé à retourner au menu durant la partie
                                         if lv.home.x == 1:
                                             return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
+        # affiche le fond d'écran
         surface.blit(background,(0,0))
+
+        # affiche les différents textes selon la page active
         if page == 'accueil':
             logo = pygame.transform.scale(Logo, (10*taille,10*taille))
             surface.blit(logo,(int((surface.get_width()-logo.get_width())/1.95),int(0.75*surface.get_height()/15)))
@@ -508,10 +517,11 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
             surface.blit(titre,(int((surface.get_width()-titre.get_width())/2),int(4*surface.get_height()/25)))
 
 
-
+        # affiche la souris si les commandes sont en souris
         if controle_actuel=='souris':
             pygame.mouse.set_visible(True)
 
+        # dessine la selection selon la forme du bouton sélectionné si les commandes sont en clavier
         else:
             pygame.mouse.set_visible(False)
 
@@ -526,64 +536,93 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                 rect_sel=pygame.Rect((b.rect[0]-int(taille/10),b.rect[1]-int(taille/10)),(b.rect[2]+2*int(taille/10),b.rect[3]+2*int(taille/10)))
                 pygame.draw.rect(surface,(100,100,100),rect_sel,0,int(b.longueur))
 
+# met à jour l'aperçut des boutons
+
         for rang in liste_boutons:
             for bouton in rang:
                 bouton.update()
 
+# met à jour l'aperçut de l'écran
+
         pygame.display.update()
+
+# initialise la page de selection de niveau de difficulte starter
 
 def starter(surface,taille,background,controle_actuel,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
     return lancement('starter',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
+# initialise la page de selection de niveau de difficulte junior
+
 def junior(surface,taille,background,controle_actuel,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
     return lancement('junior',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
+
+# initialise la page de selection de niveau de difficulte expert
 
 def expert(surface,taille,background,controle_actuel,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
     return lancement('expert',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
+# initialise la page de selection de niveau de difficulte master
+
 def master(surface,taille,background,controle_actuel,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
     return lancement('master',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
+
+# initialise la page de selection de niveau de difficulte wizard
 
 def wizard(surface,taille,background,controle_actuel,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
     return lancement('wizard',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
+# initialise la page bonus
+
 def bonus(surface,taille,background,controle_actuel,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez un niveau',True,(0,0,0))
     return lancement('bonus',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
+
+# initialise la page options
 
 def options(surface,taille,controle_actuel,background,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Options',True,(0,0,0))
     return lancement('options',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
+# initialise la page aide
+
 def aide(surface,taille,controle_actuel,background,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Aide',True,(0,0,0))
     return lancement('aide',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
+
+# initialise la page de selection de difficulte
 
 def difficulte(surface,taille,controle_actuel,background,page_aide,graphisme):
     titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Choisissez la difficulté',True,(0,0,0))
     return lancement('difficulté',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
 
 def main():
+   # initialise pygame
    pygame.init()
+   # initialise la page
    pygame.display.set_caption("Molecule Out")
+   # initialise le plein écran
    screen=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
+   # unité de mesure arbitraire variant selon l'écran
    taille=min(screen.get_size())//18
-   pygame.mixer.music.load("son/Musique_de_fond.mp3") # Importer son
+   # Importer son
+   pygame.mixer.music.load("son/Musique_de_fond.mp3")
    pygame.mixer.music.play(-1) # "-1" fait une boucle
-   titre=pygame.font.SysFont("verdana.ttf",4*taille).render('Logo',True,(0,0,0))
+   # prépare les variables pour lancer le jeu
+   titre=None
    controle_actuel='clavier'
    page_aide = 1
    graphisme = 0
    background = pygame.image.load('images/back.png').convert_alpha() # Importer l'image
    background = pygame.transform.scale(background, (screen.get_size())) # Modifier l'image pour s'adapter à l'écran
    background.convert()
-
+   # démarre le jeu
    lancement('accueil',taille,screen,background,titre,controle_actuel,page_aide,graphisme)
+   # arrête le jeu
    pygame.quit()
 
 main()
