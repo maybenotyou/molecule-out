@@ -289,7 +289,7 @@ def level(screen,list_cell_ini,grap,taille, miror = (False,False)):
         while going :
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    if event.key in [pygame.K_x,pygame.K_ESCAPE] :
+                    if event.key in [pygame.K_ESCAPE] :
                         return False
 
                     elif event.key==pygame.K_RIGHT:
@@ -306,7 +306,7 @@ def level(screen,list_cell_ini,grap,taille, miror = (False,False)):
                             i=len(liste_boutons)-1
                         b=liste_boutons[i]
 
-                    elif event.key in [pygame.K_SPACE,pygame.K_RETURN]:
+                    elif event.key in [pygame.K_SPACE,pygame.K_RETURN,pygame.K_x]:
                         if b.nom=='Menu':
                             home.x = 1
                             going=False
