@@ -276,19 +276,24 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
     #boucle permettant d'actualiser la page en permanance et de vérifier si des actions y sont effectués
     running=True
     while running:
+        
+        #détecte si il y a un changment (un touche pressé, un clique avec la souris...)
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 running=False
                 pygame.quit()
                 return
-
+            
             elif event.type==pygame.KEYDOWN:
+                #si on appuis sur ECHAP on quitte le jeu
                 if event.key==pygame.K_ESCAPE:
                     running=False
                     pygame.quit()
                     return
-
+                
+                #permet l'utilisation du clavier uniquement en commande clavier et pas en commande souris
                 elif controle_actuel=='clavier':
+                    # si l'on appuis sur la touche flèche droite :décale le bouton séléctioner de 1 vers la droite si l'on est sur le bouton le plus a droite on reviens sur le bouton le plus à gauche
                     if event.key==pygame.K_RIGHT:
                         if j<len(liste_boutons[i])-1:
                             j+=1
@@ -296,6 +301,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                             j=0
                         b=liste_boutons[i][j]
 
+                    #si l'on appuis sur la touche flèche gauche: décale le bouton séléctioner de 1 vers la gauche si l'on est sur le bouton le plus a gauche on reviens sur le bouton le plus à droite
                     elif event.key==pygame.K_LEFT:
                         if j>0:
                             j-=1
@@ -303,6 +309,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                             j=len(liste_boutons[i])-1
                         b=liste_boutons[i][j]
 
+                    #si l'on appuis sur la touche flèche haut: décale le bouton séléctioner de 1 vers le haut si l'on est sur le bouton le plus en haut on reviens sur le bouton le plus en bas
                     elif event.key==pygame.K_UP:
                         if i>0:
                             i-=1
@@ -312,6 +319,7 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                             j=len(liste_boutons[i])-1
                         b=liste_boutons[i][j]
 
+                     #si l'on appuis sur la touche flèche bas: décale le bouton séléctioner de 1 vers le bas si l'on est sur le bouton le plus en bas on reviens sur le bouton le plus en haut
                     elif event.key==pygame.K_DOWN:
                         if i<len(liste_boutons)-1:
                             i+=1
@@ -320,7 +328,8 @@ def lancement(page,taille,surface,background,titre,controle_actuel,page_aide,gra
                         if j>len(liste_boutons[i])-1:
                             j=len(liste_boutons[i])-1
                         b=liste_boutons[i][j]
-
+                    
+                    #si l'on appuis sur la touche espace ou entrer: 
                     elif event.key in [pygame.K_SPACE,pygame.K_RETURN]:
                         if b.nom=='Menu':
                             return lancement('accueil',taille,surface,background,titre,controle_actuel,page_aide,graphisme)
