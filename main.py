@@ -11,7 +11,7 @@ import os
 def rectangle_inscrit(rayon):
     return int((2*(rayon**2))**0.5)
 
-#cette class créé des boutons de forme ronde
+#cette classe crée des boutons de forme ronde
 class Bouton_circulaire():
     def __init__(self,x,y,rayon,couleur,surface,nom):
         #coordonée du bouton
@@ -32,7 +32,7 @@ class Bouton_circulaire():
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
 
-#cette class est une class fille de bouton_circulaire permettant de créé le bouton pour retrouner au Menu
+#cette classe est une classe fille de bouton_circulaire permettant de créer le bouton pour retrouner au Menu
 class Bouton_menu(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Menu')
@@ -44,7 +44,7 @@ class Bouton_menu(Bouton_circulaire):
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/3),self.y),(int(2*self.longueur/3),int(self.longueur/2))))
             pygame.draw.rect(self.surface,self.couleur,((self.x-int(self.longueur/6),self.y+int(self.longueur/12)),(int(self.longueur/3),int(self.longueur/3))))
             
-#cette class est une class fille de bouton_circulaire permettant de créé le bouton pour changer de page dans le menu aide
+#cette classe est une classe fille de bouton_circulaire permettant de créer le bouton pour changer de page dans le menu aide
 class Bouton_next(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface,page_aide):
         super().__init__(x,y,rayon,couleur,surface,'Next')
@@ -61,7 +61,7 @@ class Bouton_next(Bouton_circulaire):
             pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0],self.y),(self.x,self.rect[1]+self.rect[3])))
             pygame.draw.rect(self.surface,(0,0,0),((self.x,self.y-int(self.longueur/4)),(int(self.longueur/2),int(self.longueur/2))))
 
-#cette class est une class fille de bouton_circulaire permettant de créé le bouton pour fermer le jeu, il se trouve dans le menu option
+#cette classe est une classe fille de bouton_circulaire permettant de créer le bouton pour fermer le jeu, il se trouve dans le menu option
 class Bouton_éteindre(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Eteindre')
@@ -72,7 +72,7 @@ class Bouton_éteindre(Bouton_circulaire):
             pygame.draw.rect(self.surface,self.couleur,((self.x-int(self.longueur/6),self.y-int(9*self.rayon/10)),(int(self.longueur/3),self.rayon)))
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/12),self.y-int(9*self.rayon/10)),(int(self.longueur/6),int(9*self.rayon/10))))
 
-#cette class est une class fille de bouton_circulaire permettant de créé le bouton pour revenir au menu de choix de difficulté depuis le menu de selection de niveau
+#cette classe est une classe fille de bouton_circulaire permettant de créer le bouton pour revenir au menu de choix de difficulté depuis le menu de selection de niveau
 class Bouton_retour(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Retour')
@@ -83,7 +83,7 @@ class Bouton_retour(Bouton_circulaire):
             pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0],self.y),(self.x,self.rect[1]+self.rect[3])))
             pygame.draw.rect(self.surface,(0,0,0),((self.x,self.y-int(self.longueur/4)),(int(self.longueur/2),int(self.longueur/2))))
 
-#cette class est une class fille de bouton_circulaire et permet de créer le bouton pour passer de commande clavier a souris (disponible dans le menu option)
+#cette classe est une classe fille de bouton_circulaire et permet de créer le bouton pour passer de commande clavier a souris (disponible dans le menu option)
 class Bouton_commande(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface,etat):
         super().__init__(x,y,rayon,couleur,surface,'Commande')
@@ -106,7 +106,7 @@ class Bouton_commande(Bouton_circulaire):
             pygame.draw.line(self.surface,self.couleur,(self.x,self.rect[1]),(self.x,self.y-int(self.rayon/6)),int(self.rayon*0.05))
             pygame.draw.line(self.surface,self.couleur,(self.rect[0],self.y-int(self.rayon/6)),(self.rect[0]+self.rect[2],self.y-int(self.rayon/6)),int(self.rayon*0.05))
 
- # cette class est une class fille de bouton_circulaire et permet de créer le bouton pour allumer et éteindre le son
+ # cette classe est une classe fille de bouton_circulaire et permet de créer le bouton pour allumer et éteindre le son
 class Bouton_Musique(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Musique')
@@ -125,7 +125,7 @@ class Bouton_Musique(Bouton_circulaire):
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/2),self.y-int(self.longueur/4)),(self.rayon,int(self.longueur/2))))
             pygame.draw.line(self.surface,(255,0,0),(self.rect[0]+int(0.9*self.rect[2]),self.rect[1]),(self.rect[0],self.rect[1]+int(0.9*self.rect[3])),int(self.rayon*0.1))
 
-#cette class créé des boutons avec du texte a l'interieur
+#cette classe crée des boutons avec du texte a l'interieur
 class Bouton_texte():
     def __init__(self,x,y,largeur,longueur,couleur,surface,nom,taille):        
         self.x=x
@@ -145,7 +145,7 @@ class Bouton_texte():
         pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.largeur,self.longueur),border_radius=int(self.longueur))
         self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_width())/2,self.y+int(self.longueur-self.texte.get_height())/2))
         
-# cette class créé le bouton pour changer les graphismes du jeu (graphisme du plateau de jeu) avec l'exemple du virus (ce bouton se trouve dans le menu option)
+# cette classe crée le bouton pour changer les graphismes du jeu (graphisme du plateau de jeu) avec l'exemple du virus (ce bouton se trouve dans le menu option)
 class Bouton_graphisme():
     def __init__(self,x,y,longueur,couleur,surface,taille,graphisme):
         self.x=x
@@ -161,24 +161,26 @@ class Bouton_graphisme():
         self.nom='Graphisme'
         self.texte=pygame.font.Font("verdana.ttf",int(self.taille/2)).render('Graphisme :',True,(0,0,0))
 
-    #créé le design virus en fonction du
+    #crée le design virus en fonction du
     def set_virus(self) :
         self.virus = virus((0,0))
         self.virus.set_image(self.longueur/4,self.longueur/5,self.graphisme)
 
-    #cr
+    #change le graphisme du jeu et du virus exemple
     def change_graphisme(self):
         self.graphisme+=1
         if self.graphisme>1:
             self.graphisme=0
         self.set_virus()
 
+#dessin le bouton de changement d'esthétique et la molecule du virus (en fonction du design choisi)
     def update(self):
         pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.longueur,self.longueur),border_radius=int(self.longueur/8))
         pygame.draw.rect(self.surface,(150,150,150),(self.x+int((self.longueur/10+1.1*self.texte.get_height())/2),self.y+(int(self.longueur/10+4*self.texte.get_height()/3)),self.longueur-(int(self.longueur/10+1.1*self.texte.get_height())),self.longueur-(int(self.longueur/10+2*self.texte.get_height()))),border_radius=int(self.longueur/8))
         self.surface.blit(self.texte,(self.x+int(self.longueur-self.texte.get_width())/2,self.y+int(self.longueur/10)))
         self.virus.draw(self.surface,self.x-self.longueur/4,self.y,0,0)
 
+#cette fonction permet de créer  tous les boutons pour sélectionner son niveau et ce qu'importe le niveau de difficulté choisi (cependant la couleur et le niveau retourné changent en fonction de cette dernière)
 def la_liste_bouton(R,V,B,surface,taille):
     niveau_1=Bouton_texte(int(1.6*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'1',3*taille)
     niveau_2=Bouton_texte(int(2.6*surface.get_width()/6-5*taille),int(4*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'2',3*taille)
@@ -189,10 +191,11 @@ def la_liste_bouton(R,V,B,surface,taille):
     niveau_7=Bouton_texte(int(2.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'7',3*taille)
     niveau_8=Bouton_texte(int(3.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'8',3*taille)
     niveau_9=Bouton_texte(int(4.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'9',3*taille)
-    niveau_10=Bouton_texte(int(5.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)
+    niveau_10=Bouton_texte(int(5.6*surface.get_width()/6-5*taille),int(7*surface.get_height()/10),3*taille,3*taille,(R,V,B),surface,'10',3*taille)7
+    #créer les boutons menu et retour
     Menu=Bouton_menu(4*taille,int(1.5*taille),taille,(255,255,255),surface)
     Retour=Bouton_retour(int(1.5*taille),int(1.5*taille),taille,(255,255,255),surface)
-
+#retourne un tableau de tableau permetant en format clavier de séléctioner le bon bouton/niveau
     return [[niveau_1,niveau_2,niveau_3,niveau_4,niveau_5],
             [niveau_6,niveau_7,niveau_8,niveau_9,niveau_10],
             [Menu,Retour]]
