@@ -1,43 +1,56 @@
+###importation de pygame, des fichiers level et cellule puis random pour pouvoir utiliser l'aléatoire (notamment pour les niveaux bonus)
 import pygame
 import level as lv
 from cellule import *
 from random import choice
 
+
 import os
 
+#cette fonction permet de retourner la longueur du coté d'un carré inscrit dans un cercle a partir de son rayon
 def rectangle_inscrit(rayon):
     return int((2*(rayon**2))**0.5)
 
+#cette class créé des boutons de forme ronde
 class Bouton_circulaire():
     def __init__(self,x,y,rayon,couleur,surface,nom):
-        self.x=x
+        #coordonée du bouton
+        self.x=x 
         self.y=y
+        #sa couleur, son rayon, la surface ou ce bouton est visible et son nom
         self.couleur=couleur
         self.rayon=rayon
         self.surface=surface
         self.nom=nom
+        #appel la fonction rectangle inscrit
         self.longueur=rectangle_inscrit(rayon)
+        # création de la partie du bouton sur laquelle on peut cliquer pour entrainer son action (soit la surface dans le réctrangle inscrit)
         self.rect = pygame.Rect((self.x-(self.longueur//2),self.y-(self.longueur//2)),(self.longueur,self.longueur))
         self.surface_bouton=pygame.Surface((self.rect[2],self.rect[3]))
 
+        #dessine le  bouton circulaire a partir de ses attributs
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
 
+#cette class est une class fille de bouton_circulaire permettant de créé le bouton pour retrouner au Menu
 class Bouton_menu(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Menu')
-
+    
+    #dessine le bouton, ainsi que  son logo (la maison au centre: pour le distinguer et reconnaitre facilement )
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
             pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0],self.y),(self.rect[0]+self.rect[2],self.y)))
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/3),self.y),(int(2*self.longueur/3),int(self.longueur/2))))
             pygame.draw.rect(self.surface,self.couleur,((self.x-int(self.longueur/6),self.y+int(self.longueur/12)),(int(self.longueur/3),int(self.longueur/3))))
-
+            
+#cette class est une class fille de bouton_circulaire permettant de créé le bouton pour changer de page dans le menu aide
 class Bouton_next(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface,page_aide):
         super().__init__(x,y,rayon,couleur,surface,'Next')
         self.page_aide = page_aide
-
+    
+    #dessine le bouton, ainsi que la flèche en son centre(la flèche change de sens en fonction de si l'on revient en arrière ou si l'on va a la page suivante)
     def update(self):
         if self.page_aide == 1:
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
@@ -48,31 +61,35 @@ class Bouton_next(Bouton_circulaire):
             pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0],self.y),(self.x,self.rect[1]+self.rect[3])))
             pygame.draw.rect(self.surface,(0,0,0),((self.x,self.y-int(self.longueur/4)),(int(self.longueur/2),int(self.longueur/2))))
 
-
+#cette class est une class fille de bouton_circulaire permettant de créé le bouton pour fermer le jeu, il se trouve dans le menu option
 class Bouton_éteindre(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Eteindre')
-
+#dessine le bouton en rouge, ainsi que le logo au centre (celui génralement utiliser a cet effet: le cercle avec un petite barre verticale a son sommet)
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
             pygame.draw.circle(self.surface,(0,0,0),(self.x,self.y),int(self.longueur/2),int(self.longueur/8))
             pygame.draw.rect(self.surface,self.couleur,((self.x-int(self.longueur/6),self.y-int(9*self.rayon/10)),(int(self.longueur/3),self.rayon)))
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/12),self.y-int(9*self.rayon/10)),(int(self.longueur/6),int(9*self.rayon/10))))
 
+#cette class est une class fille de bouton_circulaire permettant de créé le bouton pour revenir au menu de choix de difficulté depuis le menu de selection de niveau
 class Bouton_retour(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Retour')
-
+        
+#dessine le bouton, ainsi que la flèche (orienté vers la gauche) en son centre
     def update(self):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
             pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0],self.y),(self.x,self.rect[1]+self.rect[3])))
             pygame.draw.rect(self.surface,(0,0,0),((self.x,self.y-int(self.longueur/4)),(int(self.longueur/2),int(self.longueur/2))))
 
+#cette class est une class fille de bouton_circulaire et permet de créer le bouton pour passer de commande clavier a souris (disponible dans le menu option)
 class Bouton_commande(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface,etat):
         super().__init__(x,y,rayon,couleur,surface,'Commande')
         self.etat=etat
 
+    #dessine le bouton, ainsi qu'un clavier (si l'on est en commande clavier) en son centre
     def update(self):
         if self.etat=="clavier":
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
@@ -82,22 +99,26 @@ class Bouton_commande(Bouton_circulaire):
                 for j in range (7):
                     pygame.draw.rect(self.surface,self.couleur,((self.x-int(5*self.longueur/12)+int(j*self.longueur/8),self.y-int(self.longueur/24)-int(3*i*self.longueur/24)),(int(self.longueur/12),int(self.longueur/12))))
 
+  #dessine le bouton, ainsi qu'une souris (si l'on es en comande souris) en son centre
         else:
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(5*self.longueur/16),self.y-int(self.longueur/2)),(int(5*self.longueur/8),self.longueur)),border_radius=35,border_top_left_radius=25,border_top_right_radius=25)
             pygame.draw.line(self.surface,self.couleur,(self.x,self.rect[1]),(self.x,self.y-int(self.rayon/6)),int(self.rayon*0.05))
             pygame.draw.line(self.surface,self.couleur,(self.rect[0],self.y-int(self.rayon/6)),(self.rect[0]+self.rect[2],self.y-int(self.rayon/6)),int(self.rayon*0.05))
 
+ # cette class est une class fille de bouton_circulaire et permet de créer le bouton pour allumer et éteindre le son
 class Bouton_Musique(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Musique')
 
+#dessine le bouton, ainsi que le logo de musique (haut parleur) (si la musique est activé)
     def update(self):
         if pygame.mixer.music.get_busy() == True:
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
             pygame.draw.polygon(self.surface,(0,0,0),((self.x+int(3*self.rayon/8),self.rect[1]),(self.rect[0],self.y),(self.x+int(3*self.rayon/8),self.rect[1]+self.rect[3])))
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/2),self.y-int(self.longueur/4)),(self.rayon,int(self.longueur/2))))
-
+            
+#rajoute au bouton et au logo de haut parleur un trait oblique rouge pour signifier que le son est coupé (si la musique est désactivé)
         else:
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
             pygame.draw.polygon(self.surface,(0,0,0),((self.x+int(3*self.rayon/8),self.rect[1]),(self.rect[0],self.y),(self.x+int(3*self.rayon/8),self.rect[1]+self.rect[3])))
