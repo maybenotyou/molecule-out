@@ -1,6 +1,7 @@
 import pygame
 from cellule import *
 import os
+# Réutilisation des boutons
 
 def rectangle_inscrit(rayon):
     return int((2*(rayon**2))**0.5)
@@ -21,6 +22,8 @@ class Bouton_circulaire():
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
 home = Bouton_circulaire(2,0,800,(255,255,255),300,'home')
 
+# Réutilisation du bouton de retour au menu
+
 class Bouton_menu(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
         super().__init__(x,y,rayon,couleur,surface,'Menu')
@@ -31,6 +34,8 @@ class Bouton_menu(Bouton_circulaire):
             pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.rect[1]),(self.rect[0],self.y),(self.rect[0]+self.rect[2],self.y)))
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/3),self.y),(int(2*self.longueur/3),int(self.longueur/2))))
             pygame.draw.rect(self.surface,self.couleur,((self.x-int(self.longueur/6),self.y+int(self.longueur/12)),(int(self.longueur/3),int(self.longueur/3))))
+
+# Création d'un bouton pour recommencer
 
 class Bouton_recommencer(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
@@ -43,6 +48,8 @@ class Bouton_recommencer(Bouton_circulaire):
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon*0.6)
             pygame.draw.rect(self.surface,self.couleur,((self.x-int(self.longueur/4),self.y),(int(self.longueur/2),+int(9*self.rayon/10))))
             pygame.draw.polygon(self.surface,(0,0,0),((self.x,self.y+self.rayon*0.75),(self.x-int(self.longueur/2.5),self.y+self.rayon*0.75),(self.x-int(self.longueur/5),self.y+self.rayon*0.35)))
+
+# Création d'un bouton pour retourner à la sélection de niveaux en fin de partie
 
 class Bouton_next(Bouton_circulaire):
     def __init__(self,x,y,rayon,couleur,surface):
@@ -133,12 +140,9 @@ def level(screen,list_cell_ini,grap,taille, miror = (False,False)):
         for c in range(3):
                 pygame.draw.circle(bg,(150,150,150),placement((7-c,c+4)),taille)
 
-    #--------------------------------------------
-
-    #------- set base image of cells and the cursor ------------
+    #------------ set base image of cells and the cursor ------------
     for cell in list_cell_ini :
         cell.set_image(scalx,scaly,grap)
-
 
     list_cell_current=[i.copy() for i in list_cell_ini]
 
