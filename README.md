@@ -21,7 +21,7 @@
 
 <h2>Images:</h2>
 
-<p>Le logo a été crée par Eliot et le fond d'écran par l'IA Dall-e avec un prompt d'Eliot.</p>
+<p>Le logo a été créé par Eliot et le fond d'écran par l'IA Dall-e avec un prompt d'Eliot.</p>
 
 - [Logo](./images/OUT.png)
 - [Fond d'écran](./images/back.png)
@@ -31,6 +31,6 @@
 
 <h2>Son:</h2>
 
-<p>Musique original est <a href="https://bit.ly/40MW20b">Future Science Technology by GentleJammers</a> qui a été remixer.</p>
+<p>Musique original est <a href="https://bit.ly/40MW20b">Future Science Technology by GentleJammers</a> qui a été remixé.</p>
 
 - [Musique de fond](./son/Musique_de_fond.mp3) 
