@@ -5,7 +5,7 @@ def turn(n,p,c): #tourne 90 horaire
         p=(-(p[1]-c[1])+c[0],p[0]-c[0]+c[1])
     return p
 
-def check(cel, ls_cell,d): #Verifie qu'un depaplacement fonctionne, l'anule dans le cas contraire
+def check(cel, ls_cell,d): #Verifie qu'un deplacement fonctionne, l'annule dans le cas contraire
     und =(-d[0],-d[1])
     un=[]
     for i in cel.cells :
