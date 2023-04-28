@@ -102,7 +102,7 @@ class Bouton_commande(Bouton_circulaire):
   #dessine le bouton, ainsi qu'une souris (si l'on es en comande souris) en son centre
         else:
             pygame.draw.circle(self.surface,self.couleur,(self.x,self.y),self.rayon)
-            pygame.draw.rect(self.surface,(0,0,0),((self.x-int(5*self.longueur/16),self.y-int(self.longueur/2)),(int(5*self.longueur/8),self.longueur))border_radius=int(self.longueur/2),border_top_left_radius=int(self.longueur/3),border_top_right_radius=int(self.longueur/3))
+            pygame.draw.rect(self.surface,(0,0,0),((self.x-int(5*self.longueur/16),self.y-int(self.longueur/2)),(int(5*self.longueur/8),self.longueur)),border_radius=int(self.longueur/2),border_top_left_radius=int(self.longueur/3),border_top_right_radius=int(self.longueur/3))
             pygame.draw.line(self.surface,self.couleur,(self.x,self.rect[1]),(self.x,self.y-int(self.rayon/6)),int(self.rayon*0.05))
             pygame.draw.line(self.surface,self.couleur,(self.rect[0],self.y-int(self.rayon/6)),(self.rect[0]+self.rect[2],self.y-int(self.rayon/6)),int(self.rayon*0.05))
 
