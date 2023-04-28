@@ -125,10 +125,11 @@ class Bouton_Musique(Bouton_circulaire):
             pygame.draw.rect(self.surface,(0,0,0),((self.x-int(self.longueur/2),self.y-int(self.longueur/4)),(self.rayon,int(self.longueur/2))))
             pygame.draw.line(self.surface,(255,0,0),(self.rect[0]+int(0.9*self.rect[2]),self.rect[1]),(self.rect[0],self.rect[1]+int(0.9*self.rect[3])),int(self.rayon*0.1))
 
+#cette class créé des boutons avec du texte a l'interieur
 class Bouton_texte():
-    def __init__(self,x,y,largeur,longueur,couleur,surface,nom,taille):
+    def __init__(self,x,y,largeur,longueur,couleur,surface,nom,taille):        
         self.x=x
-        self.y=y
+        self.y=y        
         self.largeur=largeur
         self.longueur=longueur
         self.couleur=couleur
@@ -139,10 +140,12 @@ class Bouton_texte():
         self.surface_bouton=pygame.Surface((self.rect[2],self.rect[3]))
         self.texte=pygame.font.Font("verdana.ttf",int(self.taille/2)).render(self.nom,True,(255,255,255))
 
+    #dessine le bouton ainsi que le texte qui y est inscrit
     def update(self):
         pygame.draw.rect(self.surface,self.couleur,(self.x,self.y,self.largeur,self.longueur),border_radius=int(self.longueur))
         self.surface.blit(self.texte,(self.x+int(self.largeur-self.texte.get_width())/2,self.y+int(self.longueur-self.texte.get_height())/2))
-
+        
+# cette class créé le bouton pour changer les graphismes du jeu (graphisme du plateau de jeu) avec l'exemple du virus (ce bouton se trouve dans le menu option)
 class Bouton_graphisme():
     def __init__(self,x,y,longueur,couleur,surface,taille,graphisme):
         self.x=x
@@ -158,10 +161,12 @@ class Bouton_graphisme():
         self.nom='Graphisme'
         self.texte=pygame.font.Font("verdana.ttf",int(self.taille/2)).render('Graphisme :',True,(0,0,0))
 
+    #créé le design virus en fonction du
     def set_virus(self) :
         self.virus = virus((0,0))
         self.virus.set_image(self.longueur/4,self.longueur/5,self.graphisme)
 
+    #cr
     def change_graphisme(self):
         self.graphisme+=1
         if self.graphisme>1:
